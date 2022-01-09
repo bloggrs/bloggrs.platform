@@ -4,9 +4,9 @@
  * This is the entry file for the application, only setup and boilerplate
  * code.
  */
-
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
+import './watch-polyfill';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -30,6 +30,7 @@ import './locales/i18n';
 const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
+console.log(store);
 ReactDOM.render(
   <Provider store={store}>
     <HelmetProvider>

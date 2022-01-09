@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { connect } from 'react-redux';
 
-export function HomePage() {
+const _HomePage = function HomePage() {
   return (
     <>
       <Helmet>
@@ -11,4 +12,9 @@ export function HomePage() {
       <span>HomePage container</span>
     </>
   );
-}
+};
+
+export const HomePage = connect(state => {
+  console.log({ state });
+  return {};
+})(_HomePage);
