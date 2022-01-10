@@ -7,7 +7,6 @@ export const BlogCreationStatus = ({ parentData }: any) => {
   const [loading, setLoading] = useState(true);
   const history = useHistory();
   useEffect(() => {
-    alert(JSON.stringify(parentData));
     const {
       '/blog-category': BlogCategoryId,
       '/blog-logo': logo_url,

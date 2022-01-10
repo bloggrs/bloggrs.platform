@@ -9,4 +9,7 @@ export interface RootState {
   auth: any;
   users: any;
   'createBlog.blogCategories': any;
+  'blogOverviewCard.blog': any;
+  'latestPostsCard.posts': any;
+  'postsListing.posts': any;
 }
