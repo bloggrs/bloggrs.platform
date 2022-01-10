@@ -39,6 +39,7 @@ const login = (email, password) => {
         data: { token },
       } = data;
       console.log({ data });
+      toast.success('Logged in successfully.');
       localStorage.setItem('bloggrs:token', token);
       return data;
     });

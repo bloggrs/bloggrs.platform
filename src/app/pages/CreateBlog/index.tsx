@@ -56,11 +56,9 @@ export const CreateBlog = () => {
                   sendValueToParent={sendValueToParent}
                   parentValue={data[path]}
                   nextStep={nextStep}
+                  nextStepDisabled={!data[path]}
                   {...extraProps}
                 />
-                <button onClick={nextStep} disabled={!data[path]}>
-                  Next
-                </button>
               </>
             )}
             path={path}

@@ -24,3 +24,13 @@ export const getBlogsForQuery = query => {
     state => state.blogCategories,
   );
 };
+
+export const getLoadingForQuery = query => {
+  if (!forQuerySelectors[query]) {
+    forQuerySelectors[query] = createSelector(
+      [selectSlice],
+      state => state[query] || initialState.egQueryString,
+    );
+  }
+  return createSelector([forQuerySelectors[query]], state => state.loading);
+};

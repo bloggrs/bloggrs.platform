@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { connect } from 'react-redux';
+import { MainPanel } from '../../components/MainPanel';
 
 const _HomePage = function HomePage() {
   return (
@@ -9,7 +10,7 @@ const _HomePage = function HomePage() {
         <title>Home Page</title>
         <meta name="description" content="A Boilerplate application homepage" />
       </Helmet>
-      <span>HomePage container</span>
+      <MainPanel>HomePage contdasainer</MainPanel>
     </>
   );
 };

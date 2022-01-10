@@ -51,6 +51,12 @@ export function App() {
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
       <Switch>
+        {/* Authentication routes */}
+        <Route exact path="/auth/login" component={LoginPage} />
+        <Route exact path="/auth/register" component={RegisterPage} />
+        <Route exact path="/auth/logout" component={LogoutPage} />
+        {/* EndAuthentication routes */}
+
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
         <PrivateRoute
@@ -64,9 +70,6 @@ export function App() {
           component={CreatePost}
         />
         <PrivateRoute exact path="/blogs/:blog_id" component={SingleBlog} />
-        <Route exact path="/auth/login" component={LoginPage} />
-        <Route exact path="/auth/register" component={RegisterPage} />
-        <Route exact path="/auth/logout" component={LogoutPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <ToastContainer />
