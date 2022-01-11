@@ -12,4 +12,5 @@ export interface RootState {
   'blogOverviewCard.blog': any;
   'latestPostsCard.posts': any;
   'postsListing.posts': any;
+  'commentsListing.comments': any;
 }

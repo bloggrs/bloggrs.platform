@@ -41,6 +41,7 @@ export const ChooseBlogCategory = ({
   useEffect(() => {
     if (blogCategoryId && blogCategoryId !== -1 && !loading) {
       const bg = blogCategories.find(bg => bg.id == blogCategoryId);
+      if (!bg) return;
       setQuery(bg.name);
       if (parentValue !== blogCategoryId) sendValueToParent(blogCategoryId);
     }

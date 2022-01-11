@@ -7,6 +7,7 @@ import { ChooseBlogLogo } from './ChooseBlogLogo';
 import { ChooseBlogName } from './ChooseBlogName';
 import { ChooseBlogTheme } from './ChooseBlogTheme';
 import { InformationalStep1 } from './InformationalStep1';
+import { SuccessInformational } from './SuccessInformational';
 import { HashRouter, Route, useHistory } from 'react-router-dom';
 
 function useForceUpdate() {
@@ -28,6 +29,11 @@ export const CreateBlog = () => {
       path: '/setup-status',
       sendDataObject: true,
     },
+    {
+      Component: SuccessInformational,
+      path: '/success',
+      sendDataObject: true,
+    },
   ];
 
   return (
@@ -36,8 +42,8 @@ export const CreateBlog = () => {
         const nextStep = () => {
           var component = components[i + 1];
           if (component.path === '/blog-theme')
-            component = components[components.length - 1];
-          if (!component) throw new Error('Dev-error');
+            component = components[components.length - 2];
+          else if (!component) throw new Error('Dev-error');
           window.location.hash = '#' + component.path;
         };
         const sendValueToParent = value => {

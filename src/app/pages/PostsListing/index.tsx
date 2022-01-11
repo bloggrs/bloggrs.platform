@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { usePostsSlice } from './slice';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, isPostsLoading } from './slice/selectors';
 import {
   MainButton,
   ModalContainer,
 } from '../../components/DeleteModalContainer';
+import { MainPanel } from 'app/components/MainPanel';
+import { Table } from 'app/components/Table';
 
-export const PostsListing = () => {
+export const PostsListing = ({ match }) => {
+  const history = useHistory();
   const [data, setData] = useState({ onDelete: 0 });
 
   const [loadMoreClicks, setLoadMoreClicks] = useState(0);
@@ -27,7 +30,44 @@ export const PostsListing = () => {
       actions.loadPosts({ id: blog_id, page: loadMoreClicks + 1, pageSize: 3 }),
     );
   }, [loadMoreClicks]);
-  if (loading) return <>'Loading...'</>;
+  return (
+    <MainPanel className="px-52 py-12">
+      <div className="flex -mx-2">
+        <div className="w-full w-6/6 lg:w-6/6 px-2">
+          <div className="flex w-6/6">
+            <div className="w-11/12">
+              <button
+                onClick={e => {
+                  history.goBack();
+                }}
+                className="btn-base w-32 bg-white border-2 border-yellow-500 text-yellow-500 rounded-full"
+              >
+                Back
+              </button>
+            </div>
+            <div className="w-1/12">
+              <Link to={`/blogs/${match.params.blog_id}/posts/create`}>
+                <button className=" btn-base w-52 bg-orange-300  text-white rounded-full focus:bg-yellow-500">
+                  Add Post
+                </button>
+              </Link>
+            </div>
+          </div>
+          <h1 className="text-3xl text-slate-700 font-medium py-5">Posts</h1>
+          {/* <h1 class="text-xl text-slate-400 font-normal py-5">You can change this later anytime.</h1>       */}
+          <Table
+            fields={[
+              { key: 'id', label: '#' },
+              { key: 'title', label: 'Title' },
+              { key: 'slug', label: 'slug' },
+            ]}
+            data={posts}
+            onLoadMore={e => setLoadMoreClicks(loadMoreClicks + 1)}
+          />
+        </div>
+      </div>
+    </MainPanel>
+  );
   return (
     <>
       <Link to={`/blogs/${blog_id}/posts/create`}>

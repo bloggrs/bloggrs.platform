@@ -8,7 +8,7 @@ const _HomePage = function HomePage() {
     <>
       <Helmet>
         <title>Home Page</title>
-        <meta name="description" content="A Boilerplate application homepage" />
+        <meta name='description' content='A Boilerplate application homepage' />
       </Helmet>
       <MainPanel>HomePage contdasainer</MainPanel>
     </>
