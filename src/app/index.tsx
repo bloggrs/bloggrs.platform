@@ -15,6 +15,7 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import { HomePage } from './pages/HomePage/Loadable';
 import { CreateBlog } from './pages/CreateBlog/Loadable';
+import { BlogCustomization } from './pages/BlogCustomization/Loadable';
 import { PostsListing } from './pages/PostsListing/Loadable';
 import { CommentsListing } from './pages/CommentsListing/Loadable';
 import { CreatePost } from './pages/CreatePost/Loadable';
@@ -75,7 +76,11 @@ export function App() {
           path="/blogs/:blog_id/comments"
           component={CommentsListing}
         />
-
+        <PrivateRoute
+          exact
+          path="/blogs/:blog_id/customize"
+          component={BlogCustomization}
+        />
         <PrivateRoute exact path="/blogs/:blog_id" component={SingleBlog} />
         <Route component={NotFoundPage} />
       </Switch>
