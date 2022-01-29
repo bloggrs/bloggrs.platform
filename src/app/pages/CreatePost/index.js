@@ -8,6 +8,8 @@ import ContentEditable from 'react-contenteditable';
 import { blogsService } from 'services/blogs.service';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
+import draftToHtml from 'draftjs-to-html';
+import { EditorState, convertToRaw } from 'draft-js';
 
 export const CreatePost = ({ match }) => {
   const history = useHistory();
@@ -15,13 +17,14 @@ export const CreatePost = ({ match }) => {
   const [title, setTitle] = useState(
     '15 bloggers share their advice for successful blogging',
   );
-  const [editorState, setEditorState] = useState('');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
   const onSubmit = async e => {
     e.preventDefault();
     const { blog_id: BlogId } = match.params;
     const args = {
       title,
-      html_content: 'editorState',
+      html_content: draftToHtml(convertToRaw(editorState.getCurrentContent())),
       BlogId,
     };
     try {
