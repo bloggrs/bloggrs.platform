@@ -31,20 +31,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { authUserSelector } from 'features/auth/selectors';
+import { MainPanel } from './components/MainPanel';
+import { useLocation } from 'react-router-dom';
+import { EditBlog } from './pages/EditBlog/Loadable';
 
 export function App() {
   const { actions } = useAuthSlice();
   const user = useSelector(authUserSelector);
   const { token } = user || {};
   const dispatch = useDispatch();
+  const location = useLocation();
 
+  console.log(location,'location')
+  
   useEffect(() => {
     dispatch(actions.authenticate());
   }, [token]);
 
   const { i18n } = useTranslation();
+
+  const { pathname } = location;
+  const collapse_main_panel = [
+    pathname === "/"
+  ].indexOf(true) !== -1
+
   return (
-    <BrowserRouter>
+    <>
       <Helmet
         titleTemplate="%s - React Boilerplate"
         defaultTitle="React Boilerplate"
@@ -58,34 +70,36 @@ export function App() {
         <Route exact path="/auth/register" component={RegisterPage} />
         <Route exact path="/auth/logout" component={LogoutPage} />
         {/* EndAuthentication routes */}
-
-        <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
-        <PrivateRoute
-          exact
-          path="/blogs/:blog_id/posts"
-          component={PostsListing}
-        />
-        <PrivateRoute
-          exact
-          path="/blogs/:blog_id/posts/create"
-          component={CreatePost}
-        />
-        <PrivateRoute
-          exact
-          path="/blogs/:blog_id/comments"
-          component={CommentsListing}
-        />
-        <PrivateRoute
-          exact
-          path="/blogs/:blog_id/customize"
-          component={BlogCustomization}
-        />
-        <PrivateRoute exact path="/blogs/:blog_id" component={SingleBlog} />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/posts/:id"
+            component={CreatePost}
+          />
+        <MainPanel sidebarProps={{ collapse: collapse_main_panel }}>
+          <PrivateRoute exact path="/" component={HomePage} />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/posts"
+            component={PostsListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/comments"
+            component={CommentsListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/customize"
+            component={BlogCustomization}
+          />
+          <PrivateRoute exact path="/blogs/:blog_id" component={SingleBlog} />
+          <PrivateRoute exact path="/blogs/:blog_id/edit" component={EditBlog} />
+        </MainPanel>
         <Route component={NotFoundPage} />
       </Switch>
       <ToastContainer />
       <GlobalStyle />
-    </BrowserRouter>
+    </>
   );
 }

@@ -5,6 +5,8 @@ const prettierOptions = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
 );
 
+prettierOptions.endOfLine = "auto";
+
 module.exports = {
   extends: ['react-app', 'prettier'],
   plugins: ['prettier'],

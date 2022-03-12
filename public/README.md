@@ -6,13 +6,19 @@ Super light weight, responsive and lightning fast! No JavaScript components to l
 Perfect for non-javascript programmers as well as skilled programmers. Use PCF for quick wire frame designs or full out websites. You can pretty much copy and paste your way to a functional lightning fast site.
 
 This version contains the one CSS file you need in both minified and unminified versions "purecssframework.css"
+
 #
-Optional Files included: 
-SASS version, 
-Dark theme, 
-Color theme, 
+
+Optional Files included:
+SASS version,
+Dark theme,
+Color theme,
 PCF carousel standalone CSS file (no dependences)
+
 #
+
 Have fun and learn how to use all the CSS and components here: http://www.purecssframework.com
+
 #
+
 Email me with any questions: lowell @ purecssframework.com

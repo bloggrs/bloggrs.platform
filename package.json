@@ -43,7 +43,6 @@
     "lint-staged": "10.3.0",
     "node-plop": "0.26.2",
     "plop": "2.7.4",
-    "prettier": "2.3.2",
     "qs": "6.10.2",
     "react": "17.0.2",
     "react-app-polyfill": "2.0.0",
@@ -53,6 +52,7 @@
     "react-draggable": "4.4.4",
     "react-helmet-async": "1.0.9",
     "react-i18next": "11.11.1",
+    "react-modal": "3.14.4",
     "react-redux": "7.2.4",
     "react-router-dom": "5.2.0",
     "react-scripts": "5.0.0",
@@ -90,7 +90,7 @@
     "lint:fix": "npm run eslint --fix src",
     "lint:css": "stylelint src/**/*.css",
     "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts",
-    "prettify": "prettier --write",
+    "prettify": "prettier --write ./src/app/pages/CreatePost",
     "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
     "prepare": "husky install"
   },
@@ -142,6 +142,7 @@
     "@typescript-eslint/parser": "5.9.0",
     "eslint": "8.6.0",
     "eslint-plugin-react": "7.28.0",
+    "prettier": "2.3.2",
     "tslint": "6.1.3"
   }
 }

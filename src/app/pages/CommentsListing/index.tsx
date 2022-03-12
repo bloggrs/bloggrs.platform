@@ -35,33 +35,31 @@ export const CommentsListing = ({ match }) => {
     );
   }, [loadMoreClicks]);
   return (
-    <MainPanel className="px-52 py-12">
-      <div className="flex -mx-2">
-        <div className="w-full w-6/6 lg:w-6/6 px-2">
-          <div className="flex w-6/6">
-            <div className="w-11/12">
-              <button
-                onClick={e => {
-                  history.goBack();
-                }}
-                className="btn-base w-32 bg-white border-2 border-yellow-500 text-yellow-500 rounded-full"
-              >
-                Back
-              </button>
-            </div>
+    <div className="flex -mx-2">
+      <div className="w-full w-6/6 lg:w-6/6 px-2">
+        <div className="flex w-6/6">
+          <div className="w-11/12">
+            <button
+              onClick={e => {
+                history.goBack();
+              }}
+              className="btn-base w-32 bg-white border-2 border-yellow-500 text-yellow-500 rounded-full"
+            >
+              Back
+            </button>
           </div>
-          <h1 className="text-3xl text-slate-700 font-medium py-5">Comments</h1>
-          {/* <h1 class="text-xl text-slate-400 font-normal py-5">You can change this later anytime.</h1>       */}
-          <Table
-            fields={[
-              { key: 'id', label: '#' },
-              { key: 'content', label: 'Content' },
-            ]}
-            data={comments}
-            onLoadMore={e => setLoadMoreClicks(loadMoreClicks + 1)}
-          />
         </div>
+        <h1 className="text-3xl text-slate-700 font-medium py-5">Comments</h1>
+        {/* <h1 class="text-xl text-slate-400 font-normal py-5">You can change this later anytime.</h1>       */}
+        <Table
+          fields={[
+            { key: 'id', label: '#' },
+            { key: 'content', label: 'Content' },
+          ]}
+          data={comments}
+          onLoadMore={e => setLoadMoreClicks(loadMoreClicks + 1)}
+        />
       </div>
-    </MainPanel>
+    </div>
   );
 };

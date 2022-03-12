@@ -38,6 +38,7 @@ const slice = createSlice({
     },
     deletePost(state, action: PayloadAction<any>) {
       state.deleteLoading = true;
+      console.log(JSON.stringify({ action }))
     },
     deleteSuccess(state, action: PayloadAction<any>) {
       const remove_id = action.payload.id;

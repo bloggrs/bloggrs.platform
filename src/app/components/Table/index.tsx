@@ -25,6 +25,9 @@ export const Table = ({
   pageSize,
   onLoadMore,
   plural_name,
+  type,
+  EditModal,
+  DeleteModal,
 }: any) => {
   // page = page || 1;
   // pageSize = pageSize || 3;
@@ -39,11 +42,11 @@ export const Table = ({
           <thead>
             <tr>
               {fields.map(f => (
-                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   {f.label}
                 </th>
               ))}
-              <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+              <th className="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                 Options
               </th>
             </tr>
@@ -54,22 +57,84 @@ export const Table = ({
             {data.map(d => (
               <tr>
                 {fields.map(field => (
-                  <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
+                  <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700">
                     {d[field.key]}
                   </th>
                 ))}
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                <td style={{
+                  display: "inline-flex"
+                }} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                   <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base  w-full bg-transparent border-2 border-slate-600 rounded-md">
+                    <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-slate-600 rounded-md">
                       View
                     </button>
                   </Link>
+                  {
+                    EditModal && 
+                    <EditModal {...{ [type]: d }}>
+                        <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
+                          Edit
+                        </button>
+                    </EditModal>
+                  }
+                  {
+                    DeleteModal && 
+                    <DeleteModal {...{ [type]: d }}>
+                        <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                          Delete
+                        </button>
+                    </DeleteModal>
+                  }
+                  {/* <Link to={window.location.pathname + '/' + d.id}>
+                    <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                      Edit
+                    </button>
+                  </Link> */}
+                  {/* <Link to={window.location.pathname + '/' + d.id}>
+                    <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                      Delete
+                    </button>
+                  </Link> */}
                 </td>
+                {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                  <Link to={window.location.pathname + '/' + d.id}>
+                    <button className="btn-base  w-full bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                      Delete
+                    </button>
+                  </Link>
+                </td> */}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <br/>
+      {/* <nav aria-label="Page navigation example">
+        <ul className="inline-flex -space-x-px">
+          <li>
+            <a href="#" className="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+          </li>
+          <li>
+            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+          </li>
+          <li>
+            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+          </li>
+          <li>
+            <a href="#" aria-current="page" className="py-2 px-3 text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+          </li>
+          <li>
+            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+          </li>
+          <li>
+            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+          </li>
+          <li>
+            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+          </li>
+        </ul>
+      </nav> */}
+
       <br />
       {/* <h3 className="cursor-pointer" onClick={onLoadMore}>
         Load More

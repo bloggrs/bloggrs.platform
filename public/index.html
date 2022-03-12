@@ -17,8 +17,12 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <link rel="stylesheet" href="/purecssframework.css"/>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <!-- <link rel="stylesheet" href="/purecssframework.css"/> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -32,11 +36,17 @@
     <title>React App</title>
   </head>
   <script>
-    window.Sortable = Sortable
+    window.Sortable = Sortable;
   </script>
   <style>
     .Toastify__toast-container--top-right {
       right: 50em !important;
+    }
+    body {
+      zoom: 85%;
+    }
+    .ReactModal__Overlay {
+      background-color: hsl(204deg 64% 31% / 68%) !important;
     }
     /* .bg-slate-700 {
       background-color: #1C5881 !important;
@@ -45,7 +55,7 @@
   <body class="bg-slate-100">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <div id="app-modal"/>
+    <div id="app-modal" />
 
     <!--
       This HTML file is a template.

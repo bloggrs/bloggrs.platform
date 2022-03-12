@@ -1,17 +1,26 @@
 import * as React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, matchPath } from 'react-router-dom';
 import { CenteredImage } from '../CenteredImage';
 
 const getPathname = (blog_id, path) => `/blogs/${blog_id}${path}`;
 
-export const _Sidebar = ({ collapse, match }: any) => {
-  const { blog_id } = match.params;
-  if (collapse)
+export const _Sidebar = ({ collapse, style, ...rest }: any) => {
+  const match: any = matchPath(window.location.pathname, {
+    path: '/blogs/:blog_id',
+  });
+
+  
+  const { blog_id }: any = !match ? { } : match.params;
+
+  if (collapse) {
     return (
       <div className="absolute h-screen max-h-screen max-w-10 w-5 py-5 bg-slate-700" />
     );
+  }
+
   return (
     <div
+      style={style}
       className={
         'fixed h-screen max-h-screen max-w-52 w-24 py-5 bg-slate-700 center-items'
       }
@@ -46,7 +55,12 @@ export const _Sidebar = ({ collapse, match }: any) => {
           src="/dist/static/sidebar/icons8-settings-80.png"
         />
       </Link>
-      <div className="fixed bottom-0 bg-white h-24 py-5 w-24 bg-slate-900">
+      <div
+        style={{
+          background: '#164666 0% 0% no-repeat padding-box;',
+        }}
+        className="fixed bottom-0 bg-white h-24 py-5 w-24 bg-slate-900"
+      >
         <div className="cursor-pointer align-middle w-14 h-14 m-auto py-4 mx-5 rounded-full bg-slate-700 text-center ">
           <span className="py-4 font-medium text-white">GK</span>
         </div>
