@@ -65,14 +65,14 @@ export const Table = ({
                   display: "inline-flex"
                 }} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                   <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-slate-600 rounded-md">
+                    <button className="btn-base m-2 bg-transparent border-2 border-slate-600 rounded-md">
                       View
                     </button>
                   </Link>
                   {
                     EditModal && 
                     <EditModal {...{ [type]: d }}>
-                        <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
+                        <button className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
                           Edit
                         </button>
                     </EditModal>
@@ -80,18 +80,18 @@ export const Table = ({
                   {
                     DeleteModal && 
                     <DeleteModal {...{ [type]: d }}>
-                        <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                        <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
                           Delete
                         </button>
                     </DeleteModal>
                   }
                   {/* <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                    <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
                       Edit
                     </button>
                   </Link> */}
                   {/* <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base  w-1/3 m-1 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                    <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
                       Delete
                     </button>
                   </Link> */}

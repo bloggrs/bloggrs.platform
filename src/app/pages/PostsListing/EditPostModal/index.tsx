@@ -71,7 +71,6 @@ export const EditPostModal = ({ post: { id, title }, children }: EditPostModalPr
                     block
                     w-full
                     h-12
-                    border-white
                     px-3
                     py-1.5
                     text-base
