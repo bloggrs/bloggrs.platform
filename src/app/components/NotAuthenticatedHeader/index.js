@@ -77,12 +77,12 @@ export const NotAuthenticatedHeader = () => {
               <div className="flex-shrink-0 flex items-center">
                 <img
                   className="block lg:hidden h-8 w-auto"
-                  src="http://localhost:3001/dist/static/image1.png"
+                  src="/dist2/static/image1.png"
                   alt="Workflow"
                 />
                 <img
                   className="hidden lg:block h-32 w-auto"
-                  src="http://localhost:3001/dist/static/image1.png"
+                  src="/dist2/static/image1.png"
                   alt="Workflow"
                 />
               </div>

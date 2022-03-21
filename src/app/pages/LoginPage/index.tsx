@@ -204,7 +204,7 @@ const LoginPage_ = props => {
             <div className="hidden lg:block w-1/6 px-2" />
             <div className="hidden lg:block w-2/6 px-2 justify-center items-center flex">
               <div className="mx-10 py-10 h-12 w-5/6">
-                <img src="http://localhost:3001/dist/static/twitter_outline.png" />
+                <img src="/dist2/static/twitter_outline.png" />
               </div>
             </div>
           </div>
