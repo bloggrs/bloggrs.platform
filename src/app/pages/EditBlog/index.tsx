@@ -39,7 +39,7 @@ export const EditBlog = () => {
                     left: "11rem"
                 }}
                 className="w-screen h-screen border-2 border-dashed border-slate-700 p-5" 
-                src={"http://localhost:3002/blogs/edit/" + public_key + `/${pageId}`}
+                src={`${process.env.HOSTED_CRAFT_JS_URL}/blogs/edit/` + public_key + `/${pageId}`}
             />
         </>
     )
