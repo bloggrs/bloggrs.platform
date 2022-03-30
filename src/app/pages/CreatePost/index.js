@@ -15,6 +15,7 @@ import {
   convertToRaw,
   convertFromHTML,
 } from 'draft-js';
+import RichTextEditor from 'react-rte';
 
 export const CreatePost = ({ match }) => {
   const history = useHistory();
@@ -25,7 +26,9 @@ export const CreatePost = ({ match }) => {
   const [title, setTitle] = useState(
     '15 bloggers share their advice for successful blogging',
   );
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(
+    RichTextEditor.createEmptyValue(),
+  );
 
   const [categoriesQuery, setCategoriesQuery] = useState('');
   const [categories, setCategories] = useState(null);
@@ -56,13 +59,15 @@ export const CreatePost = ({ match }) => {
       postcategories: post.postcategories,
     });
     setSelectedCategories(newSelectedCategories);
-    const blocksFromHTML = convertFromHTML(post.html_content);
-    const content = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap,
+    // const blocksFromHTML = convertFromHTML(post.html_content);
+    // const content = ContentState.createFromBlockArray(
+    //   blocksFromHTML.contentBlocks,
+    //   blocksFromHTML.entityMap,
+    // );
+    // const editorState = await EditorState.createWithContent(content);
+    setEditorState(
+      RichTextEditor.createValueFromString(post.html_content || 'du', 'html'),
     );
-    const editorState = await EditorState.createWithContent(content);
-    setEditorState(editorState);
     setLoading(false);
   }, categories);
 
@@ -74,7 +79,7 @@ export const CreatePost = ({ match }) => {
     const args = {
       id,
       title,
-      html_content: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+      html_content: editorState.toString('html'),
       BlogId,
       categories,
     };

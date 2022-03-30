@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import RichTextEditor from 'react-rte';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import htmlToDraft from 'html-to-draftjs';
@@ -8,7 +9,8 @@ export class PostContentEditor extends Component {
     const { editorState, onEditorStateChange } = this.props;
     return (
       <div className="bg-white">
-        <Editor
+        <RichTextEditor value={editorState} onChange={onEditorStateChange} />
+        {/* <Editor
           editorState={editorState}
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
@@ -16,7 +18,7 @@ export class PostContentEditor extends Component {
           editorStyle={{
             backgroundColor: 'white',
           }}
-        />
+        /> */}
         {/* <textarea
           disabled
           value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
