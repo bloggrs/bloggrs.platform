@@ -20,9 +20,13 @@ export const _Sidebar = ({ collapse, style, ...rest }: any) => {
 
   return (
     <div
-      style={style}
+      style={{
+        position: "absolute",
+        top: 104,
+        ...style
+      }}
       className={
-        'fixed h-screen max-h-screen max-w-52 w-24 py-5 bg-slate-700 center-items'
+        'h-screen max-h-screen max-w-52 w-24 py-5 bg-slate-700 center-items'
       }
     >
       <Link to={getPathname(blog_id, '/')}>
