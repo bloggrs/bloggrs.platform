@@ -59,67 +59,65 @@ export const HomePage = ({ parentValue }) => {
   //   <p className="cursor-pointer mx-10 my-2 text-slate-500">Food</p>,
   // ];
   return (
-      <div className="px-2">
-        <div className="flex -mx-2">
-          <div className="w-full w-6/6 lg:w-6/6 px-2">
-            <h1 className="text-center font-bold text-5xl text-slate-700">
-              Select one of your blogs to continue on the platform
-            </h1>
-            <div className="my-20 container w-3/6 lg:w-6/6 px-2">
-              <div className="flex flex-inline">
-                <div className="w-4/6">
-                  <div className="flex flex-inline">
-                    <img
-                      src="/dist/static/icons8-search-48.png"
-                      className="py-2"
-                    />
-                    <input
-                      className="mx-5 bg-transparent w-full outline-none text-slate-900"
-                      placeholder="Search your blogs"
-                      value={query}
-                      onChange={e => {
-                        setCustomBlogName(e.target.value);
-                        setQuery(e.target.value);
-                      }}
-                    />
-                  </div>
-                  <hr className="h-1 border-1 bg-slate-800" />
+    <div className="px-2">
+      <div className="flex -mx-2">
+        <div className="w-full w-6/6 lg:w-6/6 px-2">
+          <h1 className="text-center font-bold text-5xl text-slate-700">
+            Select one of your blogs to continue on the platform
+          </h1>
+          <div className="my-20 container w-3/6 lg:w-6/6 px-2">
+            <div className="flex flex-inline">
+              <div className="w-4/6">
+                <div className="flex flex-inline">
+                  <img
+                    src="/dist/static/icons8-search-48.png"
+                    className="py-2"
+                  />
+                  <input
+                    className="mx-5 bg-transparent w-full outline-none text-slate-900"
+                    placeholder="Search your blogs"
+                    value={query}
+                    onChange={e => {
+                      setCustomBlogName(e.target.value);
+                      setQuery(e.target.value);
+                    }}
+                  />
                 </div>
-                <div className="w-2/6">
-                  <button
-                    onClick={e => !blogId && nextStep()}
-                    className={`w-40 rounded-md h-10 mx-10 text-white font-medium ${
-                      blogId ? 'bg-orange-200' : 'bg-yellow-500'
-                    }`}
-                  >
-                    Next
-                  </button>
+                <hr className="h-1 border-1 bg-slate-800" />
+              </div>
+              <div className="w-2/6">
+                <button
+                  onClick={e => !blogId && nextStep()}
+                  className={`w-40 rounded-md h-10 mx-10 text-white font-medium ${
+                    blogId ? 'bg-orange-200' : 'bg-yellow-500'
+                  }`}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-inline">
+              {query && (
+                <div className="w-4/6 bg-white overflow-y-scroll h-60 scrollbar-rounded scrollbar-thin scrollbar-thumb-yellow-500 scrollbar-track-orange-100 h-32 overflow-y-scroll">
+                  {blogs.map(bg => (
+                    <p
+                      onClick={() => setBlogId(bg.id)}
+                      className={
+                        'cursor-pointer mx-10 my-2 ' +
+                        (blogId !== bg.id ? 'text-slate-500' : 'text-blue-500')
+                      }
+                    >
+                      {bg.name}
+                    </p>
+                  ))}
+                  {loading && <div>Loading</div>}
                 </div>
-              </div>
-              <div className="flex flex-inline">
-                {query && (
-                  <div className="w-4/6 bg-white overflow-y-scroll h-60 scrollbar-rounded scrollbar-thin scrollbar-thumb-yellow-500 scrollbar-track-orange-100 h-32 overflow-y-scroll">
-                    {blogs.map(bg => (
-                      <p
-                        onClick={() => setBlogId(bg.id)}
-                        className={
-                          'cursor-pointer mx-10 my-2 ' +
-                          (blogId !== bg.id
-                            ? 'text-slate-500'
-                            : 'text-blue-500')
-                        }
-                      >
-                        {bg.name}
-                      </p>
-                    ))}
-                    {loading && <div>Loading</div>}
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
         </div>
       </div>
+    </div>
   );
   return (
     <>

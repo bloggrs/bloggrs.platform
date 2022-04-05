@@ -15,7 +15,7 @@ import {
   convertToRaw,
   convertFromHTML,
 } from 'draft-js';
-import RichTextEditor from 'react-rte';
+// import RichTextEditor from 'react-rte';
 
 export const CreatePost = ({ match }) => {
   const history = useHistory();
@@ -26,10 +26,8 @@ export const CreatePost = ({ match }) => {
   const [title, setTitle] = useState(
     '15 bloggers share their advice for successful blogging',
   );
-  const [editorState, setEditorState] = useState(
-    RichTextEditor.createEmptyValue(),
-  );
-
+  const [editorState, setEditorState] = useState(null);
+  const [blocks, setBlocks] = useState(null);
   const [categoriesQuery, setCategoriesQuery] = useState('');
   const [categories, setCategories] = useState(null);
 
@@ -65,21 +63,23 @@ export const CreatePost = ({ match }) => {
     //   blocksFromHTML.entityMap,
     // );
     // const editorState = await EditorState.createWithContent(content);
-    setEditorState(
-      RichTextEditor.createValueFromString(post.html_content || 'du', 'html'),
-    );
+    // const blocks = await editorState.current.save();
+    const blocks = JSON.parse(post.html_content);
+    setBlocks(blocks);
     setLoading(false);
-  }, categories);
+  }, [categories]);
 
   const onSubmit = async e => {
     e.preventDefault();
     const { blog_id: BlogId, id } = match.params;
     const transform_category = category => ({ id: category.id });
     const categories = selectedCategories.map(transform_category);
+    const blocks = await editorState.current.save();
+    const html_content = JSON.stringify(blocks);
     const args = {
       id,
       title,
-      html_content: editorState.toString('html'),
+      html_content,
       BlogId,
       categories,
     };
@@ -102,7 +102,7 @@ export const CreatePost = ({ match }) => {
     }
   };
 
-  if (loading) return <>'Loading...'</>;
+  if (loading || (!blocks && !createMode)) return <>'Loading...'</>;
   const w_20_h_17_style = {
     width: 20,
     height: 17,
@@ -200,8 +200,13 @@ export const CreatePost = ({ match }) => {
             <div className="flex flex-inline">
               <div className=" w-11/12">
                 <PostContentEditor
+                  defaultValue={blocks}
                   editorState={editorState}
-                  onEditorStateChange={setEditorState}
+                  onInitialize={value => {
+                    setEditorState(value);
+                    // console.log({ value });
+                    // setEditorState(value.toString('html'));
+                  }}
                 />
               </div>
             </div>
@@ -260,6 +265,7 @@ export const CreatePost = ({ match }) => {
                 <input
                   className="mx-5 bg-transparent w-full outline-none text-slate-900"
                   placeholder="Enter blog name"
+                  onChange={e => setCategoriesQuery(e.target.value)}
                 />
               </div>
               <div className="col-span-12">

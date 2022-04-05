@@ -9,8 +9,7 @@ export const _Sidebar = ({ collapse, style, ...rest }: any) => {
     path: '/blogs/:blog_id',
   });
 
-  
-  const { blog_id }: any = !match ? { } : match.params;
+  const { blog_id }: any = !match ? {} : match.params;
 
   if (collapse) {
     return (
@@ -21,9 +20,9 @@ export const _Sidebar = ({ collapse, style, ...rest }: any) => {
   return (
     <div
       style={{
-        position: "absolute",
+        position: 'absolute',
         top: 104,
-        ...style
+        ...style,
       }}
       className={
         'h-screen max-h-screen max-w-52 w-24 py-5 bg-slate-700 center-items'

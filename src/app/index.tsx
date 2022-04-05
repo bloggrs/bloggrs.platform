@@ -42,8 +42,8 @@ export function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  console.log(location,'location')
-  
+  console.log(location, 'location');
+
   useEffect(() => {
     dispatch(actions.authenticate());
   }, [token]);
@@ -51,9 +51,7 @@ export function App() {
   const { i18n } = useTranslation();
 
   const { pathname } = location;
-  const collapse_main_panel = [
-    pathname === "/"
-  ].indexOf(true) !== -1
+  const collapse_main_panel = [pathname === '/'].indexOf(true) !== -1;
 
   return (
     <>
@@ -71,11 +69,11 @@ export function App() {
         <Route exact path="/auth/logout" component={LogoutPage} />
         {/* EndAuthentication routes */}
         <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
-          <PrivateRoute
-            exact
-            path="/blogs/:blog_id/posts/:id"
-            component={CreatePost}
-          />
+        <PrivateRoute
+          exact
+          path="/blogs/:blog_id/posts/:id"
+          component={CreatePost}
+        />
         <MainPanel sidebarProps={{ collapse: collapse_main_panel }}>
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute
@@ -94,7 +92,11 @@ export function App() {
             component={BlogCustomization}
           />
           <PrivateRoute exact path="/blogs/:blog_id" component={SingleBlog} />
-          <PrivateRoute exact path="/blogs/:blog_id/edit" component={EditBlog} />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/edit"
+            component={EditBlog}
+          />
         </MainPanel>
         <Route component={NotFoundPage} />
       </Switch>

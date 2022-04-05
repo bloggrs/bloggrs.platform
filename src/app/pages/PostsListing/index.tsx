@@ -24,14 +24,18 @@ export const PostsListing = ({ match }) => {
   const { blog_id } = params;
   const posts = useSelector(getPosts);
   const loading = useSelector(isPostsLoading);
-  
+
   const onDelete = () => {
     dispatch(actions.deletePost({ id: data.onDelete }));
   };
-  
+
   useEffect(() => {
     dispatch(
-      actions.loadPosts({ id: blog_id, page: loadMoreClicks + 1, pageSize: 9999 }),
+      actions.loadPosts({
+        id: blog_id,
+        page: loadMoreClicks + 1,
+        pageSize: 9999,
+      }),
     );
   }, [loadMoreClicks]);
 

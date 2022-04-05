@@ -61,30 +61,31 @@ export const Table = ({
                     {d[field.key]}
                   </th>
                 ))}
-                <td style={{
-                  display: "inline-flex"
-                }} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                <td
+                  style={{
+                    display: 'inline-flex',
+                  }}
+                  className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4"
+                >
                   <Link to={window.location.pathname + '/' + d.id}>
                     <button className="btn-base m-2 bg-transparent border-2 border-slate-600 rounded-md">
                       View
                     </button>
                   </Link>
-                  {
-                    EditModal && 
+                  {EditModal && (
                     <EditModal {...{ [type]: d }}>
-                        <button className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
-                          Edit
-                        </button>
+                      <button className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
+                        Edit
+                      </button>
                     </EditModal>
-                  }
-                  {
-                    DeleteModal && 
+                  )}
+                  {DeleteModal && (
                     <DeleteModal {...{ [type]: d }}>
-                        <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
-                          Delete
-                        </button>
+                      <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
+                        Delete
+                      </button>
                     </DeleteModal>
-                  }
+                  )}
                   {/* <Link to={window.location.pathname + '/' + d.id}>
                     <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
                       Edit
@@ -108,7 +109,7 @@ export const Table = ({
           </tbody>
         </table>
       </div>
-      <br/>
+      <br />
       {/* <nav aria-label="Page navigation example">
         <ul className="inline-flex -space-x-px">
           <li>

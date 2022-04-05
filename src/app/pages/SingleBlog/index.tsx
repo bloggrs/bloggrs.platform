@@ -8,12 +8,12 @@ import { LatestPostsCard } from './Features/LatestPostsCard';
 export const SingleBlog = () => {
   const match: any = useRouteMatch();
   const { blog_id } = match.params;
-  
-  const [ blog, setBlog ] = React.useState(null);
+
+  const [blog, setBlog] = React.useState(null);
 
   React.useEffect(() => {
     blogsService.getBlog(blog_id).then(setBlog);
-  }, [])
+  }, []);
 
   if (!blog) return null;
   return (
