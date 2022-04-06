@@ -37,7 +37,7 @@ export const CreatePost = ({ match }) => {
     const { blog_id } = match.params;
     const categories = await blogsService.getBlogCategories(blog_id);
     setCategories(categories);
-  }, categoriesQuery);
+  }, [categoriesQuery]);
 
   const { id } = match.params;
   const createMode = id === 'create';
