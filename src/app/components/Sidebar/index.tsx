@@ -25,14 +25,14 @@ export const _Sidebar = ({ collapse, style, ...rest }: any) => {
           position: 'fixed',
           top: 0,
           zIndex: -1,
-          background:
-            '0% 0% no-repeat padding-box padding-box rgb(28, 88, 129);',
         }}
-        className={''}
+        className={
+          'h-screen max-h-screen max-w-52 w-24 py-5 bg-slate-700 center'
+        }
       />
       <div
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: 104,
           ...style,
         }}
