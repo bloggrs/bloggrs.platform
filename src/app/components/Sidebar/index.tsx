@@ -25,9 +25,10 @@ export const _Sidebar = ({ collapse, style, ...rest }: any) => {
           position: 'fixed',
           top: 0,
           zIndex: -1,
+          height: "100%",
         }}
         className={
-          'h-screen max-h-screen max-w-52 w-24 py-5 bg-slate-700 center'
+          'max-w-52 w-24 py-5 bg-slate-700 center'
         }
       />
       <div
