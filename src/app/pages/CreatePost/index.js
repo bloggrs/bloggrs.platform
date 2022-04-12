@@ -103,10 +103,7 @@ export const CreatePost = ({ match }) => {
   };
 
   if (loading || (!blocks && !createMode)) return <>'Loading...'</>;
-  const w_20_h_17_style = {
-    width: 20,
-    height: 17,
-  };
+  const w_20_h_17_style = {};
   return (
     <>
       <Helmet>
@@ -216,11 +213,13 @@ export const CreatePost = ({ match }) => {
           class="m-0 right btn-base w-full h-8 text-sm bg-transparent  text-slate-600 justify-center text-center"
           style={{
             gridColumn: 'span 4 / span 4',
-            marginTop: '-24px',
+            top: '0px',
             minHeight: '100%',
-            position: 'absolute',
+            position: 'fixed',
             width: '25rem',
             right: 0,
+            background: 'white',
+            zIndex: -1,
           }}
         />
         <div
@@ -252,8 +251,13 @@ export const CreatePost = ({ match }) => {
             <br />
             <div className="d-flex">
               <h1 className="text-2xl text-slate-700 font-medium py-5">
-                Status:
-                <select className="text-md ml-4 border-2 border-slate-300 bg-slate-100 rounded-xl">
+                <span>Status:</span>
+                <select
+                  style={{
+                    padding: '5px',
+                  }}
+                  className="text-md ml-4 border-2 border-slate-300 bg-slate-100 rounded-xl"
+                >
                   <option>Published</option>
                   <option>Draft</option>
                   <option>Archived</option>
@@ -266,12 +270,12 @@ export const CreatePost = ({ match }) => {
               className="grid grid-cols-12"
               style={{ gridTemplateRows: 'repeat(2, minmax(0, 0.65fr))' }}
             >
-              <h1 className="col-span-6 text-lg text-slate-700 font-medium py-5">
+              <h1 className="col-span-5 text-lg text-slate-700 font-medium py-5">
                 Categories:
               </h1>
               <div
-                className="col-span-6 flex flex-inline flex flex-inline border-4 rounded-xl"
-                style={{ height: 41, marginTop: 21 }}
+                className="col-span-7 flex flex-inline flex flex-inline border-4 rounded-xl"
+                style={{ height: 41, marginTop: 38, zoom: '80%' }}
               >
                 <img
                   src="/dist/static/icons8-search-48.png"
@@ -283,7 +287,7 @@ export const CreatePost = ({ match }) => {
                   onChange={e => setCategoriesQuery(e.target.value)}
                 />
               </div>
-              <div className="col-span-12">
+              <div className="col-span-12 my-10">
                 <ul>
                   {categories.map(cat => (
                     <>
@@ -312,7 +316,11 @@ export const CreatePost = ({ match }) => {
                         }}
                       />
                       <label
-                        style={w_20_h_17_style}
+                        style={{
+                          ...w_20_h_17_style,
+                          cursor: 'pointer',
+                        }}
+                        className="noselect"
                         htmlFor={`category_${cat.id}`}
                       >
                         {cat.name}
