@@ -28,6 +28,7 @@ export const Table = ({
   type,
   EditModal,
   DeleteModal,
+  EditButton,
 }: any) => {
   // page = page || 1;
   // pageSize = pageSize || 3;
@@ -72,6 +73,7 @@ export const Table = ({
                       View
                     </button>
                   </Link>
+                  {EditButton ? <EditButton item={d} /> : null}
                   {EditModal && (
                     <EditModal {...{ [type]: d }}>
                       <button className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">

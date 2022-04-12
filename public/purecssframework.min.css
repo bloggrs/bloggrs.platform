@@ -3861,8 +3861,8 @@ fieldset[disabled] .form-elements .btn:hover,
     right: 0;
     transition: right 0.3s;
   }
-  #mobileMenu:checked ~ .full-screen[for='mobileMenu'],
-  #mobileMenu2:checked ~ .full-screen[for='mobileMenu2'] {
+  #mobileMenu:checked ~ .full-screen[htmlFor='mobileMenu'],
+  #mobileMenu2:checked ~ .full-screen[htmlFor='mobileMenu2'] {
     position: fixed;
     z-index: 79;
     top: 50px;
@@ -3870,8 +3870,8 @@ fieldset[disabled] .form-elements .btn:hover,
     width: 100%;
     height: calc(100% - 50px);
   }
-  .navbar .drop-menu-input:checked ~ .full-screen[for='mobileMenu'],
-  .navbar .drop-menu-input:checked ~ .full-screen[for='mobileMenu2'] {
+  .navbar .drop-menu-input:checked ~ .full-screen[htmlFor='mobileMenu'],
+  .navbar .drop-menu-input:checked ~ .full-screen[htmlFor='mobileMenu2'] {
     position: absolute;
     width: 100%;
     top: 0px;
@@ -4008,8 +4008,8 @@ fieldset[disabled] .form-elements .btn:hover,
   header .navbar nav#topMenuNav2 {
     width: 100%;
   }
-  #mobileMenu:checked ~ .full-screen[for='mobileMenu'],
-  #mobileMenu2:checked ~ .full-screen[for='mobileMenu2'] {
+  #mobileMenu:checked ~ .full-screen[htmlFor='mobileMenu'],
+  #mobileMenu2:checked ~ .full-screen[htmlFor='mobileMenu2'] {
     top: 0px;
     height: 100%;
   }

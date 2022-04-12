@@ -184,7 +184,7 @@ export const CreatePost = ({ match }) => {
               </div>
             </div>
             <h1
-              editable={true}
+              editable={'true'}
               className="text-3xl text-slate-700 font-medium py-5"
             >
               <ContentEditable
@@ -213,8 +213,23 @@ export const CreatePost = ({ match }) => {
           </div>
         </div>
         <div
+          class="m-0 right btn-base w-full h-8 text-sm bg-transparent  text-slate-600 justify-center text-center"
           style={{
             gridColumn: 'span 4 / span 4',
+            marginTop: '-24px',
+            minHeight: '100%',
+            position: 'absolute',
+            width: '25rem',
+            right: 0,
+          }}
+        />
+        <div
+          style={{
+            gridColumn: 'span 4 / span 4',
+            minHeight: '100%',
+            position: 'fixed',
+            width: '25rem',
+            right: 0,
           }}
           className="h-screen max-h-screen bg-white border-l-black center-items"
         >
@@ -296,7 +311,10 @@ export const CreatePost = ({ match }) => {
                           setSelectedCategories(prevSelectedCategories);
                         }}
                       />
-                      <label style={w_20_h_17_style} for={`category_${cat.id}`}>
+                      <label
+                        style={w_20_h_17_style}
+                        htmlFor={`category_${cat.id}`}
+                      >
                         {cat.name}
                       </label>
                       <br />

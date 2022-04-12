@@ -39,9 +39,16 @@ export const PostsListing = ({ match }) => {
     );
   }, [loadMoreClicks]);
 
+  const EditButton = ({ item }) => (
+    <Link to={`/blogs/${params.blog_id}/posts/${item.id}`}>
+      <button className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
+        Edit
+      </button>
+    </Link>
+  );
   return (
     <div className="flex -mx-2">
-      <div className="w-full w-6/6 lg:w-6/6 px-2">
+      <div className="w-screen">
         <div className="flex w-6/6">
           <div className="w-11/12">
             <button
@@ -70,7 +77,7 @@ export const PostsListing = ({ match }) => {
             { key: 'title', label: 'Title' },
             { key: 'slug', label: 'slug' },
           ]}
-          EditModal={EditPostModal}
+          EditButton={EditButton}
           DeleteModal={DeletePostModal}
           data={posts}
           onLoadMore={e => setLoadMoreClicks(loadMoreClicks + 1)}
