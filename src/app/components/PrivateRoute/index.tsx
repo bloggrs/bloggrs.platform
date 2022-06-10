@@ -24,6 +24,6 @@ export const PrivateRoute = ({
   const user = useSelector(authUserSelector);
   const loading = useSelector(isAuthLoading);
   if (loading) return <>loading</>;
-  if (!user) return <Redirect to="/auth/login" />;
+  if (!user) return <Redirect to='/auth/login' />;
   return <Route {...rest} render={Component} />;
 };
