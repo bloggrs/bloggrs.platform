@@ -58,7 +58,14 @@ export const Table = ({
               <tr>
                 {fields.map(field => (
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700">
-                    {d[field.key]}
+                    <div style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: 425
+                    }}>
+                      {d[field.key]}
+                    </div>
                   </th>
                 ))}
                 <td
@@ -71,7 +78,7 @@ export const Table = ({
                     <button className="btn-base m-2 bg-transparent border-2 border-slate-600 rounded-md">
                       View
                     </button>
-                  </Link>
+                  </Link> 
                   {EditButton ? <EditButton item={d} /> : null}
                   {EditModal && (
                     <EditModal {...{ [type]: d }}>
