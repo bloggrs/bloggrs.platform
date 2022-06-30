@@ -251,7 +251,7 @@ export const CreatePost = ({ match }) => {
             </button>
             <br />
             <div className="d-flex">
-              <h1 className="text-2xl text-slate-700 font-medium py-5">
+              <h1 className="text-xl text-slate-700 font-medium py-5">
                 <span>Status:</span>
                 <select
                   style={{
@@ -271,12 +271,14 @@ export const CreatePost = ({ match }) => {
               className="grid grid-cols-12"
               style={{ gridTemplateRows: 'repeat(2, minmax(0, 0.65fr))' }}
             >
-              <h1 className="col-span-5 text-lg text-slate-700 font-medium py-5">
-                Categories:
-              </h1>
+              <div className="col-span-4 flex flex-inline flex flex-inline ">
+                <h1 className="col-span-5 text-lg text-slate-700 font-medium py-5">
+                  Categories:
+                </h1>
+              </div>
               <div
                 className="col-span-7 flex flex-inline flex flex-inline border-4 rounded-xl"
-                style={{ height: 41, marginTop: 38 }}
+                style={{ height: 40, marginTop: 25 }}
               >
                 <img
                   src="/dist/static/icons8-search-48.png"
