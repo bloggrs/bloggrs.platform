@@ -53,7 +53,6 @@ export const Table = ({
             </tr>
           </thead>
           <tbody>
-            {!data.length && `No ${plural_name || 'items'} to show`}
             {/* {data.slice(...sliceRule).map(d => ( */}
             {data.map(d => (
               <tr>
@@ -110,6 +109,9 @@ export const Table = ({
             ))}
           </tbody>
         </table>
+        <p className='ml-10 my-10'>
+          {!data.length && `No ${plural_name || 'items'} to show`}
+        </p>
       </div>
       <br />
       {/* <nav aria-label="Page navigation example">

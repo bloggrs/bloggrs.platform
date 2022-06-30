@@ -275,7 +275,7 @@ export const CreatePost = ({ match }) => {
               </h1>
               <div
                 className="col-span-7 flex flex-inline flex flex-inline border-4 rounded-xl"
-                style={{ height: 41, marginTop: 38, zoom: '80%' }}
+                style={{ height: 41, marginTop: 38 }}
               >
                 <img
                   src="/dist/static/icons8-search-48.png"
