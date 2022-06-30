@@ -15,6 +15,7 @@ import {
   convertToRaw,
   convertFromHTML,
 } from 'draft-js';
+import { Loading } from 'app/components/Loading';
 // import RichTextEditor from 'react-rte';
 
 export const CreatePost = ({ match }) => {
@@ -102,7 +103,7 @@ export const CreatePost = ({ match }) => {
     }
   };
 
-  if (loading || (!blocks && !createMode)) return <>'Loading...'</>;
+  if (loading || (!blocks && !createMode)) return <Loading />;
   const w_20_h_17_style = {};
   return (
     <>
