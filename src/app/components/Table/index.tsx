@@ -53,13 +53,19 @@ export const Table = ({
             </tr>
           </thead>
           <tbody>
-            {!data.length && `No ${plural_name || 'items'} to show`}
             {/* {data.slice(...sliceRule).map(d => ( */}
             {data.map(d => (
               <tr>
                 {fields.map(field => (
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700">
-                    {d[field.key]}
+                    <div style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: 425
+                    }}>
+                      {d[field.key]}
+                    </div>
                   </th>
                 ))}
                 <td
@@ -72,7 +78,7 @@ export const Table = ({
                     <button className="btn-base m-2 bg-transparent border-2 border-slate-600 rounded-md">
                       View
                     </button>
-                  </Link>
+                  </Link> 
                   {EditButton ? <EditButton item={d} /> : null}
                   {EditModal && (
                     <EditModal {...{ [type]: d }}>
@@ -110,6 +116,9 @@ export const Table = ({
             ))}
           </tbody>
         </table>
+        <p className='ml-10 my-10'>
+          {!data.length && `No ${plural_name || 'items'} to show`}
+        </p>
       </div>
       <br />
       {/* <nav aria-label="Page navigation example">

@@ -1,0 +1,42 @@
+:root {
+    --main-color: transparent;
+    --loader-color: #f79926;
+    --back-color: transparent;
+    --time: 1s;
+    --size: 5px;
+  }
+  
+  .loader {
+    background-color: var(--main-color);
+    overflow: hidden;
+    width: 100%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center; 
+    justify-content: flex-start;  
+    z-index: 100000;
+    position: absolute;
+    top: 6.4rem;
+    /* height: 15px; */
+    z-index: -1;
+}
+  
+  .loader__element {
+      height: var(--size);
+      width: 97%;
+      background: var(--back-color);
+  }
+  
+  .loader__element:before {
+      content: '';
+      display: block;
+      background-color: var(--loader-color);
+      height: var(--size);
+      width: 0;
+    animation: getWidth var(--time) ease-in forwards;
+  }
+  
+  @keyframes getWidth {
+      100% { width: 100%; }
+  }
