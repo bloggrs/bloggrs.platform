@@ -170,8 +170,7 @@ export const SingleBlog = () => {
         </div>
       </div>
       <div
-        style={{ backgroundColor: 'E5EBF1' }}
-        className="row-start-1 shadow-md p-4 rounded-lg row-span-6 col-start-8 col-span-4"
+        className="bg-gray-200 row-start-1 shadow-md p-4 rounded-lg row-span-6 col-start-8 col-span-4"
       >
         <div className="shadow-md bg-white p-4 rounded-lg grid grid-cols-12">
           <div className="col-span-6">

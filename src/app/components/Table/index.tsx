@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Pagination = styled.div`
@@ -17,6 +17,16 @@ const Pagination = styled.div`
   margin-left: 1em;
   margin-top: 1em;
 `;
+
+const get_field_href = (field, context) => {
+  const { href } = field;
+  if (href === undefined) return false;
+  const t = typeof(href);
+  switch (t) {
+    case "function": return href(context)
+    default: return href;
+  }
+}
 
 export const Table = ({
   fields,
@@ -36,6 +46,7 @@ export const Table = ({
   // const sliceRule1 = (page - 1) * pageSize;
   // const sliceRule = [sliceRule1, sliceRule1 + pageSize];
   // console.log(sliceRule);
+  const history = useHistory();
   return (
     <>
       <div className="block w-full overflow-x-auto bg-white">
@@ -56,18 +67,23 @@ export const Table = ({
             {/* {data.slice(...sliceRule).map(d => ( */}
             {data.map(d => (
               <tr>
-                {fields.map(field => (
-                  <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700">
-                    <div style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      maxWidth: 425
-                    }}>
-                      {d[field.key]}
-                    </div>
-                  </th>
-                ))}
+                {fields.map(field => {
+                  const href = get_field_href(field, d[field.key]);
+                  const className = href !== false ? "cursor-pointer text-blue" : "";
+                  const onClick = e => history.push(href);
+                  return (
+                    <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700">
+                      <div className={className} onClick={onClick} style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        maxWidth: 425
+                      }}>
+                        {d[field.key]}
+                      </div>
+                    </th>
+                  )
+                })}
                 <td
                   style={{
                     display: 'inline-flex',

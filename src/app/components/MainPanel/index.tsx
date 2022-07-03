@@ -20,7 +20,7 @@ export const MainPanel = ({
       <Header />
       {hideSidebar ? null : <Sidebar {...(sidebarProps || {})} />}
       <br />
-      <div style={style} id={id} className={className || 'container'}>
+      <div style={style} id={id} className={className || 'container container mx-42'}>
         {children}
       </div>
     </>

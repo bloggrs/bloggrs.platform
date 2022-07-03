@@ -35,7 +35,7 @@ const LoginPage_ = props => {
       <NotAuthenticatedHeader />
       <div className="container max-h-full max-w-7xl py-9 px-12">
         <div className="px-2">
-          <div className="flex -mx-2">
+          <div className="flex">
             <Formik
               initialValues={{ email: '', password: '' }}
               validationSchema={LoginSchema}

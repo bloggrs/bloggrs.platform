@@ -47,7 +47,7 @@ export const PostsListing = ({ match }) => {
     </Link>
   );
   return (
-    <div className="flex -mx-2">
+    <div className="flex">
       <div className="w-screen">
         <div className="flex w-6/6">
           <div className="w-11/12">

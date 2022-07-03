@@ -97,7 +97,9 @@ export const CreatePost = ({ match }) => {
         : blogsService.updateBlogPost;
       const post = await fn(args);
       toast.success(success_message);
-      window.location.pathname = '/blogs/' + BlogId + '/posts/' + post.id;
+      if (createMode) {
+        window.location.pathname = '/blogs/' + BlogId + '/posts/' + post.id;
+      }
     } catch (err) {
       toast.error(fail_message);
     }
@@ -168,7 +170,7 @@ export const CreatePost = ({ match }) => {
             gridColumn: 'span 18 / span 18',
             gridColumnStart: 3,
           }}
-          className=" col-start-3 flex -mx-2"
+          className=" col-start-3 flex"
         >
           <div className="w-full w-6/6 lg:w-6/6 px-2">
             <div className="flex w-6/6">
@@ -286,7 +288,7 @@ export const CreatePost = ({ match }) => {
                 />
                 <input
                   className="mx-5 bg-transparent w-full outline-none text-slate-900"
-                  placeholder="Enter blog name"
+                  placeholder="Enter category name"
                   onChange={e => setCategoriesQuery(e.target.value)}
                 />
               </div>

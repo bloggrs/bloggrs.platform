@@ -9,7 +9,7 @@ export const InformationalStep1 = ({ nextStep }) => {
         sidebarProps={{ collapse: true }}
       >
         <div className="px-2">
-          <div className="flex -mx-2">
+          <div className="flex">
             <div className="w-full w-6/6 lg:w-6/6 px-2">
               <h1 className="text-center font-bold text-5xl text-slate-700">
                 Let's bring your ideas to life.
