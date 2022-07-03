@@ -97,7 +97,7 @@ export const CreatePost = ({ match }) => {
         : blogsService.updateBlogPost;
       const post = await fn(args);
       toast.success(success_message);
-      history.push('/blogs/' + BlogId + '/posts/' + post.id);
+      window.location.pathname = '/blogs/' + BlogId + '/posts/' + post.id;
     } catch (err) {
       toast.error(fail_message);
     }
