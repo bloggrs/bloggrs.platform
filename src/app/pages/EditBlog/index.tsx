@@ -40,10 +40,11 @@ export const EditBlog = () => {
         style={{
           position: 'absolute',
           left: '11rem',
+          width: "80vw"
         }}
-        className="w-screen h-screen border-2 border-dashed border-slate-700 p-5"
+        className="h-screen border-2 border-dashed border-slate-700 p-5"
         src={
-          `${process.env.HOSTED_CRAFT_JS_URL}/blogs/edit/` +
+          `${process.env.REACT_APP_HOSTED_CRAFT_JS_URL}/blogs/edit/` +
           public_key +
           `/${pageId}`
         }
