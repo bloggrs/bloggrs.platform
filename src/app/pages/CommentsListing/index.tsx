@@ -35,7 +35,7 @@ export const CommentsListing = ({ match }) => {
     );
   }, [loadMoreClicks]);
   return (
-    <div className="flex -mx-2">
+    <div className="flex">
       <div className="w-full w-6/6 lg:w-6/6 px-2">
         <div className="flex w-6/6">
           <div className="w-11/12">
@@ -55,6 +55,7 @@ export const CommentsListing = ({ match }) => {
           fields={[
             { key: 'id', label: '#' },
             { key: 'content', label: 'Content' },
+            { key: 'PostId', label: 'Post ID', href: value => `/blogs/${blog_id}/posts/${value}` },
           ]}
           data={comments}
           onLoadMore={e => setLoadMoreClicks(loadMoreClicks + 1)}

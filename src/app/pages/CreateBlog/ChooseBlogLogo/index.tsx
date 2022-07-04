@@ -34,7 +34,7 @@ export const ChooseBlogLogo = ({ sendValueToParent, nextStep }) => {
       className="container max-h-full max-w-7xl py-9 px-12"
     >
       <div className="px-2">
-        <div className="flex -mx-2">
+        <div className="flex">
           <div className="w-full w-6/6 lg:w-6/6 px-2">
             <h1 className="text-center font-bold text-5xl text-slate-700">
               Enter the logo of your blog

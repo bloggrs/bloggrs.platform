@@ -187,7 +187,7 @@ const deleteBlogComment = id => {
       Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
     },
   };
-  const endpoint = `${API_URL}/api/v1/comments/` + id;
+  const endpoint = `${API_URL}/api/v1/postcomments/` + id;
   return fetch(endpoint, requestOptions)
     .then(res => res.json())
     .then(data => {
@@ -206,12 +206,12 @@ const getComments = ({ BlogId, query }) => {
   };
   const endpoint =
     `${API_URL}/api/v1/` +
-    `/comments?BlogId=${BlogId}&` +
+    `/postcomments?BlogId=${BlogId}&` +
     qs.stringify(query || '');
   return fetch(endpoint, requestOptions)
     .then(res => res.json())
     .then(data => {
-      return data.data.comments;
+      return data.data.postcomments;
     });
 };
 

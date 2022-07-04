@@ -47,7 +47,7 @@ export const PostsListing = ({ match }) => {
     </Link>
   );
   return (
-    <div className="flex -mx-2">
+    <div className="flex">
       <div className="w-screen">
         <div className="flex w-6/6">
           <div className="w-11/12">
@@ -69,7 +69,7 @@ export const PostsListing = ({ match }) => {
           </div>
         </div>
         <h1 className="text-3xl text-slate-700 font-medium py-5">Posts</h1>
-        {/* <h1 class="text-xl text-slate-400 font-normal py-5">You can change this later anytime.</h1>       */}
+        {/* <h1 class="text-xl text-slate-400 font-normal py-5">You can change this later anytime.</h1> */}
         <Table
           type="post"
           fields={[
@@ -84,40 +84,5 @@ export const PostsListing = ({ match }) => {
         />
       </div>
     </div>
-  );
-  return (
-    <>
-      <Link to={`/blogs/${blog_id}/posts/create`}>
-        <button>Create</button>
-      </Link>
-      <ul>
-        {posts.map(p => (
-          <li>
-            #{p.id}/{p.title} -{' '}
-            <a
-              href="#"
-              onClick={e => {
-                e.preventDefault();
-                setData({ onDelete: p.id });
-              }}
-            >
-              Delete
-            </a>
-          </li>
-        ))}
-      </ul>
-      <br />
-      <button onClick={e => setLoadMoreClicks(loadMoreClicks + 1)}>More</button>
-      <hr />
-      {!data.onDelete ? null : (
-        <ModalContainer
-          // {...props}
-          close={() => setData({ onDelete: 0 })}
-          onDelete={onDelete}
-          name={posts.find(p => p.id == data.onDelete)?.title}
-          type="post"
-        />
-      )}
-    </>
   );
 };
