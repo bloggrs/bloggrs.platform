@@ -11,3 +11,7 @@ export const isPostsLoading = createSelector(
   [selectSlice],
   state => state.loading,
 );
+export const isPostDeleteLoading = createSelector(
+  [selectSlice],
+  state => state.deleteLoading,
+);

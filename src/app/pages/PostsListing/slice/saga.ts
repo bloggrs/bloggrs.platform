@@ -15,10 +15,11 @@ function* getPosts({ payload: { id, page = 1, pageSize = 10 } }) {
   }
 }
 
-function* deletePost({ payload: { id } }) {
+function* deletePost({ payload: { id, onSuccess } }) {
   try {
     yield call(blogsService.deleteBlogPost, id);
     yield put(actions.deleteSuccess({ id }));
+    yield call(onSuccess);
   } catch (err) {
     yield put(actions.deleteFailed({ error: err }));
   }
