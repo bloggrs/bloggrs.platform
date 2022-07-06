@@ -43,6 +43,7 @@ const slice = createSlice({
     deleteSuccess(state, action: PayloadAction<any>) {
       const remove_id = action.payload.id;
       state.posts = state.posts.filter(p => p.id !== remove_id);
+      state.deleteLoading = false;
     },
     deleteFailed(state, action: PayloadAction<any>) {
       state.deleteLoading = false;

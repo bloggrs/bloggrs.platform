@@ -20,7 +20,15 @@ export const MainPanel = ({
       <Header />
       {hideSidebar ? null : <Sidebar {...(sidebarProps || {})} />}
       <br />
-      <div style={style} id={id} className={className || 'container'}>
+      <div
+        style={{
+          position: 'absolute',
+          maxWidth: '-webkit-fill-available',
+          ...style,
+        }}
+        id={id}
+        className={className || 'container'}
+      >
         {children}
       </div>
     </>
