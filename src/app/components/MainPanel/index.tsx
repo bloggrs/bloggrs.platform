@@ -24,8 +24,6 @@ export const MainPanel = ({
         style={{
           position: 'absolute',
           maxWidth: '-webkit-fill-available',
-          marginLeft: '8vw',
-          marginRight: '6vw',
           ...style,
         }}
         id={id}

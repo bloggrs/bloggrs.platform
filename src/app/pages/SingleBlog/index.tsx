@@ -9,7 +9,7 @@ export const SingleBlog = () => {
   const match: any = useRouteMatch();
   const { blog_id } = match.params;
 
-  const [blog, setBlog] = React.useState(null);
+  const [blog, setBlog]: any = React.useState(null);
 
   React.useEffect(() => {
     blogsService.getBlog(blog_id).then(setBlog);
@@ -24,7 +24,7 @@ export const SingleBlog = () => {
             <img src="/coming-soon.png" />
           </div>
           <div className="col-span-6 ml-4 my-1">
-            <h2 className="text-lg font-bold ">DataAddict's Blog</h2>
+            <h2 className="text-lg font-bold ">{blog.name}</h2>
             <h2 className="text-lg font-medium text-gray-500 my-2">
               https://www.gjergjk71.bloggrs.com
             </h2>
@@ -120,7 +120,7 @@ export const SingleBlog = () => {
               New Post
             </button>
           </div>
-          <div className="my-5 shadow-lg bg-white p-4 rounded-lg row-start-4 row-span-6 col-span-12">
+          <div className="my-5  bg-white p-4 rounded-lg row-start-4 row-span-6 col-span-12">
             <div className="grid grid-cols-12">
               <div className="col-span-4 py-5">
                 <img src="/coming-soon.png" />
@@ -169,10 +169,8 @@ export const SingleBlog = () => {
           </div>
         </div>
       </div>
-      <div
-        className="bg-gray-200 row-start-1 shadow-md p-4 rounded-lg row-span-6 col-start-8 col-span-4"
-      >
-        <div className="shadow-md bg-white p-4 rounded-lg grid grid-cols-12">
+      <div className="bg-gray-200 row-start-1 shadow-md p-4 rounded-lg row-span-6 col-start-8 col-span-4">
+        <div className="bg-white p-4 rounded-lg grid grid-cols-12">
           <div className="col-span-6">
             <h1 className="font-medium text-2xl text-slate-700">Analytics</h1>
           </div>
@@ -217,7 +215,7 @@ export const SingleBlog = () => {
             </div>
           </div>
         </div>
-        <div className="my-5 shadow-md bg-white p-4 rounded-lg">
+        <div className="my-5 bg-white p-4 rounded-lg">
           <h1 className="font-medium text-2xl text-slate-700">
             We're here for you
           </h1>

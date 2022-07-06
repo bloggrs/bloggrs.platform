@@ -164,176 +164,178 @@ export const CreatePost = ({ match }) => {
           `,
         }}
       />
-      <MainPanel className="grid grid-cols-24">
-        <div
-          style={{
-            gridColumn: 'span 18 / span 18',
-            gridColumnStart: 3,
-          }}
-          className=" col-start-3 flex"
-        >
-          <div className="w-full w-6/6 lg:w-6/6 px-2">
-            <div className="flex w-6/6">
-              <div className="w-11/12">
-                <button
-                  onClick={e => history.goBack()}
-                  className=" btn-base w-32 h-8 text-sm bg-slate-600 border-2 border-slate-600 text-white rounded-full justify-center text-center"
-                >
-                  <span className>Back</span>
-                </button>
+      <MainPanel>
+        <div className="grid grid-cols-24">
+          <div
+            style={{
+              gridColumn: 'span 18 / span 18',
+              gridColumnStart: 1,
+            }}
+            className=" flex"
+          >
+            <div className="w-full w-6/6 lg:w-6/6 px-2">
+              <div className="flex w-6/6">
+                <div className="w-11/12">
+                  <button
+                    onClick={e => history.goBack()}
+                    className=" btn-base w-32 h-8 text-sm bg-slate-600 border-2 border-slate-600 text-white rounded-full justify-center text-center"
+                  >
+                    <span className>Back</span>
+                  </button>
+                </div>
               </div>
-            </div>
-            <h1
-              editable={'true'}
-              className="text-3xl text-slate-700 font-medium py-5"
-            >
-              <ContentEditable
-                innerRef={titleContentEditableRef}
-                html={title} // innerHTML of the editable div
-                disabled={false} // use true to disable editing
-                onChange={evt => {
-                  setTitle(evt.target.value);
-                }} // handle innerHTML change
-                tagName="span" // Use a custom HTML tag (uses a div by default)
-              />
-            </h1>
-            <div className="flex flex-inline">
-              <div className=" w-11/12">
-                <PostContentEditor
-                  defaultValue={blocks}
-                  editorState={editorState}
-                  onInitialize={value => {
-                    setEditorState(value);
-                    // console.log({ value });
-                    // setEditorState(value.toString('html'));
-                  }}
+              <h1
+                editable={'true'}
+                className="text-3xl text-slate-700 font-medium py-5"
+              >
+                <ContentEditable
+                  innerRef={titleContentEditableRef}
+                  html={title} // innerHTML of the editable div
+                  disabled={false} // use true to disable editing
+                  onChange={evt => {
+                    setTitle(evt.target.value);
+                  }} // handle innerHTML change
+                  tagName="span" // Use a custom HTML tag (uses a div by default)
                 />
+              </h1>
+              <div className="flex flex-inline">
+                <div className=" w-11/12">
+                  <PostContentEditor
+                    defaultValue={blocks}
+                    editorState={editorState}
+                    onInitialize={value => {
+                      setEditorState(value);
+                      // console.log({ value });
+                      // setEditorState(value.toString('html'));
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          class="m-0 right btn-base w-full h-8 text-sm bg-transparent  text-slate-600 justify-center text-center"
-          style={{
-            gridColumn: 'span 4 / span 4',
-            top: '0px',
-            minHeight: '100%',
-            position: 'fixed',
-            width: '25rem',
-            right: 0,
-            background: 'white',
-            zIndex: -1,
-          }}
-        />
-        <div
-          style={{
-            gridColumn: 'span 4 / span 4',
-            minHeight: '100%',
-            position: 'fixed',
-            width: '25rem',
-            right: 0,
-          }}
-          className="h-screen max-h-screen bg-white border-l-black center-items"
-        >
-          <div className="p-5">
-            <button
-              onClick={onSubmit}
-              class="m-0 right btn-base w-full h-8 text-sm bg-transparent border-2 border-slate-600 text-slate-600 rounded-full justify-center text-center"
-              style={{}}
-            >
-              <span>{createMode ? 'Publish' : 'Save'}</span>
-            </button>
-            <br />
-            <br />
-            <button
-              class="m-0 right btn-base w-full h-8 text-sm bg-transparent border-2 border-slate-600 text-slate-600 rounded-full justify-center text-center"
-              style={{}}
-            >
-              <span>Preview</span>
-            </button>
-            <br />
-            <div className="d-flex">
-              <h1 className="text-xl text-slate-700 font-medium py-5">
-                <span>Status:</span>
-                <select
-                  style={{
-                    padding: '5px',
-                  }}
-                  className="text-md ml-4 border-2 border-slate-300 bg-slate-100 rounded-xl"
-                >
-                  <option>Published</option>
-                  <option>Draft</option>
-                  <option>Archived</option>
-                </select>
-              </h1>
-            </div>
-            <hr className="bg-slate-300" />
-            <hr className="bg-slate-300" />
-            <div
-              className="grid grid-cols-12"
-              style={{ gridTemplateRows: 'repeat(2, minmax(0, 0.65fr))' }}
-            >
-              <div className="col-span-4 flex flex-inline flex flex-inline ">
-                <h1 className="col-span-5 text-lg text-slate-700 font-medium py-5">
-                  Categories:
+          <div
+            class="m-0 right btn-base w-full h-8 text-sm bg-transparent  text-slate-600 justify-center text-center"
+            style={{
+              gridColumn: 'span 4 / span 4',
+              top: '0px',
+              minHeight: '100%',
+              position: 'fixed',
+              width: '25rem',
+              right: 0,
+              background: 'white',
+              zIndex: -1,
+            }}
+          />
+          <div
+            style={{
+              gridColumn: 'span 4 / span 4',
+              minHeight: '100%',
+              position: 'fixed',
+              width: '25rem',
+              right: 0,
+            }}
+            className="h-screen max-h-screen bg-white border-l-black center-items"
+          >
+            <div className="p-5">
+              <button
+                onClick={onSubmit}
+                class="m-0 right btn-base w-full h-8 text-sm bg-transparent border-2 border-slate-600 text-slate-600 rounded-full justify-center text-center"
+                style={{}}
+              >
+                <span>{createMode ? 'Publish' : 'Save'}</span>
+              </button>
+              <br />
+              <br />
+              <button
+                class="m-0 right btn-base w-full h-8 text-sm bg-transparent border-2 border-slate-600 text-slate-600 rounded-full justify-center text-center"
+                style={{}}
+              >
+                <span>Preview</span>
+              </button>
+              <br />
+              <div className="d-flex">
+                <h1 className="text-xl text-slate-700 font-medium py-5">
+                  <span>Status:</span>
+                  <select
+                    style={{
+                      padding: '5px',
+                    }}
+                    className="text-md ml-4 border-2 border-slate-300 bg-slate-100 rounded-xl"
+                  >
+                    <option>Published</option>
+                    <option>Draft</option>
+                    <option>Archived</option>
+                  </select>
                 </h1>
               </div>
+              <hr className="bg-slate-300" />
+              <hr className="bg-slate-300" />
               <div
-                className="col-span-7 flex flex-inline flex flex-inline border-4 rounded-xl"
-                style={{ height: 40, marginTop: 25 }}
+                className="grid grid-cols-12"
+                style={{ gridTemplateRows: 'repeat(2, minmax(0, 0.65fr))' }}
               >
-                <img
-                  src="/dist/static/icons8-search-48.png"
-                  className="py-2 ml-1"
-                />
-                <input
-                  className="mx-5 bg-transparent w-full outline-none text-slate-900"
-                  placeholder="Enter category name"
-                  onChange={e => setCategoriesQuery(e.target.value)}
-                />
-              </div>
-              <div className="col-span-12 my-10">
-                <ul>
-                  {categories.map(cat => (
-                    <>
-                      <input
-                        id={`category_${cat.id}`}
-                        // value={cat.name}
-                        type="checkbox"
-                        className="accent-blue-800"
-                        style={w_20_h_17_style}
-                        checked={selectedCategories.find(
-                          scat => scat.id === cat.id,
-                        )}
-                        onChange={e => {
-                          let prevSelectedCategories = selectedCategories;
-                          const find_category_rule = pscat =>
-                            pscat.id === cat.id;
-                          const exists =
-                            prevSelectedCategories.find(find_category_rule);
-                          const remove = Boolean(exists);
-                          if (remove) {
-                            const filter_rule = i => !find_category_rule(i);
-                            prevSelectedCategories =
-                              prevSelectedCategories.filter(filter_rule);
-                          } else prevSelectedCategories.push(cat);
-                          setSelectedCategories(prevSelectedCategories);
-                        }}
-                      />
-                      <label
-                        style={{
-                          ...w_20_h_17_style,
-                          cursor: 'pointer',
-                        }}
-                        className="noselect"
-                        htmlFor={`category_${cat.id}`}
-                      >
-                        {cat.name}
-                      </label>
-                      <br />
-                    </>
-                  ))}
-                </ul>
+                <div className="col-span-4 flex flex-inline flex flex-inline ">
+                  <h1 className="col-span-5 text-lg text-slate-700 font-medium py-5">
+                    Categories:
+                  </h1>
+                </div>
+                <div
+                  className="col-span-7 flex flex-inline flex flex-inline border-4 rounded-xl"
+                  style={{ height: 40, marginTop: 25 }}
+                >
+                  <img
+                    src="/dist/static/icons8-search-48.png"
+                    className="py-2 ml-1"
+                  />
+                  <input
+                    className="mx-5 bg-transparent w-full outline-none text-slate-900"
+                    placeholder="Enter category name"
+                    onChange={e => setCategoriesQuery(e.target.value)}
+                  />
+                </div>
+                <div className="col-span-12 my-10">
+                  <ul>
+                    {categories.map(cat => (
+                      <>
+                        <input
+                          id={`category_${cat.id}`}
+                          // value={cat.name}
+                          type="checkbox"
+                          className="accent-blue-800"
+                          style={w_20_h_17_style}
+                          checked={selectedCategories.find(
+                            scat => scat.id === cat.id,
+                          )}
+                          onChange={e => {
+                            let prevSelectedCategories = selectedCategories;
+                            const find_category_rule = pscat =>
+                              pscat.id === cat.id;
+                            const exists =
+                              prevSelectedCategories.find(find_category_rule);
+                            const remove = Boolean(exists);
+                            if (remove) {
+                              const filter_rule = i => !find_category_rule(i);
+                              prevSelectedCategories =
+                                prevSelectedCategories.filter(filter_rule);
+                            } else prevSelectedCategories.push(cat);
+                            setSelectedCategories(prevSelectedCategories);
+                          }}
+                        />
+                        <label
+                          style={{
+                            ...w_20_h_17_style,
+                            cursor: 'pointer',
+                          }}
+                          className="noselect"
+                          htmlFor={`category_${cat.id}`}
+                        >
+                          {cat.name}
+                        </label>
+                        <br />
+                      </>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
