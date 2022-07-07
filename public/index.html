@@ -39,19 +39,46 @@
     window.Sortable = Sortable;
   </script>
   <style>
-<<<<<<< HEAD
     /* .Toastify__toast-container--top-right {
       right: 50em !important;
     } */
-=======
     .select-blog-container > div {
       color: black;
     }
 
     .Toastify__toast-container--top-right {
       right: 1em !important;
+      width: 467px !important;
+      height: 65px;
     }
->>>>>>> 199913f2f7fe52faddfc613a535138596dabab4b
+    .Toastify__toast {
+      height: 60px;
+      /* UI Properties */
+      background: #FFFFFF 0% 0% no-repeat padding-box;
+      box-shadow: 0px 3px 6px #00000029;
+      border-radius: 15px;
+    }
+    .Toastify__close-button {
+      border: 2px solid #707070;
+
+    }
+    .Toastify__progress-bar {
+      position: absolute !important;
+      left: 0 !important;
+      width: 3px !important;
+      height: 73% !important;
+      z-index: var(--toastify-z-index) !important;
+      transform-origin: left !important;
+      margin-left: 5px !important;
+      top: 1.1vh !important;
+      margin-top: -5px !important;
+    }
+    .Toastify__toast-body > div {
+      text-align: left;
+      font: normal normal normal 17px/26px Poppins;
+      letter-spacing: 0px;
+      color: #000000;
+    }
     /* body {
       zoom: 70%;
     } */

@@ -28,7 +28,7 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { useTranslation } from 'react-i18next';
 import { useAuthSlice } from '../features/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { authUserSelector } from 'features/auth/selectors';
 import { MainPanel } from './components/MainPanel';
@@ -43,6 +43,8 @@ export function App() {
   const location = useLocation();
 
   console.log(location, 'location');
+  
+  (window as any).toast = toast;
 
   useEffect(() => {
     dispatch(actions.authenticate());
