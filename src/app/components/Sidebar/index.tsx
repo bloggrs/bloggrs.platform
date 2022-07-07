@@ -14,17 +14,7 @@ const getPathname = (blog_id, path) => `/blogs/${blog_id}${path}`;
 
 const SelectBlogContainer = ({ children, loading }) => {
   return (
-    <div
-      className="select-blog-container"
-      style={{
-        backgroundColor: 'white',
-        position: 'absolute',
-        width: '20vw',
-        minHeight: '10vh',
-        /* top: 'revert', */ top: '-6vh',
-        left: '4vw',
-      }}
-    >
+    <div className="select-blog-container cursor-pointer">
       {loading ? <Loading forModal={true} /> : children}
     </div>
   );
@@ -32,20 +22,12 @@ const SelectBlogContainer = ({ children, loading }) => {
 const SelectBlog = ({ loading, selected, blogs }) => {
   const BlogItems = blogs.map((blog, i) => (
     <div
-      style={{
-        textAlign: 'left',
-        font: 'normal normal normal 18px/27px Poppins',
-        letterSpacing: 0,
-        color: selected == blog.id ? '#bc7c2d' : '#F7941D',
-        opacity: 1,
-        marginTop: '1vh',
-        marginLeft: '1vw',
-        cursor: 'pointer',
-      }}
       onClick={e => (window.location.pathname = '/blogs/' + blog.id)}
+      // @ts-nocheck
+      data-selected={String(selected == blog.id)}
     >
-      {blog.name}
-      {/* {i !== blogs.length - 1 ? <hr /> : undefined} */}
+      <img />
+      <span>{blog.name}</span>
     </div>
   ));
   return (

@@ -1,0 +1,49 @@
+.select-blog-container {
+    background-color: white;
+    position: relative;
+    width: 20vw;
+    min-height: 10vh;
+    bottom: 27vh;
+    max-width: 13vw;
+    max-height: 25vh;
+    overflow: auto;
+    left: 4vw;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    opacity: 1;
+  }
+  
+  .select-blog-container > div {
+    margin-top: 25px;
+    margin-left: 16px;
+    text-align: left;
+    font: normal normal normal 17px/26px Poppins;
+    letter-spacing: 0px;
+    color: #4A596B;
+    opacity: 1;
+    display: inline-flex; 
+  }
+  .select-blog-container > div:last-child {
+    margin-bottom: 25px;
+  }
+  
+  .select-blog-container > div[selected="true"] {
+    text-align: left;
+    font: normal normal normal 18px/27px Poppins;
+    letter-spacing: 0px;
+    color: #F7941D;
+    opacity: 1;
+  }
+  
+  .select-blog-container > div > img {
+    width: 2.5vw;
+    height: 2.5vh;
+    /* position: absolute; */
+    padding-right: 15px;
+    content:url("http://localhost:3000/blue-b-circle.png");
+  }
+  .select-blog-container > div[selected="true"] > img {
+    content:url("http://localhost:3000/orange-b-circle.png");
+  }
+  
