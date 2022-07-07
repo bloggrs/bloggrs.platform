@@ -43,27 +43,35 @@ export const ChooseBlogLogo = ({ sendValueToParent, nextStep }) => {
               <h1 className="text-center py-3 font-bold text-slate-500 text-2xl">
                 Upload File
               </h1>
-              <div className="my-32 container center">
-                <div className=" w-5/6 lg:w-6/6 px-2 h-44 bg-transparent border-slate-200 border-2 border-dashed">
+              <div className="my-24 container center">
+                <div className="mx-auto w-5/6 lg:w-6/6 px-2 h-44 bg-transparent border-slate-200 border-2 border-dashed">
                   <img
-                    className="my-3"
+                    className="my-3 mx-auto"
                     src="/dist/static/icons8-upload-100.png"
-                    style={{ opacity: src ? 1 : 0.3 }}
+                    style={{ opacity: src ? 1 : 0.3, marginTop: "2vh" }}
                   />
-                  <h6 className="my-2">
+                  <h6 className="my-2" style={{
+                    textAlign: "center",
+                    marginTop: 25
+                  }}>
                     {/* Drag and drop here <br />
                     or <br />
                     <span className='text-blue-500'>browse</span> */}
                     <FileInput onChange={onChange} value={value} />
                   </h6>
                 </div>
+                <div>
                 <button
                   disabled={!src}
                   onClick={next}
-                  className="my-5  w-40 rounded-md h-10 mx-10 border-2 border-yellow-500 text-yellow-500 font-medium"
+                  style={{
+                    marginLeft: "6vw"
+                  }}
+                  className="my-10 mx-auto w-40 rounded-md h-10 border-2 border-yellow-500 text-yellow-500 font-medium"
                 >
                   Next
                 </button>
+                </div>
               </div>
             </div>
             {/* <div class="flex flex-inline">
