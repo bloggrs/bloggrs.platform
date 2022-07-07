@@ -51,7 +51,7 @@ const getMyBlogs = id => {
     });
 };
 
-const getBlogCategories = id => {
+const getBlogCategories = (id, query) => {
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -59,7 +59,8 @@ const getBlogCategories = id => {
       Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
     },
   };
-  const endpoint = `${API_URL}/api/v1/blogs/${id}/categories`;
+  const endpoint =
+    `${API_URL}/api/v1/blogs/${id}/categories?query=` + query || '';
   return fetch(endpoint, requestOptions)
     .then(res => res.json())
     .then(data => {

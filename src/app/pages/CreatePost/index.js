@@ -33,12 +33,28 @@ export const CreatePost = ({ match }) => {
   const [categories, setCategories] = useState(null);
 
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const { blog_id } = match.params;
 
   useEffect(async () => {
-    const { blog_id } = match.params;
-    const categories = await blogsService.getBlogCategories(blog_id);
+    const categories = await blogsService.getBlogCategories(
+      blog_id,
+      categoriesQuery,
+    );
     setCategories(categories);
   }, [categoriesQuery]);
+
+  useEffect(async () => {
+    if (createMode) return;
+    const post = await blogsService.getPost(id);
+    const categories = await blogsService.getBlogCategories(
+      blog_id,
+      categoriesQuery,
+    );
+    const newSelectedCategories = post.postcategories
+      .map(pc => categories.find(cat => cat.id === pc.CategoryId))
+      .filter(i => i !== undefined);
+    setSelectedCategories(newSelectedCategories);
+  }, []);
 
   const { id } = match.params;
   const createMode = id === 'create';
@@ -49,15 +65,6 @@ export const CreatePost = ({ match }) => {
     if (createMode) return setLoading(false);
     const post = await blogsService.getPost(id);
     setTitle(post.title);
-    const newSelectedCategories = post.postcategories.map(pc =>
-      categories.find(cat => cat.id === pc.CategoryId),
-    );
-    console.log({
-      newSelectedCategories,
-      categories,
-      postcategories: post.postcategories,
-    });
-    setSelectedCategories(newSelectedCategories);
     // const blocksFromHTML = convertFromHTML(post.html_content);
     // const content = ContentState.createFromBlockArray(
     //   blocksFromHTML.contentBlocks,
@@ -107,6 +114,7 @@ export const CreatePost = ({ match }) => {
 
   if (loading || (!blocks && !createMode)) return <Loading />;
   const w_20_h_17_style = {};
+  console.log({ selectedCategories });
   return (
     <>
       <Helmet>
