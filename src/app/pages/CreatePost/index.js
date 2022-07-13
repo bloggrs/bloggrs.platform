@@ -16,6 +16,7 @@ import {
   convertFromHTML,
 } from 'draft-js';
 import { Loading } from 'app/components/Loading';
+import { FileInput } from 'app/components/FileInput';
 // import RichTextEditor from 'react-rte';
 
 export const CreatePost = ({ match }) => {
@@ -34,6 +35,25 @@ export const CreatePost = ({ match }) => {
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { blog_id } = match.params;
+
+  const [thumbnail, setThumbnail] = useState(undefined);
+  const [thumbnailSrc, setThumbnailSrc] = useState('');
+
+  const onThumbnailChange = file => {
+    setThumbnail(file);
+    if (file.type && !file.type.startsWith('image/')) {
+      console.log('File is not an image.', file.type, file);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.addEventListener('load', (event: any) => {
+      const { result } = event.target;
+      setThumbnailSrc(result);
+      console.log(result);
+    });
+    reader.readAsDataURL(file);
+  };
 
   useEffect(async () => {
     const categories = await blogsService.getBlogCategories(
@@ -275,6 +295,12 @@ export const CreatePost = ({ match }) => {
                     <option>Archived</option>
                   </select>
                 </h1>
+              </div>
+              <h1 className="text-xl text-slate-700 font-medium py-5">
+                Thumbnail:
+              </h1>
+              <div className="createpost__thumbnail">
+                <FileInput onChange={onThumbnailChange} value={thumbnail} />
               </div>
               <hr className="bg-slate-300" />
               <hr className="bg-slate-300" />

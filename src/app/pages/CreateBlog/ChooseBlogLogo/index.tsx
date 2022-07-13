@@ -44,55 +44,21 @@ export const ChooseBlogLogo = ({ sendValueToParent, nextStep }) => {
                 Upload File
               </h1>
               <div className="my-24 container center">
-                <div className="mx-auto w-5/6 lg:w-6/6 px-2 h-44 bg-transparent border-slate-200 border-2 border-dashed">
-                  <img
-                    className="my-3 mx-auto"
-                    src="/dist/static/icons8-upload-100.png"
-                    style={{ opacity: src ? 1 : 0.3, marginTop: "2vh" }}
-                  />
-                  <h6 className="my-2" style={{
-                    textAlign: "center",
-                    marginTop: 25
-                  }}>
-                    {/* Drag and drop here <br />
-                    or <br />
-                    <span className='text-blue-500'>browse</span> */}
-                    <FileInput onChange={onChange} value={value} />
-                  </h6>
-                </div>
+                <FileInput onChange={onChange} value={value} />
                 <div>
-                <button
-                  disabled={!src}
-                  onClick={next}
-                  style={{
-                    marginLeft: "6vw"
-                  }}
-                  className="my-10 mx-auto w-40 rounded-md h-10 border-2 border-yellow-500 text-yellow-500 font-medium"
-                >
-                  Next
-                </button>
+                  <button
+                    disabled={!src}
+                    onClick={next}
+                    style={{
+                      marginLeft: '6vw',
+                    }}
+                    className="my-10 mx-auto w-40 rounded-md h-10 border-2 border-yellow-500 text-yellow-500 font-medium"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
             </div>
-            {/* <div class="flex flex-inline">
-                <div class="w-4/6 bg-white overflow-y-scroll h-60 scrollbar-rounded scrollbar-thin scrollbar-thumb-yellow-500 scrollbar-track-orange-100 h-32 overflow-y-scroll">
-                  <p class="mx-10 my-2 text-blue-500">Travel</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel accessories</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Accessories Shop</p>
-                </div>
-              </div> */}
           </div>
         </div>
       </div>
