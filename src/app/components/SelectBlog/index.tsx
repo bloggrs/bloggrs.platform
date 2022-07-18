@@ -11,6 +11,7 @@ import slugify from 'slugify';
 
 export const SelectBlog = ({
 }) => {
+  const history = useHistory();
   const { actions } = useBlogsSlice();
 
   const blogs = useSelector(selectBlogs);
@@ -27,6 +28,8 @@ export const SelectBlog = ({
   );
   if (loading) return <></>
   if (!blogs.length) return <Redirect to="/blogs/create" />
+
+  const onCreateClick = () => history.push("/blogs/create")
   return (
     <div className="col-9 select-blog">
       <select className="form-select" aria-label="Default select example">
@@ -35,7 +38,7 @@ export const SelectBlog = ({
               <option value={blog.id}>{blog.name}</option>
             ))
           }
-          <option value="create">Create</option>
+          <option onClick={onCreateClick} value="create">Create</option>
       </select>
     </div>
   )

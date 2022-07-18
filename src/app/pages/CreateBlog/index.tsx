@@ -20,6 +20,7 @@ export const CreateBlog = () => {
     "/": {
       name: "",
       description: "",
+      thumbnail: ""
     },
     "/choose-url": {
       username: ""
@@ -193,10 +194,33 @@ export const CreateBlog = () => {
               sendValueToParent(data);
               previousStep()
             }
+            const handleSubmit = () => {
+              const {
+                name, description, thumbnail
+              } = data["/"]
+              const {
+                id: BlogCategoryId
+              } = data["/blog-category"]
+              const BlogThemeId = data["/choose-theme"]
+              const { username } = data["/choose-url"]
+
+              console.log({
+                name, description, thumbnail,
+                BlogCategoryId, BlogThemeId, username
+              })
+              
+            }
             const onContinueClick = data => e => {
               e?.preventDefault()
-              sendValueToParent(data);
-              nextStep()
+              
+              const shouldSubmit = path === "/confirm-details";
+              console.log({ shouldSubmit, path })
+
+              if (!shouldSubmit){
+                sendValueToParent(data);
+                return nextStep()
+              }
+              return handleSubmit();
             }
             return (
               <>

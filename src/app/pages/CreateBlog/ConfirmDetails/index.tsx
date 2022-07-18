@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { getBlogCategoriesForQuery, selectBlogCategories } from '../ChooseBlogCategory/slice/selectors';
 import { selectBlogThemes } from '../ChooseTheme/slice/selectors';
 
-export const ConfirmDetails = ({ parentData, STEPS }) => {
+export const ConfirmDetails = ({ parentData, STEPS, onPreviousClick, onContinueClick }) => {
   const { thumbnail, name, description } = parentData[ STEPS[0] ]
   
   console.log("parentData[ STEPS[1] ]", parentData[ STEPS[1] ])
@@ -106,7 +106,7 @@ export const ConfirmDetails = ({ parentData, STEPS }) => {
                 disabled={true}
                 aria-label="username"
                 aria-describedby="basic-addon2"
-                value="gk-personal"
+                value={username}
               />
               <span className="input-group-text" id="basic-addon2">
                 .gjergjkadriu.com
@@ -118,6 +118,7 @@ export const ConfirmDetails = ({ parentData, STEPS }) => {
               <button
                 className="btn btn-outline-light"
                 style={{ right: "-6vw", marginRight: "2vw" }}
+                onClick={onPreviousClick()}
               >
                 Previous
               </button>
@@ -126,6 +127,7 @@ export const ConfirmDetails = ({ parentData, STEPS }) => {
               <button
                 className="btn btn-outline-primary"
                 style={{ right: "-6vw", marginRight: "0.5vw" }}
+                onClick={onContinueClick()}
               >
                 Continue
               </button>
