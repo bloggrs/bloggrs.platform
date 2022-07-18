@@ -2,14 +2,28 @@ import { toast } from 'react-toastify';
 import { API_URL } from '../config';
 import qs from 'qs';
 
-const createBlog = ({ name, description, BlogCategoryId, logo_url }) => {
+const createBlog = ({
+  name,
+  description,
+  thumbnail,
+  BlogCategory,
+  BlogThemeId,
+  username,
+}) => {
   const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
     },
-    body: JSON.stringify({ name, description, BlogCategoryId, logo_url }),
+    body: JSON.stringify({
+      name,
+      description,
+      thumbnail,
+      BlogCategory,
+      BlogThemeId,
+      username,
+    }),
   };
   const endpoint = `${API_URL}/api/v1/blogs`;
   return fetch(endpoint, requestOptions)

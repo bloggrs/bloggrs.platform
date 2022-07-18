@@ -84,6 +84,7 @@ export const CreateBlog = () => {
     },
   ];
   console.log("DATAAAA", data)
+  const onSuccess = blog => history.push("/blogs/" + blog.id)
   return (
     <div className="card-body form-wizard-wrapper wizard clearfix">
         <div className="steps clearfix">
@@ -213,14 +214,16 @@ export const CreateBlog = () => {
             const onContinueClick = data => e => {
               e?.preventDefault()
               
-              const shouldSubmit = path === "/confirm-details";
-              console.log({ shouldSubmit, path })
+              // const shouldSubmit = path === "/confirm-details";
+              // console.log({ shouldSubmit, path })
+              sendValueToParent(data);
+              return nextStep()
 
-              if (!shouldSubmit){
-                sendValueToParent(data);
-                return nextStep()
-              }
-              return handleSubmit();
+              // if (!shouldSubmit){
+              //   sendValueToParent(data);
+              //   return nextStep()
+              // }
+              // return handleSubmit();
             }
             return (
               <>
@@ -237,6 +240,7 @@ export const CreateBlog = () => {
                       onPreviousClick={!previousDisabled && onPreviousClick}
                       onContinueClick={!nextDisabled && onContinueClick}
                       STEPS={STEPS}
+                      onSuccess={onSuccess}
                       {...extraProps}
                     />
                   </>

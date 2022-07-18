@@ -30,15 +30,19 @@ export const SelectBlog = ({
   if (!blogs.length) return <Redirect to="/blogs/create" />
 
   const onCreateClick = () => history.push("/blogs/create")
+  const onChange = e => {
+    const { value } = e.target;
+    if (value == "create") return onCreateClick();
+  }
   return (
     <div className="col-9 select-blog">
-      <select className="form-select" aria-label="Default select example">
+      <select onChange={onChange} className="form-select" aria-label="Default select example">
           {
             blogs.map(blog => (
               <option value={blog.id}>{blog.name}</option>
             ))
           }
-          <option onClick={onCreateClick} value="create">Create</option>
+          <option value="create">Create</option>
       </select>
     </div>
   )
