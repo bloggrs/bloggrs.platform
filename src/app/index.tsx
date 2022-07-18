@@ -34,6 +34,7 @@ import { authUserSelector } from 'features/auth/selectors';
 import { MainPanel } from './components/MainPanel';
 import { useLocation } from 'react-router-dom';
 import { EditBlog } from './pages/EditBlog/Loadable';
+import Sidebar from './components/Sidebar';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -42,8 +43,10 @@ export function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  const [ sideBarOpened, setSideBarOpened ] = React.useState(true);
+
   console.log(location, 'location');
-  
+
   (window as any).toast = toast;
 
   useEffect(() => {
@@ -55,6 +58,37 @@ export function App() {
   const { pathname } = location;
   const collapse_main_panel = [pathname === '/'].indexOf(true) !== -1;
 
+    useEffect(() => {
+    const { body } = document;
+    if (!sideBarOpened) return body.classList.add("enlarge-menu");
+    return body.classList.remove("enlarge-menu"); 
+  }, [ sideBarOpened ]);
+
+  const toggleSideBar = () => setSideBarOpened(!sideBarOpened);
+  const newButton = { label: "New post", to: "/posts/create" };
+  const isComment = pathname.indexOf("comment") !== -1;
+  const isPost = pathname.indexOf("task") !== -1;
+  const isTeam = pathname.indexOf("team") !== -1;
+  const isCategory = pathname.indexOf("categories") !== -1;
+  const isTag = pathname.indexOf("tags") !== -1;
+  if (isComment) {
+    newButton.label = "New comment"
+    newButton.to = "/comments/create"
+  } else if (isPost) {
+    newButton.label = "New post"
+    newButton.to = "/posts/create"
+  } else if (isTeam) {
+    newButton.label = "New team"
+    newButton.to = "/teams/create"
+  } else if (isCategory) {
+    newButton.label = "New category"
+    newButton.to = "/categories/create"
+  } else if (isTag) {
+    newButton.label = "New tag"
+    newButton.to = "/tags/create"
+  }
+  if (location.hash == "404") return <>E404</>
+
   return (
     <>
       <Helmet
@@ -64,19 +98,26 @@ export function App() {
       >
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
+      <Sidebar opened={sideBarOpened} />
       <Switch>
         {/* Authentication routes */}
         <Route exact path="/auth/login" component={LoginPage} />
         <Route exact path="/auth/register" component={RegisterPage} />
         <Route exact path="/auth/logout" component={LogoutPage} />
         {/* EndAuthentication routes */}
-        <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
         <PrivateRoute
           exact
           path="/blogs/:blog_id/posts/:id"
           component={CreatePost}
         />
-        <MainPanel sidebarProps={{ collapse: collapse_main_panel }}>
+        <MainPanel 
+          sideBarOpened={sideBarOpened} 
+          setSideBarOpened={setSideBarOpened}
+          sidebarProps={{ collapse: collapse_main_panel }}
+          toggleSideBar={toggleSideBar}
+          newButton={newButton}
+        >
+          <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute
             exact

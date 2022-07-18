@@ -21,6 +21,7 @@ const slice = createSlice({
       const {
         payload: { query },
       } = action;
+      if (state[query] !== undefined) return;
       state[query] = {
         blogCategories: [],
         loading: true,

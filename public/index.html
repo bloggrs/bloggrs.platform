@@ -9,21 +9,12 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <link href="/dist2/output.css" rel="stylesheet" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <!-- <link rel="stylesheet" href="/purecssframework.css"/> -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -34,237 +25,132 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <link href="../plugins/animate/animate.css" rel="stylesheet" type="text/css">
+
+    <!-- App css -->
+    <link href="%PUBLIC_URL%/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="%PUBLIC_URL%/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="%PUBLIC_URL%/assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="%PUBLIC_URL%/../plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="%PUBLIC_URL%/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      .table td {
+        padding: 10px;
+      }
+      .ReactModal__Overlay--after-open {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1040;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.1) !important;
+        backdrop-filter: blur(2px) !important;
+      }
+      .special-a {
+        color: rgb(23, 97, 253);
+        cursor: pointer;
+      }
+      .ml-3 {
+        margin-left: 1rem !important;
+      }
+      @media (min-width: 1400px){
+        .dashboard-analytics {
+          width: 55% !important;
+        }
+      }
+      @media (max-width: 1400px) {
+        .dashboard-leftrow {
+          width: 90% !important;
+        }
+        .dashboard-analytics {
+          width: 90% !important;
+        }
+        /* .posts-rightbar {
+          width: "21.5vw",
+        } */
+      }
+      .disabled {
+        pointer-events: none;
+        opacity: .65;
+      }
+      
+      .subitem-active {
+        color: #6374ff !important;
+        font-weight: 500 !important;
+      }
+      .select-blog {
+          margin: auto auto;
+      }
+      @media only screen and (max-width : 1316px) {
+        .select-blog {
+          margin-top: 1vh !important;
+        }
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      code {
+        font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+          monospace;
+      }
+      .logo-md {
+        height: 45px;
+      }
+      .navbar-custom > ul:nth-child(2) {
+        line-height: 0 !important;
+      }
+      @media (max-width: 1316.98px) {
+        .page-wrapper {
+          margin: 0;
+        }
+      }
+      @media (min-width: 1316.98px) {
+        .page-wrapper {
+          margin-left: 85px;
+        }
+      }
+      .ml-85 {
+        margin-left: 85px !important;
+      }
+      .left-sidenav > img {
+        padding: 15px;
+      }
+      .hide-children > * {
+        display: none;
+      }
+      .hide-children > input {
+        display: initial;
+      }
+      .btn-primary:disabled {
+        background-color: transparent !important;
+        color: #1761fd !important;
+      }
+      a[data-disabled="true"] {
+        pointer-events: none;
+        cursor: pointer;
+        opacity: 0.75;
+      }
+    </style>
   </head>
-  <script>
-    window.Sortable = Sortable;
-  </script>
-  <style>
-    /* .Toastify__toast-container--top-right {
-      right: 50em !important;
-    } */
-    .select-blog-container > div {
-      color: black;
-    }
-
-    .Toastify__toast-container--top-right {
-      right: 1em !important;
-      width: 467px !important;
-      height: 65px;
-    }
-    .Toastify__toast {
-      height: 60px;
-      /* UI Properties */
-      background: #FFFFFF 0% 0% no-repeat padding-box;
-      box-shadow: 0px 3px 6px #00000029;
-      border-radius: 15px;
-    }
-    .Toastify__close-button {
-      border: 2px solid #707070;
-
-    }
-    .Toastify__progress-bar {
-      position: absolute !important;
-      left: 0 !important;
-      width: 3px !important;
-      height: 73% !important;
-      z-index: var(--toastify-z-index) !important;
-      transform-origin: left !important;
-      margin-left: 5px !important;
-      top: 1.1vh !important;
-      margin-top: -5px !important;
-    }
-    .Toastify__toast-body > div {
-      text-align: left;
-      font: normal normal normal 17px/26px Poppins;
-      letter-spacing: 0px;
-      color: #000000;
-    }
-    /* body {
-      zoom: 70%;
-    } */
-    .ReactModal__Overlay {
-      background-color: hsl(204deg 64% 31% / 68%) !important;
-    }
-    .btn-base {
-      min-height: 35px;
-    }
-
-    ::-webkit-scrollbar {
-      background: black;
-      height: 10px;
-    }
-    ::-webkit-scrollbar-button{
-
-    } 
-    ::-webkit-scrollbar-thumb {
-      background: #1C5881;
-      border-radius: 10px;
-
-    }
-    /* ::-webkit-scrollbar-track {
-      background: white;
-      box-shadow: inset 0 0 5px grey;
-      border-radius: 10px;      
-    }  */
-    ::-webkit-scrollbar-track-piece {
-      background: #7A9DB5;
-    } 
-    input[type=checkbox] {
-      -moz-appearance:none;
-      -webkit-appearance:none;
-      -o-appearance:none;
-      outline: none;
-      content: none;	
-    }
-
-    input[type=checkbox]:before {
-      font-family: "FontAwesome";
-        content: "✓";
-        font-size: 15px;
-        color: transparent !important;
-        background: #769BB4;
-        display: block;
-        width: 25px;
-        height: 25px;
-        border: 1px solid black;
-        margin-right: 7px;
-        padding: 2.5px
-    }
-
-    input[type=checkbox]:checked:before {
-
-      color: white !important;
-      background: #1C5881;
-      padding: 2.5px;
-    }
-    .noselect {
-      -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Safari */
-        -khtml-user-select: none; /* Konqueror HTML */
-          -moz-user-select: none; /* Old versions of Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-                user-select: none; /* Non-prefixed version, currently
-                                      supported by Chrome, Edge, Opera and Firefox */
-    }
-
-    /* ::-webkit-scrollbar-corner {
-      background: white;
-    }
-    ::-webkit-resizer{
-      background: white;
-    } */
-
-    /* .bg-slate-700 {
-      background-color: #1C5881 !important;
-    } */
-    #root > div.container {
-      left: 7vw;
-      width: 93vw;
-    }
-    .grid-cols-24 {
-  grid-template-columns: repeat(24, minmax(0, 1fr));
-}
-
-.special-text {
-  text-align: left;
-  font: normal normal normal 16px/25px Poppins;
-  letter-spacing: 0px;
-  color: #397FCC;
-  opacity: 1;
-}
-
-.center-image-inside {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media (min-width: 1023px) {
-  .xl-grid-column-start-8 {
-    grid-column-start: 8 !important;
-  }
-}
-.home-container > div:not(:first-child) {
-  margin-top: 2vh;
-}
-
-.special-p {
-  font: normal normal normal 18px/28px Poppins;
-  letter-spacing: 0px;
-  color: #8E9DAD;
-  opacity: 1;
-}
-
-.select-blog-container {
-  background-color: white;
-  position: relative;
-  width: 20vw;
-  min-height: 10vh;
-  bottom: 27vh;
-  max-width: 13vw;
-  max-height: 25vh;
-  overflow: auto;
-  left: 4vw;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 10px;
-  opacity: 1;
-}
-
-.select-blog-container > div {
-  margin-top: 25px;
-  margin-left: 16px;
-  text-align: left;
-  font: normal normal normal 17px/26px Poppins;
-  letter-spacing: 0px;
-  color: #4A596B;
-  opacity: 1;
-  display: inline-flex; 
-}
-.select-blog-container > div:last-child {
-  margin-bottom: 25px;
-}
-
-.select-blog-container > div[selected="true"] {
-  text-align: left;
-  font: normal normal normal 18px/27px Poppins;
-  letter-spacing: 0px;
-  color: #F7941D;
-  opacity: 1;
-}
-
-.select-blog-container > div > img {
-  width: 2.5vw;
-  height: 2.5vh;
-  /* position: absolute; */
-  padding-right: 15px;
-  content:url("http://localhost:3000/blue-b-circle.png");
-}
-.select-blog-container > div[selected="true"] > img {
-  content:url("http://localhost:3000/orange-b-circle.png");
-}
-
-  .file-drop-container {
-    width: 204px;
-    height: 136px;
-    /* UI Properties */
-    border: 0.7px dashed var(--unnamed-color-1c5881);
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 0.699999988079071px dashed #1C5881;
-    border-radius: 10px;
-  }
-
-  .createpost__thumbnail > div:first-child {
-    margin: 0;
-    margin-bottom: 5px
-  }
-    
-  </style>
-  <body class="bg-slate-100">
+  <body id="root" class="enlarge-menu">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <div id="app-modal" />
-
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -275,5 +161,23 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="%PUBLIC_URL%/assets/js/jquery.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/metismenu.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/waves.js"></script>root
+    <script src="%PUBLIC_URL%/assets/js/feather.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/simplebar.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/moment.js"></script>
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+
+    <!-- <script src="../plugins/apex-charts/apexcharts.min.js"></script> -->
+    <script src="%PUBLIC_URL%/../plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="%PUBLIC_URL%/../plugins/jvectormap/jquery-jvectormap-us-aea-en.js"></script>
+    <script src="%PUBLIC_URL%/assets/pages/jquery.analytics_dashboard.init.js"></script>
+
+    <!-- App js -->
+    <!-- <script src="%PUBLIC_URL%/assets/js/app.js"></script> -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
   </body>
 </html>

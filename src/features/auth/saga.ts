@@ -3,10 +3,10 @@ import { authActions as actions } from '.';
 import { authService } from '../../services/auth.service';
 import { LoginAction, AuthenticateAction } from './types';
 
-export function* login({ payload: { email, password, setSubmitting } }) {
+export function* login({ payload: { username, email, password, setSubmitting } }) {
   console.log({ setSubmitting });
   try {
-    const payload: any = yield call(authService.login, email, password);
+    const payload: any = yield call(authService.login, email || username, password);
     payload.data.user.token = payload.data.token;
     yield put(actions.loginSuccess(payload.data.user));
     setSubmitting(false);

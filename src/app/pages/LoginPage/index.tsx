@@ -4,16 +4,16 @@ import { Formik } from 'formik';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { authActions } from 'features/auth/index';
 import { authUserSelector, isAuthLoading } from 'features/auth/selectors';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { NotAuthenticatedHeader } from '../../components/NotAuthenticatedHeader';
 import * as Yup from 'yup';
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Email is not in correct format.')
-    .required('Email is required.'),
+  username: Yup.string()
+    .min(4, 'Username must be at least 4 characters.')
+    .required('Username is required.'),
   password: Yup.string()
-    .min(3, 'Password must be at least 3 characters.')
+    .min(8, 'Password must be at least 8 characters.')
     .required('Password is a required field'),
 });
 
@@ -32,237 +32,104 @@ const LoginPage_ = props => {
           content="A Boilerplate application LoginPage"
         />
       </Helmet>
-      <NotAuthenticatedHeader />
-      <div className="container max-h-full max-w-7xl py-9 px-12">
-        <div className="px-2">
-          <div className="flex">
-            <Formik
-              initialValues={{ email: '', password: '' }}
-              validationSchema={LoginSchema}
-              onSubmit={async (values, { setSubmitting }) => {
-                console.log(values);
-                dispatch(authActions.login(values));
-              }}
-            >
-              {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-                /* and other goodies */
-              }) => (
-                <form
-                  onSubmit={handleSubmit}
-                  className="lg:w-3/6 sm:w-6/6 px-2"
-                >
-                  <div className="h-12">
-                    <h1 className="mx-2 text-slate-900 font-bold text-5xl font-medium">
-                      Log in
-                    </h1>
-                    <h2 className="mx-2 py-5 text-xl font-medium text-slate-600">
-                      What are you waiting for? Get <br />
-                      blogging already!
-                    </h2>
-                    <hr className="mx-1" />
-                    <div className="py-7">
-                      <div className="my-2 px-2 mb-3 xl:w-96">
-                        <input
-                          name="email"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.email}
-                          type="email"
-                          placeholder="E-Mail"
-                          className="
-                    form-control
-                    block
-                    w-full
-                    h-12
-                    border-white
-                    px-3
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-slate-700
-                    bg-white bg-clip-padding
-                    border border-solid border-slate-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    focus:text-slate-700
-                    focus:bg-white
-                    focus:border-slate-800
-                    focus:border-2
-                    focus:outline-none
-                  "
-                          id="first_name"
-                        />
-                        <p className="error-feedback">
-                          {errors.email && touched.email && errors.email}
-                        </p>
-                      </div>
-                      <div className="px-2 mb-3 xl:w-96">
-                        <input
-                          type="password"
-                          name="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                          placeholder="Password"
-                          className="
-                    form-control
-                    block
-                    w-full
-                    h-12
-                    border-white
-                    px-3
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-slate-700
-                    bg-white bg-clip-padding
-                    border border-solid border-slate-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    focus:text-slate-700
-                    focus:bg-white
-                    focus:border-slate-800
-                    focus:border-2
-                    focus:outline-none
-                  "
-                          id="last_name"
-                        />
-                        <p className="error-feedback">
-                          {errors.password &&
-                            touched.password &&
-                            errors.password}
-                        </p>
-                      </div>
-                      <div className="px-2 mb-3 xl:w-96 my-40">
-                        {Object.keys(errors).length ? (
-                          <button
-                            type="submit"
-                            className="w-full py-5/6 btn bg-slate-200 block shadow-md"
-                          >
-                            <span className="font-medium text-slate-900">
-                              Sign Up
-                            </span>
-                          </button>
-                        ) : (
-                          <button
-                            type="submit"
-                            className="w-full py-5/6 btn bg-slate-600 block shadow-md"
-                          >
-                            <span className="font-medium text-white">
-                              Sign Up
-                            </span>
-                          </button>
-                        )}
-                        <div className="flex py-3">
-                          <p className="text-slate-900 font-medium">
-                            Don't have an account?&nbsp;&nbsp;
-                          </p>
-                          <a href="/src/register">
-                            <p className="text-blue-500 font-medium">
-                              Sign up!
-                            </p>
-                          </a>
+      {/* <NotAuthenticatedHeader /> */}
+      <div className="container">
+            <div className="row vh-100 d-flex justify-content-center">
+            <div className="col-12 align-self-center">
+                <div className="row">
+                <div className="col-lg-5 mx-auto">
+                    <div className="card">
+                    <div className="card-body p-0 auth-header-box">
+                        <div className="text-center p-3">
+                        <Link to="/"  className="logo logo-admin">
+                            <img src="/dist/static/image1.png" height={50} alt="logo" className="auth-logo" />
+                        </Link>
+                        <h4 className="mt-3 mb-1 fw-semibold text-white font-18">Let's Get Started Dastone</h4>   
+                        <p className="text-muted  mb-0">Sign in to continue to Dastone.</p>  
                         </div>
-                      </div>
                     </div>
-                  </div>
-                </form>
-                // <form onSubmit={handleSubmit}>
-                //   <input
-                // type="email"
-                // name="email"
-                // onChange={handleChange}
-                // onBlur={handleBlur}
-                // value={values.email}
-                //   />
-                //   {errors.email && touched.email && errors.email}
-                //   <input
-                // type="password"
-                // name="password"
-                // onChange={handleChange}
-                // onBlur={handleBlur}
-                // value={values.password}
-                //   />
-                //   {errors.password && touched.password && errors.password}
-                //   <button type="submit" disabled={loading}>
-                //     Submit
-                //   </button>
-                // </form>
-              )}
-            </Formik>
-            <div className="hidden lg:block w-1/6 px-2" />
-            <div className="hidden lg:block w-2/6 px-2 justify-center items-center flex">
-              <div className="mx-10 py-10 h-12 w-5/6">
-                <img src="/dist2/static/twitter_outline.png" />
-              </div>
-            </div>
-          </div>
+                    <div className="card-body p-0">
+                        <ul className="nav-border nav nav-pills" role="tablist">
+                        <li className="nav-item">
+                            <a className="nav-link active fw-semibold" data-bs-toggle="tab" href="#LogIn_Tab" role="tab">Log In</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link fw-semibold" data-bs-toggle="tab" href="#Register_Tab" role="tab">Register</a>
+                        </li>
+                        </ul>
+                        {/* Tab panes */}
+                        <div className="tab-content">
+                        <div className="tab-pane active p-3">
+            <div className="flex">
+              <Formik
+                initialValues={{ username: '', password: '' }}
+                validationSchema={LoginSchema}
+                onSubmit={async (values, { setSubmitting }) => {
+                  console.log(values);
+                  dispatch(authActions.login(values));
+                }}
+              >
+                {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isSubmitting,
+                  /* and other goodies */
+                }) => (
+                    <form onSubmit={handleSubmit} className="form-horizontal auth-form" action="index.html">
+                        <div className="form-group mb-2">
+                        <label className="form-label" htmlFor="username">Username</label>
+                        <div className="input-group">                                                                                         
+                            <input 
+                                className="form-control"
+                                type="text"
+                                name="username"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.username}
+                            />
+                        </div>
+                        </div>
+                        <div className="form-group mb-2">
+                            <label className="form-label" htmlFor="userpassword">Password</label>                                            
+                            <div className="input-group">
+                                <input 
+                                    className="form-control"
+                                    type="password"
+                                    name="password"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.password}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row my-3">
+                        <div className="col-sm-6">
+                            <div className="custom-control custom-switch switch-success">
+                            <input type="checkbox" className="custom-control-input" id="customSwitchSuccess" />
+                            <label className="form-label text-muted" htmlFor="customSwitchSuccess">Remember me</label>
+                            </div>
+                        </div>
+                        <div className="col-sm-6 text-end">
+                            <a href="auth-recover-pw.html" className="text-muted font-13"><i className="dripicons-lock" /> Forgot password?</a>                                    
+                        </div>
+                        </div>
+                        <div className="form-group mb-0 row">
+                        <div className="col-12">
+                            <button type="submit" disabled={isSubmitting} className="btn btn-primary w-100 waves-effect waves-light">Log In <i className="fas fa-sign-in-alt ms-1" /></button>
+                        </div>
+                        </div>                           
+                    </form>
+                )}
+              </Formik>
+        
         </div>
-      </div>
-    </>
-  );
-  return (
-    <>
-      <Helmet>
-        <title>Home Page</title>
-        <meta
-          name="description"
-          content="A Boilerplate application LoginPage"
-        />
-      </Helmet>
-      <span>LoginPage container</span>
-      <hr />
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={LoginSchema}
-        onSubmit={async (values, { setSubmitting }) => {
-          dispatch(authActions.login(values));
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
-            {errors.email && touched.email && errors.email}
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            {errors.password && touched.password && errors.password}
-            <button type="submit" disabled={loading}>
-              Submit
-            </button>
-          </form>
-        )}
-      </Formik>
+        </div></div></div>
+        </div></div></div>
+        </div></div></div>
     </>
   );
 };

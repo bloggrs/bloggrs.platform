@@ -8,11 +8,14 @@ const selectSlice = (state: RootState) =>
 
 export const selectBlogCategories = createSelector(
   [selectSlice],
-  state => state,
+  state => Object.keys(state).map(query => 
+      Array.isArray(state[query].blogCategories) ? state[query].blogCategories
+      : []
+    ).flat(),
 );
 
 const forQuerySelectors = {};
-export const getBlogsForQuery = query => {
+export const getBlogCategoriesForQuery = query => {
   if (!forQuerySelectors[query]) {
     forQuerySelectors[query] = createSelector(
       [selectSlice],
