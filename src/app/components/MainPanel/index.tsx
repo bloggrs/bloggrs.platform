@@ -425,9 +425,7 @@ export const MainPanel = ({
         </nav>
     </div>
     <div className="page-content">
-        <div className="container-fluid">
-            {props.children}
-        </div>
+        {children}
         <footer className="footer text-center text-sm-start">
         © Bloggrs{" "}
         <span className="text-muted d-none d-sm-inline-block float-end">

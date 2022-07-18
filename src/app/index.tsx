@@ -36,6 +36,8 @@ import { useLocation } from 'react-router-dom';
 import { EditBlog } from './pages/EditBlog/Loadable';
 import Sidebar from './components/Sidebar';
 import { MyProfile } from './pages/MyProfile/Loadable';
+import { Categories } from './pages/Categories';
+import { CreateCategory } from './pages/CreateCategory';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -111,40 +113,40 @@ export function App() {
           path="/blogs/:blog_id/posts/:id"
           component={CreatePost}
         />
-        <PrivateRoute>
-          <MainPanel 
-            sideBarOpened={sideBarOpened} 
-            setSideBarOpened={setSideBarOpened}
-            sidebarProps={{ collapse: collapse_main_panel }}
-            toggleSideBar={toggleSideBar}
-            newButton={newButton}
-          >
-            <PrivateRoute exact path="/" component={MyProfile} />
-            <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
-            <PrivateRoute exact path="/" component={HomePage} />
-            <PrivateRoute
-              exact
-              path="/blogs/:blog_id/posts"
-              component={PostsListing}
-            />
-            <PrivateRoute
-              exact
-              path="/blogs/:blog_id/comments"
-              component={CommentsListing}
-            />
-            <PrivateRoute
-              exact
-              path="/blogs/:blog_id/customize"
-              component={BlogCustomization}
-            />
-            <PrivateRoute exact path="/blogs/:blog_id" component={SingleBlog} />
-            <PrivateRoute
-              exact
-              path="/blogs/:blog_id/edit"
-              component={EditBlog}
-            />
-          </MainPanel>
-        </PrivateRoute>
+        <MainPanel
+          sideBarOpened={sideBarOpened} 
+          setSideBarOpened={setSideBarOpened}
+          sidebarProps={{ collapse: collapse_main_panel }}
+          toggleSideBar={toggleSideBar}
+          newButton={newButton}
+        >
+          <PrivateRoute exact path="/" component={MyProfile} />
+          <PrivateRoute exact path="/categories" component={Categories} />
+          <PrivateRoute exact path="/categories/create" component={CreateCategory} />
+          <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
+          <PrivateRoute exact path="/" component={HomePage} />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/posts"
+            component={PostsListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/comments"
+            component={CommentsListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/customize"
+            component={BlogCustomization}
+          />
+          <PrivateRoute exact path="/blogs/:blog_id" component={SingleBlog} />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/edit"
+            component={EditBlog}
+          />
+        </MainPanel>
         <Route component={NotFoundPage} />
       </Switch>
       <ToastContainer />
