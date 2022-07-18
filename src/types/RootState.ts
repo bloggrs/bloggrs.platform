@@ -15,5 +15,5 @@ export interface RootState {
   'postsListing.posts': any;
   'commentsListing.comments': any;
   'homePage.blogs': any;
-  
+  'selectBlog.blogs': any;
 }
