@@ -31,6 +31,7 @@ const slice = createSlice({
       }
       state = { ...new_state }
     },
+    deleteCategory(state, action: PayloadAction<any>) {},
     initSearchIfNotExists(state, action: PayloadAction<any>) {
       const {
         payload: { query, page, pageSize  },

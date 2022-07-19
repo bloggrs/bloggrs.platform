@@ -18,3 +18,7 @@ export interface CategoriesState {
 export interface LoadCategoriesAction extends Action {
   type: 'platform.categories/loadCategories';
 }
+
+export interface DeleteCategoryAction extends Action {
+  type: 'platform.categories/deleteCategory';
+}

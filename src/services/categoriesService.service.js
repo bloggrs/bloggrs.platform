@@ -75,9 +75,27 @@ const updateCategory = ({ id, name, slug, description }) => {
     });
 };
 
+const deleteCategory = id => {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+  };
+
+  const endpoint = `${API_URL}/api/v1/categories/${id}`;
+  return fetch(endpoint, requestOptions)
+    .then(res => res.json())
+    .then(data => {
+      return data;
+    });
+};
+
 export const categoriesService = {
   getCategories,
   getCategoryById,
   createCategory,
   updateCategory,
+  deleteCategory,
 };
