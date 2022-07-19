@@ -38,6 +38,8 @@ import Sidebar from './components/Sidebar';
 import { MyProfile } from './pages/MyProfile/Loadable';
 import { Categories } from './pages/Categories';
 import { SingleCategory } from './pages/SingleCategory';
+import Handle404 from 'utils/handle404';
+import { E404 } from './pages/E404';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -92,6 +94,9 @@ export function App() {
   }
   if (location.hash == "404") return <>E404</>
 
+  const { search } = location;
+  const show404 = search.indexOf("?e=404") !== -1;
+  if (show404) return <E404 />
   return (
     <>
       <Helmet
@@ -101,6 +106,7 @@ export function App() {
       >
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
+      {/* <Handle404/> */}
       <Sidebar opened={sideBarOpened} />
       <Switch>
         {/* Authentication routes */}

@@ -35,6 +35,9 @@ const getCategoryById = id => {
   return fetch(endpoint, requestOptions)
     .then(res => res.json())
     .then(data => {
+      const success = data.code >= 200 && data.code < 300;
+      if (!success) throw data;
+
       return data.data.category;
     });
 };
@@ -71,6 +74,8 @@ const updateCategory = ({ id, name, slug, description }) => {
   return fetch(endpoint, requestOptions)
     .then(res => res.json())
     .then(data => {
+      const success = data.code >= 200 && data.code < 300;
+      if (!success) throw this;
       return data.data.category;
     });
 };

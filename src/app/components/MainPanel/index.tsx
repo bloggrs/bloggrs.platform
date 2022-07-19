@@ -18,7 +18,6 @@ export const MainPanel = ({
   const { pathname } = location;
   
   const minimal = pathname.indexOf("/blogs/create") !== -1;
-  
   if (minimal) {
      return (
       <div className="page-wrapper ml-85">

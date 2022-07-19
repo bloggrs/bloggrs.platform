@@ -108,11 +108,10 @@ export const Categories = props => {
     const [ showEntries, setShowEntries ] = React.useState(qShowEntries);
     const onShowEntriesChange = e => {
         e.preventDefault();
-        const { value } = e.target;
-        setShowEntries(
-            Number(value)
-        )
-        queryParams.set("entries", value)
+        const { value: str_value } = e.target;
+        const value = Number(str_value);
+        setShowEntries(value);
+        queryParams.set("entries", str_value)
         const newQueryParams = queryParams.toString();
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?${newQueryParams}`
         history.pushState({path:newurl},'',newurl);

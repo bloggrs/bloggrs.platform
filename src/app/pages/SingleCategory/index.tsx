@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { toast } from "react-toastify";
 import { categoriesService } from "services/categoriesService.service";
+import Handle404, { set404 } from "../../../utils/handle404";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
@@ -20,7 +21,7 @@ const getFeedback = (errors, key) => (
       </span>
     )
 )
-export const SingleCategory = props => {
+const SingleCategory = props => {
   const match: any = useRouteMatch();
   const history: any = useHistory();
   const { id: param_id } = match.params;
@@ -28,6 +29,7 @@ export const SingleCategory = props => {
 
   const [ value, setValue ]: any = useState(false);
   const [ loading, setLoading ] = useState(true);
+  const [ error, setError ]: any = useState(false);
 
   useEffect(() => {
     const defaultValue = {
@@ -42,14 +44,20 @@ export const SingleCategory = props => {
     fetchData().then(value => {
       setValue(value);
       setLoading(false);
+    }).catch(err => {
+      setError(err)
+      setLoading(false);
     })
   }, [ param_id ])
   if (loading) return <>loading...</>;
   const modeLabel = mode === "create" ? "Create" : "Edit";
   const submitButtonText = mode === "create" ? "Create" : "Save";
 
+  if (error?.code === 404) set404();
+
   return (
     <div className="container-fluid">
+      {/* { error?.code === 404 ? <Handle404/> : null } */}
       <div className="row">
         <div className="col-sm-12">
           <div className="page-title-box">
@@ -229,3 +237,5 @@ export const SingleCategory = props => {
     </div>
   )
 }
+
+export { SingleCategory }
