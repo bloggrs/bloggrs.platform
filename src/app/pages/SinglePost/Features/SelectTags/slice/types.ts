@@ -6,7 +6,7 @@ export interface Category {
   name: string;
 }
 export interface CategoriesQueryString {
-  categories: [Category?];
+  tags: [Category?];
   loading: boolean;
   error: [string?] | null;
   _meta: any;
@@ -16,9 +16,9 @@ export interface CategoriesState {
 }
 
 export interface LoadCategoriesAction extends Action {
-  type: 'platform.createPost.categories/loadCategories';
+  type: 'platform.createPost.tags/loadCategories';
 }
 
 export interface DeleteCategoryAction extends Action {
-  type: 'platform.createPost.categories/deleteCategory';
+  type: 'platform.createPost.tags/deleteCategory';
 }

@@ -40,6 +40,7 @@ import { Categories } from './pages/Categories';
 import { SingleCategory } from './pages/SingleCategory';
 import Handle404 from 'utils/handle404';
 import { E404 } from './pages/E404';
+import { SinglePost } from './pages/SinglePost';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -129,6 +130,7 @@ export function App() {
           <PrivateRoute exact path="/" component={MyProfile} />
           <PrivateRoute exact path="/categories" component={Categories} />
           <PrivateRoute exact path="/categories/:id" component={SingleCategory} />
+          <PrivateRoute exact path="/posts/:id" component={SinglePost} />
           <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute

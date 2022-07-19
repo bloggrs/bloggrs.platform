@@ -18,4 +18,6 @@ export interface RootState {
   'selectBlog.blogs': any;
   'platform.postCategories': any;
   'platform.categories': any;
+  'platform.createPost.categories': any;
+  'platform.createPost.tags': any;
 }

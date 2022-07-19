@@ -4,12 +4,12 @@ import { RootState } from 'types';
 import { initialState } from '.';
 
 const selectSlice = (state: RootState) =>
-  state['platform.createPost.categories'] || initialState;
+  state['platform.createPost.tags'] || initialState;
 
 export const selectPostCategories = createSelector(
   [selectSlice],
   state => Object.keys(state).map(query => 
-      Array.isArray(state[query].categories) ? state[query].categories
+      Array.isArray(state[query].tags) ? state[query].tags
       : []
     ).flat(),
 );
@@ -25,7 +25,7 @@ export const getPaginatedPostCategories = ({ query = "", page = 1, pageSize = 10
   }
   return createSelector(
     [paginatedPostCategories[hash]],
-    state => state.categories,
+    state => state.tags,
   );
 };
 

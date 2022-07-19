@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import { MainPanel } from 'app/components/MainPanel';
+import { UploadFile } from 'app/components/UploadFile';
 import { Formik } from 'formik';
 import * as React from 'react';
 import * as yup from "yup";
@@ -65,63 +66,12 @@ export const GeneralDetails = ({
                       Thumbnail:{" "}
                     </label>
                   </div>
-                  <div className="col-2 card-body m-auto">
-                    <div
-                      className={ "dropify-wrapper " + (thumbnail ? "hide-children" : "") }
-                      style={{ 
-                        height: "313.993px",
-                        backgroundImage: `url(${thumbnail})`
-                      }}
-                    >
-                      <div className="dropify-message">
-                        <span className="file-icon">
-                          {" "}
-                          <p>Drag and drop a file here or click</p>
-                        </span>
-                        <p className="dropify-error">
-                          Ooops, something wrong appended.
-                        </p>
-                      </div>
-                      <div className="dropify-loader" />
-                      <div className="dropify-errors-container">
-                        <ul />
-                      </div>
-                      <input
-                        type="file"
-                        id="input-file-now-custom-2"
-                        className="dropify"
-                        data-height={500}
-                        onChange={ (event: any) => {
-                          setThumbnailFile(event.target.files[0]);
-                          let reader: any = new FileReader();
-                          let file = event.target.files[0];
-                          reader.onload = () => {
-                            console.log(reader.result)
-                            setThumbnail(reader.result);
-                          };
-                          reader.readAsDataURL(file);
-                          
-                        }}
-                      />
-                      <button type="button" className="dropify-clear">
-                        Remove
-                      </button>
-                      <div className="dropify-preview">
-                        <span className="dropify-render" />
-                        <div className="dropify-infos">
-                          <div className="dropify-infos-inner">
-                            <p className="dropify-filename">
-                              <span className="file-icon" />{" "}
-                              <span className="dropify-filename-inner" />
-                            </p>
-                            <p className="dropify-infos-message">
-                              Drag and drop or click to replace
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <UploadFile 
+                    onChange={({ file, src }) => {
+                      setThumbnail(src);
+                      setThumbnailFile(file);
+                    }}
+                  />
                 </div>
                 <div className={"col-md-8 row " + (errors.name ? "has-error" : "")}>
                   <div className="col-2" style={{ margin: "auto" }}>

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { categoriesService } from "services/categoriesService.service";
 import Handle404, { set404 } from "../../../utils/handle404";
 import * as yup from "yup";
+import { PageNavigation } from "app/components/PageNavigation";
 
 const schema = yup.object().shape({
   name: yup.string().min(2).required(),
@@ -59,23 +60,33 @@ const SingleCategory = props => {
     <div className="container-fluid">
       {/* { error?.code === 404 ? <Handle404/> : null } */}
       <div className="row">
-        <div className="col-sm-12">
-          <div className="page-title-box">
-            <div className="row">
-              <div className="col">
-                <h4 className="page-title">#1 - Personal Blog</h4>
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <a href="javascript:void(0);">Bloggrs</a>
-                  </li>
-                  <li className="breadcrumb-item active">Categories</li>
-                  <li className="breadcrumb-item active">#1</li>
-                </ol>
+          <div className="col-12">
+              <div className="page-title-box">
+                  <div className="row">
+                      <PageNavigation
+                          label="Categories"
+                          items={[
+                            {
+                              label: "Categories",
+                              to: "/categories",
+                          },
+                          {
+                            label: value.name || "Create",
+                            active: true
+                        },
+                        
+                          ]}
+                      />
+                      <div className="col-auto align-self-center">
+                          <div className="btn btn-sm btn-outline-warning">
+                          
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
-        </div>
       </div>
+      
       <div className="col mt-1">
         <div className="card">
           <div className="card-header">

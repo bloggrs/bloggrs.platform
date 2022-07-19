@@ -6,7 +6,7 @@ import { CategoriesState } from './types';
 
 export const initialState: CategoriesState = {
   egPaginatedString: {
-    categories: [],
+    tags: [],
     loading: true,
     error: null,
     _meta: { count: 0 }
@@ -14,7 +14,7 @@ export const initialState: CategoriesState = {
 };
 
 const slice = createSlice({
-  name: 'platform.createPost.categories',
+  name: 'platform.createPost.tags',
   initialState,
   reducers: {
     loadPostCategories(state, action: PayloadAction<any>) {},
@@ -24,8 +24,8 @@ const slice = createSlice({
       const new_state = { };
       for (let key of keys) {
         const value: any = state[key];
-        if (Array.isArray(value.categories)) {
-          value.categories = value.categories.filter(filter_rule)
+        if (Array.isArray(value.tags)) {
+          value.tags = value.tags.filter(filter_rule)
         } 
         new_state[key] = value
       }
@@ -39,7 +39,7 @@ const slice = createSlice({
       const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
       if (state[hash] !== undefined) return;
       state[hash] = {
-        categories: [],
+        tags: [],
         loading: true,
         error: null,
         _meta: undefined
@@ -51,7 +51,7 @@ const slice = createSlice({
       const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
       state[hash]._meta = _meta;
       state[hash].loading = false;
-      state[hash].categories =
+      state[hash].tags =
         action.payload.categories;
     },
     failed(state, action: PayloadAction<any>) {
