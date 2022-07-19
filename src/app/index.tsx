@@ -37,7 +37,7 @@ import { EditBlog } from './pages/EditBlog/Loadable';
 import Sidebar from './components/Sidebar';
 import { MyProfile } from './pages/MyProfile/Loadable';
 import { Categories } from './pages/Categories';
-import { CreateCategory } from './pages/CreateCategory';
+import { SingleCategory } from './pages/SingleCategory';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -122,7 +122,7 @@ export function App() {
         >
           <PrivateRoute exact path="/" component={MyProfile} />
           <PrivateRoute exact path="/categories" component={Categories} />
-          <PrivateRoute exact path="/categories/create" component={CreateCategory} />
+          <PrivateRoute exact path="/categories/:id" component={SingleCategory} />
           <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute

@@ -22,6 +22,24 @@ const getCategories = (query = '', page = 1, pageSize = 10) => {
     });
 };
 
+const getCategoryById = id => {
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+  };
+
+  const endpoint = `${API_URL}/api/v1/categories/${id}`;
+  return fetch(endpoint, requestOptions)
+    .then(res => res.json())
+    .then(data => {
+      return data.data.category;
+    });
+};
+
 export const categoriesService = {
   getCategories,
+  getCategoryById,
 };
