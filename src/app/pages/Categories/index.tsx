@@ -76,7 +76,8 @@ export const Categories = props => {
 
     const meta = useSelector(getMetaForPagination(pagination))
     const from = Math.round(pagination.pageSize * pagination.page) - (pagination.pageSize - 1)
-    const to = Math.round(pagination.pageSize * pagination.page)
+    const to_ = Math.round(pagination.pageSize * pagination.page)
+    const to = categories.length < pagination.pageSize && page === 1 ? categories.length : to_ 
     const pages = Math.round(meta.count / pagination.pageSize   )
     console.log("heree", { a: meta.count, b: pagination.pageSize, c: pagination.page })
 

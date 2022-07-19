@@ -39,7 +39,45 @@ const getCategoryById = id => {
     });
 };
 
+const createCategory = ({ name, slug, description }) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+    body: JSON.stringify({ name, slug, description }),
+  };
+
+  const endpoint = `${API_URL}/api/v1/categories`;
+  return fetch(endpoint, requestOptions)
+    .then(res => res.json())
+    .then(data => {
+      return data.data.category;
+    });
+};
+
+const updateCategory = ({ id, name, slug, description }) => {
+  const requestOptions = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+    body: JSON.stringify({ name, slug, description }),
+  };
+
+  const endpoint = `${API_URL}/api/v1/categories/${id}`;
+  return fetch(endpoint, requestOptions)
+    .then(res => res.json())
+    .then(data => {
+      return data.data.category;
+    });
+};
+
 export const categoriesService = {
   getCategories,
   getCategoryById,
+  createCategory,
+  updateCategory,
 };

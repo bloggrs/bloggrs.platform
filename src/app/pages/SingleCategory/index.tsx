@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import { useLocation, useRouteMatch } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import { toast } from "react-toastify";
 import { categoriesService } from "services/categoriesService.service";
 import * as yup from "yup";
 
@@ -12,20 +13,22 @@ const schema = yup.object().shape({
 
 const getFeedback = (errors, key) => (                            
     errors[key] && (
+      <span className="col form-text text-muted font-12">
         <div className="form-control-feedback" style={{ color: "red" }}>
             { errors[key] }
         </div>
+      </span>
     )
 )
 export const SingleCategory = props => {
   const match: any = useRouteMatch();
+  const history: any = useHistory();
   const { id: param_id } = match.params;
   const mode = param_id === "create" ? "create" : "edit";
 
-  const [ value, setValue ] = useState(false);
+  const [ value, setValue ]: any = useState(false);
   const [ loading, setLoading ] = useState(true);
 
-  /* ignore */
   useEffect(() => {
     const defaultValue = {
       id: "create",
@@ -40,8 +43,11 @@ export const SingleCategory = props => {
       setValue(value);
       setLoading(false);
     })
-  }, [])
+  }, [ param_id ])
   if (loading) return <>loading...</>;
+  const modeLabel = mode === "create" ? "Create" : "Edit";
+  const submitButtonText = mode === "create" ? "Create" : "Save";
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -65,25 +71,32 @@ export const SingleCategory = props => {
       <div className="col mt-1">
         <div className="card">
           <div className="card-header">
-            <h4 className="card-title">Edit category</h4>
+            <h4 className="card-title">{modeLabel} category</h4>
             <p className="text-muted mb-0">
               Basic example to demonstrate Bootstrap’s form styles.
             </p>
           </div>
           <div className="card-body">
               <Formik
-                initialValues={{ name: "", slug: "", description: "" }}
+                initialValues={{ name: value.name, slug: value.slug, description: value.description }}
                 validationSchema={schema}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
                     alert(JSON.stringify(values))
+                    const func = mode === "create" ? () => categoriesService.createCategory(values) : () => categoriesService.updateCategory({ id: param_id, ...values })
                     try {
-                        await props.onDelete()
+                        const category = await func();
+                        if (mode === "create") {
+                          history.push("/categories/" + category.id)
+                        }
+                        toast.success(`Category '${category.name}' updated successfully!`)
                     } catch(err) {
                         console.log(err);
+                        toast.error(`Category '${value.name || values.name}' failed to update!`)
                     }
                     setSubmitting(false);
                 }}
+                enableReinitialize={true}
                 >
                 {({
                     values,
@@ -196,13 +209,14 @@ export const SingleCategory = props => {
                       </div>
                     </div>
                     <button disabled={isSubmitting} type="submit" className="btn btn-soft-primary btn-md">
-                      Save
+                      {submitButtonText}
                     </button>
                     <button 
                       disabled={isSubmitting}
                       type="button"
                       className="btn btn-soft-danger btn-md"
                       style={{ marginLeft: 15 }}
+                      onClick={() => history.push("/categories")}
                     >
                       Cancel
                     </button>
