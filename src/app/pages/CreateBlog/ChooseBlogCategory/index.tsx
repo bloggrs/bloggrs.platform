@@ -58,7 +58,7 @@ export const ChooseBlogCategory = ({
     }, 75),
     [query],
   );
-  
+
   const exception = query.length && !blogCategories.length && !loading
   const handleSubmit = e => {
     e.preventDefault();

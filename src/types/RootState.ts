@@ -16,4 +16,6 @@ export interface RootState {
   'commentsListing.comments': any;
   'homePage.blogs': any;
   'selectBlog.blogs': any;
+  'platform.postCategories': any;
+  'platform.categories': any;
 }

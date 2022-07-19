@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { useCategoriesSlice } from "./slice";
+import debounce from 'debounce';
+import { getMetaForPagination, getPaginatedPostCategories } from "./slice/selectors";
+import slugify from "slugify";
+import { DeleteItemModal } from "app/components/DeleteItemModal";
 
 function useQuery() {
   const { search } = useLocation();
@@ -8,15 +14,16 @@ function useQuery() {
 }
 
 export const Categories = props => {
+    const { actions } = useCategoriesSlice();
+
     const history: any = useHistory();
     const { pathname, search } = useLocation();
 
     const queryParams =  React.useMemo(() => new URLSearchParams(search), [search]);
-      console.log({ queryParams });
 
-    const qShowEntries = !isNaN(Number(queryParams.get("entries"))) ? Number(queryParams.get("entries")) : 10;
+    const qShowEntries = !isNaN(Number(queryParams.get("entries")))  && !(Number(queryParams.get("entries")) === 0) ? Number(queryParams.get("entries")) : 10;
     const qQuery = queryParams.get("q") ? queryParams.get("q") : "";
-    const qPage = !isNaN(Number(queryParams.get("page"))) ? Number(queryParams.get("page")) :  1;
+    const qPage = !isNaN(Number(queryParams.get("page")))  && !(Number(queryParams.get("page")) === 0) ? Number(queryParams.get("page")) :  1;
 
     const [ showEntries, setShowEntries ] = React.useState(qShowEntries);
     const onShowEntriesChange = e => {
@@ -47,13 +54,36 @@ export const Categories = props => {
         const { value } = e.target;
         setPage(value);
     }
-    const pages = 5;
+
+    // const hash = `{"query":"${query}","page":${page},"pageSize"=${showEntries}}`
+
+    const pagination = { query, page, pageSize: showEntries } as any
+    const categories = useSelector(getPaginatedPostCategories(pagination))
 
     const paginationItems: any = [];
+
+    const [ init, setInit ] = useState(false);
+    const dispatch = useDispatch();
+    useEffect(() => 
+        debounce(() => {
+            const pageSize = !isNaN(Number(queryParams.get("entries")))  && !(Number(queryParams.get("entries")) === 0) ? Number(queryParams.get("entries")) : 10;
+            const query = queryParams.get("q") ? queryParams.get("q") : "";
+            const page = !isNaN(Number(queryParams.get("page")))  && !(Number(queryParams.get("page")) === 0) ? Number(queryParams.get("page")) :  1;
+            dispatch(actions.loadPostCategories({ query, pageSize, page }));
+          }, 75), [ query, showEntries, page, init ]
+    )
+    useEffect(() => setInit(true), [])
+
+    const meta = useSelector(getMetaForPagination(pagination))
+    const from = Math.round(pagination.pageSize * pagination.page) - (pagination.pageSize - 1)
+    const to = Math.round(pagination.pageSize * pagination.page)
+    const pages = Math.round(meta.count / pagination.pageSize   )
+    console.log("heree", { a: meta.count, b: pagination.pageSize, c: pagination.page })
+
     for (let x = 0; x < pages; x++) paginationItems.push(
         <li className={`page-item ${page === (x + 1) ? "active" : ""}`}>
             <a 
-                className="page-link" 
+                className="page-link"
                 onClick={e => {
                     queryParams.set("page", String(x + 1))
                     const newQueryParams = queryParams.toString();
@@ -64,6 +94,37 @@ export const Categories = props => {
             >{x + 1}</a>
         </li>
     )
+
+    const previousDisabled = page - 1 <= 0
+    const OnPreviousClick = () => (
+        <li className="page-item">
+            <a 
+                onClick={() => setPage(page - 1)} 
+                className={`page-link ${previousDisabled && "disabled"}`} 
+                href="#" 
+                aria-label="Previous"
+            >
+                <span aria-hidden="true">«</span>
+                <span className="sr-only">Previous</span>
+            </a>
+        </li>
+    )
+    const nextDisabled = page + 1 > pages
+    console.log({ page, pages, nextDisabled })
+    const OnNextClick = () => (
+        <li className="page-item">
+            <a 
+                onClick={() => setPage(page + 1)} 
+                className={`page-link ${nextDisabled ? "disabled" : ""}`} 
+                href="#" 
+                aria-label="Next"
+            >
+                <span aria-hidden="true">»</span>
+                <span className="sr-only">Next</span>
+            </a>
+        </li>
+    )
+    
     return (
         <div className="container-fluid">
             <div className="row">
@@ -185,79 +246,83 @@ export const Categories = props => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>#1</td>
-                                <td>Personal Notes</td>
-                                <td style={{ textTransform: "lowercase" }}>Personal-Notes</td>
-                                <td>
-                                    <a
-                                    className="btn btn-link"
-                                    href="/posts?category_name=personal-notes"
-                                    >
-                                    1
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#" className="btn btn-link">
-                                    Gjergj Kadriu
-                                    </a>
-                                </td>
-                                <td>25/11/2018</td>
-                                <td className="text-right">
-                                    <div className="dropdown d-inline-block">
-                                    <a
-                                        className="dropdown-toggle arrow-none"
-                                        id="dLabel11"
-                                        data-bs-toggle="dropdown"
-                                        href="#"
-                                        role="button"
-                                        aria-haspopup="false"
-                                        aria-expanded="false"
-                                    >
-                                        <i className="las la-ellipsis-v font-20 text-muted" />
-                                    </a>
-                                    <div
-                                        className="dropdown-menu dropdown-menu-right"
-                                        aria-labelledby="dLabel11"
-                                    >
-                                        <a className="dropdown-item" href="#">
-                                        View/Edit
-                                        </a>
-                                        <a className="dropdown-item" href="#">
-                                        Delete
-                                        </a>
-                                    </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            {
+                                categories.map(category => (
+                                    <tr>
+                                        <td>#{category.id}</td>
+                                        <td>{category.name}</td>
+                                        <td style={{ textTransform: "lowercase" }}>{slugify(category.name)}</td>
+                                        <td>
+                                            <a
+                                            className="btn btn-link"
+                                            href="/posts?category_name=personal-notes"
+                                            >
+                                            1
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" className="btn btn-link">
+                                            Gjergj Kadriu
+                                            </a>
+                                        </td>
+                                        <td>25/11/2018</td>
+                                        <td className="text-right">
+                                            <div className="dropdown d-inline-block">
+                                            <a
+                                                className="dropdown-toggle arrow-none"
+                                                id="dLabel11"
+                                                data-bs-toggle="dropdown"
+                                                href="#"
+                                                role="button"
+                                                aria-haspopup="false"
+                                                aria-expanded="false"
+                                            >
+                                                <i className="las la-ellipsis-v font-20 text-muted" />
+                                            </a>
+                                            <div
+                                                className="dropdown-menu dropdown-menu-right"
+                                                aria-labelledby="dLabel11"
+                                            >
+                                                <a className="dropdown-item" href="#">
+                                                View/Edit
+                                                </a>
+                                                <DeleteItemModal
+                                                    header="Delete confirmation"
+                                                    title={`Delete "${category.name}" category`}
+                                                    onDelete={() => {
+                                                        dispatch(actions.removeCategory({ id: category.id }));
+                                                    }}
+                                                >
+                                                    { ({ toggle }) => {
+                                                        return (
+                                                            <a onClick={toggle} className="dropdown-item" href="#">Delete</a>
+                                                        )
+                                                    }}
+                                                </DeleteItemModal>
+                                            </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
                         </tbody>
                         </table>
                     </div>
                     <div className="mt-3" style={{ display: "flex" }}>
                         <div className="col-sm-12 col-md-5">
-                        <div
-                            className="dataTables_info"
-                            id="datatable_info"
-                            role="status"
-                            aria-live="polite"
-                        >
-                            Showing 1 to 10 of 10 entries
-                        </div>
+                            <div
+                                className="dataTables_info"
+                                id="datatable_info"
+                                role="status"
+                                aria-live="polite"
+                            >
+                                Showing {from} to {to} of {meta?.count} entries
+                            </div>
                         </div>
                         <ul className="pagination mr-auto" style={{ marginLeft: "auto" }}>
-                        <li className="page-item">
-                                                  <a className="page-link" href="#" aria-label="Previous">
-                                                      <span aria-hidden="true">«</span>
-                                                      <span className="sr-only">Previous</span>
-                                                  </a>
-                                              </li>
-                            {paginationItems}
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">»</span>
-                            <span className="sr-only">Next</span>
-                            </a>
-                        </li>
+                            <OnPreviousClick/>
+                                {paginationItems}
+                            <OnNextClick/>
                         </ul>
                     </div>
                     </div>
