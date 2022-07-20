@@ -9,6 +9,7 @@ import {
   Route,
   RouteComponentProps,
   RouteProps,
+  useLocation,
 } from 'react-router-dom';
 import { LineLoader } from '../LineLoader';
 
@@ -19,12 +20,20 @@ interface PrivateRouteProps extends RouteProps {
 }
 
 export const PrivateRoute = ({
-  component: Component,
+  component: Component, allowGuest = false,
   ...rest
-}: any): ReactElement => {
+}: any): ReactElement | null => {
+  const location = useLocation();
+  const { pathname } = location;
+  const onAuthentication = pathname.indexOf("/auth")
   const user = useSelector(authUserSelector);
   const loading = useSelector(isAuthLoading);
   if (loading) return <LineLoader />;
-  if (!user) return <Redirect to="/auth/login" />;
+  const guestRule = allowGuest ? true : user.isGuest === false
+  console.log({ allowGuest, user, guestRule })
+  if (!user || (!guestRule)) {
+    if (onAuthentication) return null;
+    return <Redirect to="/auth/login" />;
+  }
   return <Route {...rest} component={Component} render={Component} />;
 };

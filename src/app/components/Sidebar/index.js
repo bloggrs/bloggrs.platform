@@ -5,6 +5,7 @@ import Item from './Item';
 import { useLocation, useNavigate, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { SelectBlog } from '../SelectBlog';
+import { PrivateRoute } from '../PrivateRoute';
 
 const Sidebar = props => {
   const location = useLocation();
@@ -78,7 +79,9 @@ const Sidebar = props => {
                 className="simplebar-content-wrapper"
                 style={{ height: '100%', overflow: 'hidden scroll' }}
               >
-                <SelectBlog />
+                <PrivateRoute>
+                  <SelectBlog />
+                </PrivateRoute>
                 <div
                   className="simplebar-content"
                   style={{ padding: '0px 0px 70px' }}

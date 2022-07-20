@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter, matchPath, useHistory } from 'react-router-dom';
 import { CenteredImage } from '../CenteredImage';
 import { Loading } from '../Loading';
+import { PrivateRoute } from '../PrivateRoute';
 
 const getPathname = (blog_id, path) => `/blogs/${blog_id}${path}`;
 
@@ -128,7 +129,9 @@ export const _Sidebar = ({ collapse, style, ...rest }: any) => {
             <span className="py-4 font-medium text-white">GK</span>
           </div>
           {showSelectBlog ? (
-            <SelectBlog selected={blog_id} loading={loading} blogs={blogs} />
+            <PrivateRoute>
+              <SelectBlog selected={blog_id} loading={loading} blogs={blogs} />
+            </PrivateRoute>
           ) : null}
         </div>
       </div>
