@@ -43,6 +43,7 @@ import { E404 } from './pages/E404';
 import { SinglePost } from './pages/SinglePost';
 import { Posts } from './pages/Posts';
 import { SingleTeam } from './pages/SingleTeam';
+import { Tags } from './pages/Tags';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -136,6 +137,7 @@ export function App() {
             path="/categories/:id"
             component={SingleCategory}
           />
+          <PrivateRoute exact path="/tags" component={Tags} />
           <PrivateRoute exact path="/posts" component={Posts} />
           <PrivateRoute exact path="/posts/:id" component={SinglePost} />
           <PrivateRoute exact path="/teams/:id" component={SingleTeam} />

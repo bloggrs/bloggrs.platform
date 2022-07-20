@@ -22,4 +22,5 @@ export interface RootState {
   'platform.createPost.tags': any;
   'platform.posts': any;
   'platform.addTeamMember.users': any;
+  'platform.tags': any;
 }
