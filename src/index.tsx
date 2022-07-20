@@ -31,17 +31,18 @@ import { BrowserRouter } from 'react-router-dom';
 const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
-console.log(store);
 ReactDOM.render(
-  <Provider store={store}>
-    <HelmetProvider>
-      {/* <React.StrictMode> */}
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-      {/* </React.StrictMode> */}
-    </HelmetProvider>
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <HelmetProvider>
+        {/* <React.StrictMode> */}
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+        {/* </React.StrictMode> */}
+      </HelmetProvider>
+    </Provider>
+  </React.StrictMode>,
   MOUNT_NODE,
 );
 

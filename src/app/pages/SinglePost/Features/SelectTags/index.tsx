@@ -13,7 +13,7 @@ import moment from "moment";
 const CategoriesTable = ({ categories, value, setValue, onChange: _onChange }) => {
 
     const onChange = e => {
-        e.preventDefault();
+        // e.preventDefault();
         const { value: str } = e.target;
         const value_id = Number(str);
 
@@ -48,8 +48,8 @@ const CategoriesTable = ({ categories, value, setValue, onChange: _onChange }) =
     })
     return (
         <div
-        className="row"
-        style={{ marginLeft: "auto", marginRight: "auto", marginTop: 10, padding: 1, maxHeight: "8vh", overflow: "auto" }}
+            className="row"
+            style={{ marginLeft: "auto", marginRight: "auto", marginTop: 10, padding: 1, maxHeight: "8vh", overflow: "auto" }}
         >
             <div className="col" style={{ marginLeft: 15 }}>
                 {CategoryItems}
@@ -77,7 +77,7 @@ export const SelectTags = ({ initialValue, onChange }) => {
         queryParams.set("q", value)
         const newQueryParams = queryParams.toString();
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?${newQueryParams}`
-        history.pushState({path:newurl},'',newurl);
+        history.pushState({ path:newurl },'', newurl);
     }
 
     const pagination = { query } as any

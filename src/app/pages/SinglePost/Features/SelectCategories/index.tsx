@@ -13,7 +13,7 @@ import moment from "moment";
 const CategoriesTable = ({ categories, value, setValue, onChange: _onChange }) => {
 
     const onChange = e => {
-        e.preventDefault();
+        // e.preventDefault();
         const { value: str } = e.target;
         const value_id = Number(str);
 

@@ -114,7 +114,7 @@ export const Categories = props => {
         queryParams.set("entries", str_value)
         const newQueryParams = queryParams.toString();
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?${newQueryParams}`
-        history.pushState({path:newurl},'',newurl);
+        window.history.pushState({path:newurl},'',newurl);
 
     }
     const [ query, setQuery ] = React.useState(qQuery);
@@ -125,7 +125,7 @@ export const Categories = props => {
         queryParams.set("q", value)
         const newQueryParams = queryParams.toString();
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?${newQueryParams}`
-        history.pushState({path:newurl},'',newurl);
+        window.history.pushState({path:newurl},'',newurl);
     }
     const [ page, setPage ] = React.useState(qPage);
 

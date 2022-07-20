@@ -82,7 +82,7 @@ const getBlogCategories = (id, query) => {
     });
 };
 
-const getPosts = ({ BlogId, query }) => {
+const getPosts = ({ BlogId = 1, query }) => {
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -95,7 +95,10 @@ const getPosts = ({ BlogId, query }) => {
   return fetch(endpoint, requestOptions)
     .then(res => res.json())
     .then(data => {
-      return data.data.posts;
+      return [
+        data.data.posts,
+        data.data._meta || { count: data.data.posts.length },
+      ];
     });
 };
 

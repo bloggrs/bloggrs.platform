@@ -6,9 +6,9 @@ import { useLocation } from "react-router-dom";
 */
   
 const Pagination = ({ page, pageSize, total_items, count, setPage, queryParams }) => {
-    const from = Math.round(pageSize * page) - (pageSize - 1)
     const to_ = Math.round(pageSize * page)
     const to = total_items < pageSize && page === 1 ? total_items : to_ 
+    const from = to === 0 ? 0 : Math.round(pageSize * page) - (pageSize - 1)
     const pages = Math.round(count / pageSize   )
 
     const previousDisabled = page - 1 <= 0

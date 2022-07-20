@@ -20,4 +20,6 @@ export interface RootState {
   'platform.categories': any;
   'platform.createPost.categories': any;
   'platform.createPost.tags': any;
+  'platform.posts': any;
+  'platform.addTeamMember.users': any;
 }

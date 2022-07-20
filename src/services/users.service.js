@@ -41,6 +41,24 @@ const handleResponse = (response, disableToast) => {
   });
 };
 
+const getUsers = (query = '') => {
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+  };
+
+  const endpoint = `${API_URL}/api/v1/users?query=${query}`;
+  return fetch(endpoint, requestOptions)
+    .then(res => res.json())
+    .then(data => {
+      return [data.data.users, data.data._meta || { count: data.data.users }];
+    });
+};
+
 export const usersService = {
   register,
+  getUsers,
 };

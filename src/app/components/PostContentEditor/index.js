@@ -46,7 +46,7 @@ export const EDITOR_JS_TOOLS = {
   simpleImage: SimpleImage,
 };
 
-const ReactEditorJS = createReactEditorJS({ readOnly: true });
+const ReactEditorJS = createReactEditorJS({});
 
 export const PostContentEditor = ({ onInitialize, defaultValue }) => {
   const editorCore = React.useRef(null);
