@@ -7,7 +7,7 @@ import { BlogsState } from './types';
 export const initialState: BlogsState = {
   blogs: [],
   loading: true,
-  error: []
+  error: [],
 };
 
 const slice = createSlice({

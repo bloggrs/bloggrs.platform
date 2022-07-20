@@ -6,17 +6,34 @@ import { initialState } from '.';
 const selectSlice = (state: RootState) =>
   state['platform.createPost.tags'] || initialState;
 
-export const selectPostCategories = createSelector(
-  [selectSlice],
-  state => Object.keys(state).map(query => 
-      Array.isArray(state[query].tags) ? state[query].tags
-      : []
-    ).flat(),
+export const selectPostCategories = createSelector([selectSlice], state =>
+  Object.keys(state)
+    .map(query => (Array.isArray(state[query].tags) ? state[query].tags : []))
+    .flat(),
 );
 
 const paginatedPostCategories = {};
-export const getPaginatedPostCategories = ({ query = "", page = 1, pageSize = 10 }) => {
-  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+export const getPaginatedPostCategories = ({
+  query = '',
+  page = 1,
+  pageSize = 10,
+}) => {
+  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
+  if (!paginatedPostCategories[hash]) {
+    paginatedPostCategories[hash] = createSelector(
+      [selectSlice],
+      state => state[hash] || initialState.egPaginatedString,
+    );
+  }
+  return createSelector([paginatedPostCategories[hash]], state => state.tags);
+};
+
+export const getLoadingForPagination = ({
+  query = '',
+  page = 1,
+  pageSize = 10,
+}) => {
+  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
   if (!paginatedPostCategories[hash]) {
     paginatedPostCategories[hash] = createSelector(
       [selectSlice],
@@ -25,28 +42,24 @@ export const getPaginatedPostCategories = ({ query = "", page = 1, pageSize = 10
   }
   return createSelector(
     [paginatedPostCategories[hash]],
-    state => state.tags,
+    state => state.loading,
   );
 };
 
-export const getLoadingForPagination = ({ query = "", page = 1, pageSize = 10 }) => {
-  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+export const getMetaForPagination = ({
+  query = '',
+  page = 1,
+  pageSize = 10,
+}) => {
+  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
   if (!paginatedPostCategories[hash]) {
     paginatedPostCategories[hash] = createSelector(
       [selectSlice],
       state => state[hash] || initialState.egPaginatedString,
     );
   }
-  return createSelector([paginatedPostCategories[hash]], state => state.loading);
-};
-
-export const getMetaForPagination = ({ query = "", page = 1, pageSize = 10 }) => {
-  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
-  if (!paginatedPostCategories[hash]) {
-    paginatedPostCategories[hash] = createSelector(
-      [selectSlice],
-      state => state[hash] || initialState.egPaginatedString,
-    );
-  }
-  return createSelector([paginatedPostCategories[hash]], state => state._meta || {});
+  return createSelector(
+    [paginatedPostCategories[hash]],
+    state => state._meta || {},
+  );
 };

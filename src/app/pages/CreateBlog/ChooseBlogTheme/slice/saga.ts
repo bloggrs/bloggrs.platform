@@ -6,10 +6,7 @@ import { LoadBlogThemesAction } from './types';
 function* getBlogThemes({ payload: { query } }) {
   yield put(actions.initSearchIfNotExists({ query }));
   try {
-    const blogThemes: any = yield call(
-      blogThemesService.getBlogThemes,
-      query,
-    );
+    const blogThemes: any = yield call(blogThemesService.getBlogThemes, query);
     yield put(actions.loaded({ query, blogThemes }));
   } catch (err) {
     yield put(actions.failed({ query, error: err }));

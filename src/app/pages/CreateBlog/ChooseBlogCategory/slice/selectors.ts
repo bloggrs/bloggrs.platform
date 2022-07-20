@@ -6,12 +6,14 @@ import { initialState } from '.';
 const selectSlice = (state: RootState) =>
   state['createBlog.blogCategories'] || initialState;
 
-export const selectBlogCategories = createSelector(
-  [selectSlice],
-  state => Object.keys(state).map(query => 
-      Array.isArray(state[query].blogCategories) ? state[query].blogCategories
-      : []
-    ).flat(),
+export const selectBlogCategories = createSelector([selectSlice], state =>
+  Object.keys(state)
+    .map(query =>
+      Array.isArray(state[query].blogCategories)
+        ? state[query].blogCategories
+        : [],
+    )
+    .flat(),
 );
 
 const forQuerySelectors = {};

@@ -71,18 +71,18 @@ export const DeletePostModal = ({
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel='Example Modal'
+        contentLabel="Example Modal"
         //   className="w-2/6 h-2/6"
       >
         {deleteLoading ? (
           <Loading forModal={true} />
         ) : (
-          <div className='ml-2'>
-            <img src='/dist/static/icons8-delete-96 (1).png' />
-            <h1 className='text-2xl text-slate-700 font-medium'>
+          <div className="ml-2">
+            <img src="/dist/static/icons8-delete-96 (1).png" />
+            <h1 className="text-2xl text-slate-700 font-medium">
               Delete '{title}' post
             </h1>
-            <h1 className='text-xl text-slate-700 font-bold'>
+            <h1 className="text-xl text-slate-700 font-bold">
               Are you sure you want to perform this action?
             </h1>
             <span
@@ -98,27 +98,27 @@ export const DeletePostModal = ({
             </span>
             {/* <div>I am a modal</div> */}
             <div
-              className='flex w-6/6'
+              className="flex w-6/6"
               style={{
                 bottom: 15,
                 position: 'absolute',
                 width: '90%',
               }}
             >
-              <div className='w-11/12'>
+              <div className="w-11/12">
                 <button
                   onClick={onDelete(id)}
-                  className=' btn-base w-52 bg-red-500  text-white rounded-full hover:bg-red-500'
+                  className=" btn-base w-52 bg-red-500  text-white rounded-full hover:bg-red-500"
                 >
                   Delete
                 </button>
               </div>
               <br />
 
-              <div className=''>
+              <div className="">
                 <button
                   onClick={closeModal}
-                  className='btn-base w-32 bg-white border-2 border-yellow-300 text-yellow-300 rounded-full'
+                  className="btn-base w-32 bg-white border-2 border-yellow-300 text-yellow-300 rounded-full"
                 >
                   Cancel
                 </button>

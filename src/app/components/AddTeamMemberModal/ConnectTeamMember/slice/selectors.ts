@@ -6,31 +6,26 @@ import { initialState } from '.';
 const selectSlice = (state: RootState) =>
   state['platform.addTeamMember.users'] || initialState;
 
-export const selectUsers = createSelector(
-  [selectSlice],
-  state => Object.keys(state).map(query => 
-      Array.isArray(state[query].users) ? state[query].users
-      : []
-    ).flat(),
+export const selectUsers = createSelector([selectSlice], state =>
+  Object.keys(state)
+    .map(query => (Array.isArray(state[query].users) ? state[query].users : []))
+    .flat(),
 );
 
 const paginatedUsers = {};
-export const getPaginatedUsers = ({ query = "" }) => {
-  const hash = `{"query":"${query}"}`
+export const getPaginatedUsers = ({ query = '' }) => {
+  const hash = `{"query":"${query}"}`;
   if (!paginatedUsers[hash]) {
     paginatedUsers[hash] = createSelector(
       [selectSlice],
       state => state[hash] || initialState.egPaginatedString,
     );
   }
-  return createSelector(
-    [paginatedUsers[hash]],
-    state => state.users,
-  );
+  return createSelector([paginatedUsers[hash]], state => state.users);
 };
 
-export const getLoadingForPagination = ({ query = "" }) => {
-  const hash = `{"query":"${query}"}`
+export const getLoadingForPagination = ({ query = '' }) => {
+  const hash = `{"query":"${query}"}`;
   if (!paginatedUsers[hash]) {
     paginatedUsers[hash] = createSelector(
       [selectSlice],
@@ -40,8 +35,8 @@ export const getLoadingForPagination = ({ query = "" }) => {
   return createSelector([paginatedUsers[hash]], state => state.loading);
 };
 
-export const getMetaForPagination = ({ query = "" }) => {
-  const hash = `{"query":"${query}"}`
+export const getMetaForPagination = ({ query = '' }) => {
+  const hash = `{"query":"${query}"}`;
   if (!paginatedUsers[hash]) {
     paginatedUsers[hash] = createSelector(
       [selectSlice],

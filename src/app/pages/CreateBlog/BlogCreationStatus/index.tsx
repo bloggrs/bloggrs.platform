@@ -11,32 +11,32 @@ export const BlogCreationStatus = ({
   onSuccess,
 }: any) => {
   const [loading, setLoading] = useState(true);
-  
+
   const history = useHistory();
-  const { username } = parentData["/choose-url"]
-  
+  const { username } = parentData['/choose-url'];
+
   useEffect(() => {
-    const {
-      name, description, thumbnail
-    } = parentData["/"]
-    const BlogCategory = parentData["/blog-category"]
-    const BlogThemeId = parentData["/choose-theme"]
-    const { username } = parentData["/choose-url"]
+    const { name, description, thumbnail } = parentData['/'];
+    const BlogCategory = parentData['/blog-category'];
+    const BlogThemeId = parentData['/choose-theme'];
+    const { username } = parentData['/choose-url'];
     const data = {
-      name, description, thumbnail,
-      BlogCategory, BlogThemeId, username
-    }
-    blogsService
-      .createBlog(data)
-      .then(blog => {
-        onSuccess(blog)
-        // sendValueToParent(blog);
-        // nextStep();
-      });
+      name,
+      description,
+      thumbnail,
+      BlogCategory,
+      BlogThemeId,
+      username,
+    };
+    blogsService.createBlog(data).then(blog => {
+      onSuccess(blog);
+      // sendValueToParent(blog);
+      // nextStep();
+    });
   }, []);
   return (
     <>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: 'center' }}>
         <h6>Setting up {username}.gjergjkadriu.com</h6>
       </div>
     </>

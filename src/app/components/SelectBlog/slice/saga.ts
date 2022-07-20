@@ -5,19 +5,14 @@ import { LoadBlogsAction } from './types';
 
 function* getBlogs() {
   try {
-    const blogs: any = yield call(
-      blogsService.getMyBlogs,
-    );
+    const blogs: any = yield call(blogsService.getMyBlogs);
     yield put(actions.loaded({ blogs }));
   } catch (err) {
-    console.info(err)
+    console.info(err);
     yield put(actions.failed({ error: err }));
   }
 }
 
 export function* blogsSaga() {
-  yield takeLatest<LoadBlogsAction, any>(
-    actions.loadBlogs.type,
-    getBlogs,
-  );
+  yield takeLatest<LoadBlogsAction, any>(actions.loadBlogs.type, getBlogs);
 }

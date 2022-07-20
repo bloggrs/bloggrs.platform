@@ -9,7 +9,7 @@ export const initialState: CategoriesState = {
     tags: [],
     loading: true,
     error: null,
-    _meta: { count: 0 }
+    _meta: { count: 0 },
   },
 };
 
@@ -21,42 +21,41 @@ const slice = createSlice({
     removeCategory(state, action: PayloadAction<any>) {
       const keys = Object.keys(state);
       const filter_rule = category => category.id !== action.payload.id;
-      const new_state = { };
+      const new_state = {};
       for (let key of keys) {
         const value: any = state[key];
         if (Array.isArray(value.tags)) {
-          value.tags = value.tags.filter(filter_rule)
-        } 
-        new_state[key] = value
+          value.tags = value.tags.filter(filter_rule);
+        }
+        new_state[key] = value;
       }
-      state = { ...new_state }
+      state = { ...new_state };
     },
     deleteCategory(state, action: PayloadAction<any>) {},
     initSearchIfNotExists(state, action: PayloadAction<any>) {
       const {
-        payload: { query, page, pageSize  },
+        payload: { query, page, pageSize },
       } = action;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
       if (state[hash] !== undefined) return;
       state[hash] = {
         tags: [],
         loading: true,
         error: null,
-        _meta: undefined
+        _meta: undefined,
       };
     },
     loaded(state, action: PayloadAction<any>) {
       console.log('loaded', action);
       const { query, page, pageSize, _meta } = action.payload;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
       state[hash]._meta = _meta;
       state[hash].loading = false;
-      state[hash].tags =
-        action.payload.categories;
+      state[hash].tags = action.payload.categories;
     },
     failed(state, action: PayloadAction<any>) {
       const { query, page, pageSize } = action.payload;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
 
       state[hash].loading = false;
       state[hash].error = action.payload.error;

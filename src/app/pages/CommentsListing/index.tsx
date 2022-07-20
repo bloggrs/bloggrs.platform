@@ -55,7 +55,11 @@ export const CommentsListing = ({ match }) => {
           fields={[
             { key: 'id', label: '#' },
             { key: 'content', label: 'Content' },
-            { key: 'PostId', label: 'Post ID', href: value => `/blogs/${blog_id}/posts/${value}` },
+            {
+              key: 'PostId',
+              label: 'Post ID',
+              href: value => `/blogs/${blog_id}/posts/${value}`,
+            },
           ]}
           data={comments}
           onLoadMore={e => setLoadMoreClicks(loadMoreClicks + 1)}

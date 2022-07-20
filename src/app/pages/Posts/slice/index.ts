@@ -9,7 +9,7 @@ export const initialState: PostsState = {
     posts: [],
     loading: true,
     error: null,
-    _meta: { count: 0 }
+    _meta: { count: 0 },
   },
 };
 
@@ -20,45 +20,41 @@ const slice = createSlice({
     loadPosts(state, action: PayloadAction<any>) {},
     addPost(state, action: PayloadAction<any>) {
       const {
-        payload: { post, query = "", page = 1, pageSize = 10 }
+        payload: { post, query = '', page = 1, pageSize = 10 },
       } = action;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
       if (state[hash] === undefined) return state;
-      return { 
+      return {
         ...state,
-        [ hash ]: {
+        [hash]: {
           ...state[hash],
-          posts: [
-            ...state[hash].posts,
-            post
-          ]
-        }
-      } as any
+          posts: [...state[hash].posts, post],
+        },
+      } as any;
     },
     initSearchIfNotExists(state, action: PayloadAction<any>) {
       const {
-        payload: { query, page, pageSize  },
+        payload: { query, page, pageSize },
       } = action;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
       // if (state[hash] !== undefined) return;
       state[hash] = {
         posts: [],
         loading: true,
         error: null,
-        _meta: undefined
+        _meta: undefined,
       };
     },
     loaded(state, action: PayloadAction<any>) {
       const { query, page, pageSize, _meta } = action.payload;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
       state[hash]._meta = _meta;
       state[hash].loading = false;
-      state[hash].posts =
-        action.payload.posts;
+      state[hash].posts = action.payload.posts;
     },
     failed(state, action: PayloadAction<any>) {
       const { query, page, pageSize } = action.payload;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`
+      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
 
       state[hash].loading = false;
       state[hash].error = action.payload.error;

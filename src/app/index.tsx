@@ -51,7 +51,7 @@ export function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const [ sideBarOpened, setSideBarOpened ] = React.useState(true);
+  const [sideBarOpened, setSideBarOpened] = React.useState(true);
 
   console.log(location, 'location');
 
@@ -66,40 +66,40 @@ export function App() {
   const { pathname } = location;
   const collapse_main_panel = [pathname === '/'].indexOf(true) !== -1;
 
-    useEffect(() => {
+  useEffect(() => {
     const { body } = document;
-    if (!sideBarOpened) return body.classList.add("enlarge-menu");
-    return body.classList.remove("enlarge-menu"); 
-  }, [ sideBarOpened ]);
+    if (!sideBarOpened) return body.classList.add('enlarge-menu');
+    return body.classList.remove('enlarge-menu');
+  }, [sideBarOpened]);
 
   const toggleSideBar = () => setSideBarOpened(!sideBarOpened);
-  const newButton = { label: "New post", to: "/posts/create" };
-  const isComment = pathname.indexOf("comment") !== -1;
-  const isPost = pathname.indexOf("task") !== -1;
-  const isTeam = pathname.indexOf("team") !== -1;
-  const isCategory = pathname.indexOf("categories") !== -1;
-  const isTag = pathname.indexOf("tags") !== -1;
+  const newButton = { label: 'New post', to: '/posts/create' };
+  const isComment = pathname.indexOf('comment') !== -1;
+  const isPost = pathname.indexOf('task') !== -1;
+  const isTeam = pathname.indexOf('team') !== -1;
+  const isCategory = pathname.indexOf('categories') !== -1;
+  const isTag = pathname.indexOf('tags') !== -1;
   if (isComment) {
-    newButton.label = "New comment"
-    newButton.to = "/comments/create"
+    newButton.label = 'New comment';
+    newButton.to = '/comments/create';
   } else if (isPost) {
-    newButton.label = "New post"
-    newButton.to = "/posts/create"
+    newButton.label = 'New post';
+    newButton.to = '/posts/create';
   } else if (isTeam) {
-    newButton.label = "New team"
-    newButton.to = "/teams/create"
+    newButton.label = 'New team';
+    newButton.to = '/teams/create';
   } else if (isCategory) {
-    newButton.label = "New category"
-    newButton.to = "/categories/create"
+    newButton.label = 'New category';
+    newButton.to = '/categories/create';
   } else if (isTag) {
-    newButton.label = "New tag"
-    newButton.to = "/tags/create"
+    newButton.label = 'New tag';
+    newButton.to = '/tags/create';
   }
-  if (location.hash == "404") return <>E404</>
+  if (location.hash == '404') return <>E404</>;
 
   const { search } = location;
-  const show404 = search.indexOf("?e=404") !== -1;
-  if (show404) return <E404 />
+  const show404 = search.indexOf('?e=404') !== -1;
+  if (show404) return <E404 />;
   return (
     <>
       <Helmet
@@ -123,7 +123,7 @@ export function App() {
           component={CreatePost}
         />
         <MainPanel
-          sideBarOpened={sideBarOpened} 
+          sideBarOpened={sideBarOpened}
           setSideBarOpened={setSideBarOpened}
           sidebarProps={{ collapse: collapse_main_panel }}
           toggleSideBar={toggleSideBar}
@@ -131,7 +131,11 @@ export function App() {
         >
           <PrivateRoute exact path="/" component={MyProfile} />
           <PrivateRoute exact path="/categories" component={Categories} />
-          <PrivateRoute exact path="/categories/:id" component={SingleCategory} />
+          <PrivateRoute
+            exact
+            path="/categories/:id"
+            component={SingleCategory}
+          />
           <PrivateRoute exact path="/posts" component={Posts} />
           <PrivateRoute exact path="/posts/:id" component={SinglePost} />
           <PrivateRoute exact path="/teams/:id" component={SingleTeam} />

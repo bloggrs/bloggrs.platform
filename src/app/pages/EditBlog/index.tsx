@@ -40,7 +40,7 @@ export const EditBlog = () => {
         style={{
           position: 'absolute',
           left: '11rem',
-          width: "80vw"
+          width: '80vw',
         }}
         className="h-screen border-2 border-dashed border-slate-700 p-5"
         src={

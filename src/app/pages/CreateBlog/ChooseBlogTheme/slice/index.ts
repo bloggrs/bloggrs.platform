@@ -31,8 +31,7 @@ const slice = createSlice({
     loaded(state, action: PayloadAction<any>) {
       console.log('loaded', action);
       state[action.payload.query].loading = false;
-      state[action.payload.query].blogThemes =
-        action.payload.blogThemes;
+      state[action.payload.query].blogThemes = action.payload.blogThemes;
     },
     failed(state, action: PayloadAction<any>) {
       state[action.payload.query].loading = false;

@@ -9,7 +9,7 @@ export const initialState: UsersState = {
     users: [],
     loading: true,
     error: null,
-    _meta: { count: 0 }
+    _meta: { count: 0 },
   },
 };
 
@@ -20,29 +20,28 @@ const slice = createSlice({
     loadUsers(state, action: PayloadAction<any>) {},
     initSearchIfNotExists(state, action: PayloadAction<any>) {
       const {
-        payload: { query  },
+        payload: { query },
       } = action;
-      const hash = `{"query":"${query}"}`
+      const hash = `{"query":"${query}"}`;
       if (state[hash] !== undefined) return;
       state[hash] = {
         users: [],
         loading: true,
         error: null,
-        _meta: undefined
+        _meta: undefined,
       };
     },
     loaded(state, action: PayloadAction<any>) {
       console.log('loaded', action);
       const { query, _meta } = action.payload;
-      const hash = `{"query":"${query}"}`
+      const hash = `{"query":"${query}"}`;
       state[hash]._meta = _meta;
       state[hash].loading = false;
-      state[hash].users =
-        action.payload.users;
+      state[hash].users = action.payload.users;
     },
     failed(state, action: PayloadAction<any>) {
       const { query } = action.payload;
-      const hash = `{"query":"${query}"}`
+      const hash = `{"query":"${query}"}`;
 
       state[hash].loading = false;
       state[hash].error = action.payload.error;

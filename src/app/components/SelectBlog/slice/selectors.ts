@@ -6,9 +6,9 @@ import { initialState } from '.';
 const selectSlice = (state: RootState) =>
   state['selectBlog.blogs'] || initialState;
 
-export const selectBlogs = createSelector(
-  [selectSlice],
-  state => state.blogs
-);
+export const selectBlogs = createSelector([selectSlice], state => state.blogs);
 
-export const getIsLoading = createSelector([ selectSlice ], state => state.loading);
+export const getIsLoading = createSelector(
+  [selectSlice],
+  state => state.loading,
+);
