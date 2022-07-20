@@ -45,6 +45,7 @@ import { Posts } from './pages/Posts';
 import { SingleTeam } from './pages/SingleTeam';
 import { Tags } from './pages/Tags';
 import { SingleTag } from './pages/SingleTag';
+import { GeneralDetails } from './pages/Settings/GeneralDetails';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -140,6 +141,7 @@ export function App() {
           />
           <PrivateRoute exact path="/tags" component={Tags} />
           <PrivateRoute exact path="/tags/:id" component={SingleTag} />
+          <PrivateRoute exact path="/settings/general" component={GeneralDetails} />
           <PrivateRoute exact path="/posts" component={Posts} />
           <PrivateRoute exact path="/posts/:id" component={SinglePost} />
           <PrivateRoute exact path="/teams/:id" component={SingleTeam} />

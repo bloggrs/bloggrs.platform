@@ -165,6 +165,43 @@ const createBlogPost = ({
       return data.data.post;
     });
 };
+const updateBlog = ({
+  id,
+  name,
+  description,
+  thumbnail,
+  BlogCategory,
+  BlogThemeId,
+  username,
+}) => {
+  const data = {
+    name,
+    description,
+    thumbnail,
+    BlogCategory,
+    BlogThemeId,
+    username,
+  };
+  let body = {};
+  for (let key of Object.keys(data)) {
+    const value = data[key];
+    if (value) body[key] = value;
+  }
+  const requestOptions = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+    body: JSON.stringify(body),
+  };
+  const endpoint = `${API_URL}/api/v1/blogs/${id}`; // /` + BlogId + '/posts';
+  return fetch(endpoint, requestOptions)
+    .then(res => res.json())
+    .then(data => {
+      return data.data.post;
+    });
+};
 
 const updateBlogPost = ({
   id,
@@ -236,6 +273,7 @@ const getComments = ({ BlogId, query }) => {
 export const blogsService = {
   createBlog,
   getBlog,
+  updateBlog,
   getMyBlogs,
   getBlogCategories,
   getPosts,

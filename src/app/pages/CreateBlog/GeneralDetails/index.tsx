@@ -12,11 +12,12 @@ const schema = yup.object().shape({
 });
 
 export const GeneralDetails = ({
-  nextStep,
   onContinueClick,
   onPreviousClick,
-  sendValueToParent,
   parentValue: parentValue_,
+  className_ = "card-body",
+  continueLabel = "Continue",
+  previousLabel = "Cancel",
 }) => {
   const [thumbnail, setThumbnail] = React.useState(parentValue_.thumbnail);
   const [thumbnailFile, setThumbnailFile] = React.useState(
@@ -27,7 +28,7 @@ export const GeneralDetails = ({
     errors[key] && <div className="form-control-feedback">{errors[key]}</div>;
 
   return (
-    <div className="card-body">
+    <div className={className_}>
       <Formik
         initialValues={{
           name: parentValue_.name,
@@ -137,7 +138,7 @@ export const GeneralDetails = ({
                           })
                         }
                       >
-                        Previous
+                        {previousLabel}
                       </button>
                     </div>
                     <div
@@ -153,7 +154,7 @@ export const GeneralDetails = ({
                         disabled={!onContinueClick || isSubmitting}
                         type="submit"
                       >
-                        Continue
+                        {continueLabel}
                       </button>
                     </div>
                   </div>

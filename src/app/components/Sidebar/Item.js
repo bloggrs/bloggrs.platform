@@ -1,6 +1,6 @@
 /* eslint-disable */
 import FeatherIcon from 'feather-icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SubItem from './SubItem';
 
@@ -32,11 +32,18 @@ const getExact = ({ pathname, to, items }) => {
 };
 
 const Item = props => {
-  const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
-
+  
   const location = useLocation();
   const { pathname } = location;
+  const [open, setOpen] = useState(pathname.indexOf( props.to ) !== -1);
+
+  useEffect(() => {
+    const value = pathname.indexOf( props.to ) !== -1;
+    setOpen(value);
+  }, [pathname])
+  
+
   const exact = getExact({
     items: props.items,
     to: props.to,

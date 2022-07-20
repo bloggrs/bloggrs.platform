@@ -8,6 +8,7 @@ export interface RootState {
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
   auth: any;
   users: any;
+  blogs: any;
   'createBlog.blogCategories': any;
   'createBlog.blogThemes': any;
   'blogOverviewCard.blog': any;
