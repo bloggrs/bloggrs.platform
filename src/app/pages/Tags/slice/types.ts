@@ -22,3 +22,7 @@ export interface LoadTagsAction extends Action {
 export interface DeleteTagAction extends Action {
   type: 'platform.tags/deleteTag';
 }
+
+export interface DeleteCategoryAction extends Action {
+  type: 'platform.createPost.categories/deleteCategory';
+}

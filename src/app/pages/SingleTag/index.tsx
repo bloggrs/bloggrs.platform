@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { categoriesService } from 'services/categoriesService.service';
+import { tagsService } from 'services/tagsService.service';
 import Handle404, { set404 } from '../../../utils/handle404';
 import * as yup from 'yup';
 import { PageNavigation } from 'app/components/PageNavigation';
@@ -21,7 +21,7 @@ const getFeedback = (errors, key) =>
       </div>
     </span>
   );
-const SingleCategory = props => {
+const SingleTag = props => {
   const match: any = useRouteMatch();
   const history: any = useHistory();
   const { id: param_id } = match.params;
@@ -41,7 +41,7 @@ const SingleCategory = props => {
       const value =
         mode === 'create'
           ? defaultValue
-          : await categoriesService.getCategoryById(param_id);
+          : await tagsService.getTagById(param_id);
       return value;
     };
     fetchData()
@@ -68,11 +68,11 @@ const SingleCategory = props => {
           <div className="page-title-box">
             <div className="row">
               <PageNavigation
-                label="Categories"
+                label="Tags"
                 items={[
                   {
-                    label: 'Categories',
-                    to: '/categories',
+                    label: 'Tags',
+                    to: '/tags',
                   },
                   {
                     label: value.name || 'Create',
@@ -91,7 +91,7 @@ const SingleCategory = props => {
       <div className="col mt-1">
         <div className="card">
           <div className="card-header">
-            <h4 className="card-title">{modeLabel} category</h4>
+            <h4 className="card-title">{modeLabel} tag</h4>
             <p className="text-muted mb-0">
               Basic example to demonstrate Bootstrap’s form styles.
             </p>
@@ -108,24 +108,24 @@ const SingleCategory = props => {
                 setSubmitting(true);
                 const func =
                   mode === 'create'
-                    ? () => categoriesService.createCategory(values)
+                    ? () => tagsService.createTag(values)
                     : () =>
-                        categoriesService.updateCategory({
+                        tagsService.updateTag({
                           id: param_id,
                           ...values,
                         });
                 try {
-                  const category = await func();
+                  const tag = await func();
                   if (mode === 'create') {
-                    history.push('/categories/' + category.id);
+                    history.push('/tags/' + tag.id);
                   }
                   toast.success(
-                    `Category '${category.name}' updated successfully!`,
+                    `Tag '${tag.name}' updated successfully!`,
                   );
                 } catch (err) {
                   console.log(err);
                   toast.error(
-                    `Category '${value.name || values.name}' failed to update!`,
+                    `Tag '${value.name || values.name}' failed to update!`,
                   );
                 }
                 setSubmitting(false);
@@ -256,7 +256,7 @@ const SingleCategory = props => {
                     type="button"
                     className="btn btn-soft-danger btn-md"
                     style={{ marginLeft: 15 }}
-                    onClick={() => history.push('/categories')}
+                    onClick={() => history.push('/tags')}
                   >
                     Cancel
                   </button>
@@ -270,4 +270,4 @@ const SingleCategory = props => {
   );
 };
 
-export { SingleCategory };
+export { SingleTag };
