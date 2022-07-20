@@ -1,24 +1,24 @@
 import { Action } from '@reduxjs/toolkit';
 
 /* --- STATE --- */
-export interface Category {
+export interface Tag {
   id: number;
   name: string;
 }
-export interface CategoriesQueryString {
-  tags: [Category?];
+export interface TagsQueryString {
+  tags: [Tag?];
   loading: boolean;
   error: [string?] | null;
   _meta: any;
 }
-export interface CategoriesState {
-  [queryString: string]: CategoriesQueryString;
+export interface TagsState {
+  [queryString: string]: TagsQueryString;
 }
 
-export interface LoadCategoriesAction extends Action {
-  type: 'platform.createPost.tags/loadCategories';
+export interface LoadTagsAction extends Action {
+  type: 'platform.createPost.tags/loadTags';
 }
 
-export interface DeleteCategoryAction extends Action {
-  type: 'platform.createPost.tags/deleteCategory';
+export interface DeleteTagAction extends Action {
+  type: 'platform.createPost.tags/deleteTag';
 }

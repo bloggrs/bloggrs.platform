@@ -6,42 +6,38 @@ import { initialState } from '.';
 const selectSlice = (state: RootState) =>
   state['platform.createPost.tags'] || initialState;
 
-export const selectPostCategories = createSelector([selectSlice], state =>
+export const selectTags = createSelector([selectSlice], state =>
   Object.keys(state)
     .map(query => (Array.isArray(state[query].tags) ? state[query].tags : []))
     .flat(),
 );
 
-const paginatedPostCategories = {};
-export const getPaginatedPostCategories = ({
+const paginatedTags = {};
+export const getPaginatedTags = ({
   query = '',
-  page = 1,
-  pageSize = 10,
 }) => {
-  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
-  if (!paginatedPostCategories[hash]) {
-    paginatedPostCategories[hash] = createSelector(
+  const hash = `{"query":"${query}"}`;
+  if (!paginatedTags[hash]) {
+    paginatedTags[hash] = createSelector(
       [selectSlice],
       state => state[hash] || initialState.egPaginatedString,
     );
   }
-  return createSelector([paginatedPostCategories[hash]], state => state.tags);
+  return createSelector([paginatedTags[hash]], state => state.tags);
 };
 
 export const getLoadingForPagination = ({
   query = '',
-  page = 1,
-  pageSize = 10,
 }) => {
-  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
-  if (!paginatedPostCategories[hash]) {
-    paginatedPostCategories[hash] = createSelector(
+  const hash = `{"query":"${query}"}`;
+  if (!paginatedTags[hash]) {
+    paginatedTags[hash] = createSelector(
       [selectSlice],
       state => state[hash] || initialState.egPaginatedString,
     );
   }
   return createSelector(
-    [paginatedPostCategories[hash]],
+    [paginatedTags[hash]],
     state => state.loading,
   );
 };
@@ -51,15 +47,15 @@ export const getMetaForPagination = ({
   page = 1,
   pageSize = 10,
 }) => {
-  const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
-  if (!paginatedPostCategories[hash]) {
-    paginatedPostCategories[hash] = createSelector(
+  const hash = `{"query":"${query}"}`;
+  if (!paginatedTags[hash]) {
+    paginatedTags[hash] = createSelector(
       [selectSlice],
       state => state[hash] || initialState.egPaginatedString,
     );
   }
   return createSelector(
-    [paginatedPostCategories[hash]],
+    [paginatedTags[hash]],
     state => state._meta || {},
   );
 };

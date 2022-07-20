@@ -82,16 +82,6 @@ export default props => {
                     alt=""
                     className="img-fluid rounded"
                   />
-                  <span
-                    className="badge badge-purple px-3 py-2 bg-danger fw-semibold mt-035"
-                    style={{
-                      position: 'fixed',
-                      marginTop: '0.35vh',
-                      marginLeft: '-13vw',
-                    }}
-                  >
-                    Selected
-                  </span>
                   <p className="text-muted mt-2">my-favorite-vacation-image</p>
                   <hr className="hr-dashed" />
                 </div>
@@ -102,21 +92,22 @@ export default props => {
             <div className="col-lg-3">
               <div className="card-body">
                 <div className="blog-card">
+                  <span
+                    className="badge badge-purple px-3 py-2 bg-danger fw-semibold mt-035"
+                    style={{
+                      margin: 5,
+                      zoom: '70%',
+                      fontSize: 15,
+                      position: 'absolute',
+                    }}
+                  >
+                    Selected
+                  </span>
                   <img
                     src="https://mannatthemes.com/dastone/default/assets/images/small/img-3.jpg"
                     alt=""
                     className="img-fluid rounded"
                   />
-                  <span
-                    className="badge badge-purple px-3 py-2 bg-danger fw-semibold mt-035"
-                    style={{
-                      position: 'fixed',
-                      marginTop: '0.35vh',
-                      marginLeft: '-13vw',
-                    }}
-                  >
-                    Selected
-                  </span>
                   <p className="text-muted mt-2">my-favorite-vacation-image</p>
                   <hr className="hr-dashed" />
                 </div>

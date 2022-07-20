@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useCategoriesSlice } from './slice';
+import { useTagsSlice } from './slice';
 import debounce from 'debounce';
 import {
   getMetaForPagination,
-  getPaginatedPostCategories,
+  getPaginatedTags,
 } from './slice/selectors';
 import slugify from 'slugify';
 import { DeleteItemModal } from 'app/components/DeleteItemModal';
@@ -13,8 +13,8 @@ import { DeleteItemModal } from 'app/components/DeleteItemModal';
 import { PageNavigation } from 'app/components/PageNavigation';
 import moment from 'moment';
 
-const CategoriesTable = ({
-  categories,
+const TagsTable = ({
+  tags,
   value,
   setValue,
   onChange: _onChange,
@@ -33,26 +33,26 @@ const CategoriesTable = ({
     setValue(newValue);
     _onChange(newValue);
   };
-  const isChecked = category =>
-    Boolean(value.find(value_id => category.id === value_id));
-  const CategoryItems =
+  const isChecked = tag =>
+    Boolean(value.find(value_id => tag.id === value_id));
+  const TagItems =
     value &&
-    categories.map(category => {
+    tags.map(tag => {
       return (
         <div className="form-check">
           <input
             className="form-check-input"
             type="checkbox"
-            id={`plaform.createPost.categories[${category.id}]`}
-            value={category.id}
+            id={`platform.createPost.tags[${tag.id}]`}
+            value={tag.id}
             onChange={onChange}
-            checked={isChecked(category)}
+            checked={isChecked(tag)}
           />
           <label
             className="form-check-label"
-            htmlFor={`plaform.createPost.categories[${category.id}]`}
+            htmlFor={`platform.createPost.tags[${tag.id}]`}
           >
-            {category.name}
+            {tag.name}
           </label>
         </div>
       );
@@ -70,14 +70,14 @@ const CategoriesTable = ({
       }}
     >
       <div className="col" style={{ marginLeft: 15 }}>
-        {CategoryItems}
+        {TagItems}
       </div>
     </div>
   );
 };
 
 export const SelectTags = ({ initialValue, onChange }) => {
-  const { actions } = useCategoriesSlice();
+  const { actions } = useTagsSlice();
 
   const history: any = useHistory();
   const { search } = useLocation();
@@ -107,7 +107,7 @@ export const SelectTags = ({ initialValue, onChange }) => {
   };
 
   const pagination = { query } as any;
-  const categories = useSelector(getPaginatedPostCategories(pagination));
+  const tags = useSelector(getPaginatedTags(pagination));
 
   const [init, setInit] = useState(false);
   const dispatch = useDispatch();
@@ -115,7 +115,7 @@ export const SelectTags = ({ initialValue, onChange }) => {
     () =>
       debounce(() => {
         const query = queryParams.get('q') ? queryParams.get('q') : '';
-        dispatch(actions.loadPostCategories({ query }));
+        dispatch(actions.loadTags({ query }));
       }, 75),
     [query, init],
   );
@@ -126,7 +126,7 @@ export const SelectTags = ({ initialValue, onChange }) => {
   return (
     <div className="row">
       <div className="input-group col-sm-8 mt-2 col form-label">
-        <label className="col-sm-3 mt-2 col form-label">Categories: </label>
+        <label className="col-sm-3 mt-2 col form-label">Tags: </label>
         <button
           className={`btn btn-${btnType}`}
           type="button"
@@ -137,16 +137,16 @@ export const SelectTags = ({ initialValue, onChange }) => {
         <input
           type="text"
           className="form-control"
-          placeholder="Search categories.."
+          placeholder="Search tags.."
           aria-label="Example text with button addon"
           aria-describedby="button-addon1"
           value={query!}
           onChange={onQueryChange}
         />
       </div>
-      <CategoriesTable
+      <TagsTable
         onChange={onChange}
-        categories={categories}
+        tags={tags}
         value={value}
         setValue={setValue}
       />

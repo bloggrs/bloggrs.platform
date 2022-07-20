@@ -82,7 +82,7 @@ const ConnectTeamMember = ({
 
   return (
     <>
-      <div className="card-body">
+      <div className="card-body" style={{ maxHeight: "50vh", overflow: "auto" }}>
         <div className="input-group col-sm-8 mt-2 col form-label">
           <label className="col-sm-3 mt-2 col form-label">Search: </label>
           <button

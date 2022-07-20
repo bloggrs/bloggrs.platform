@@ -1,10 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
-import { categoriesSaga } from './saga';
-import { CategoriesState } from './types';
+import { tagsSaga } from './saga';
+import { TagsState } from './types';
 
-export const initialState: CategoriesState = {
+export const initialState: TagsState = {
   egPaginatedString: {
     tags: [],
     loading: true,
@@ -17,26 +17,12 @@ const slice = createSlice({
   name: 'platform.createPost.tags',
   initialState,
   reducers: {
-    loadPostCategories(state, action: PayloadAction<any>) {},
-    removeCategory(state, action: PayloadAction<any>) {
-      const keys = Object.keys(state);
-      const filter_rule = category => category.id !== action.payload.id;
-      const new_state = {};
-      for (let key of keys) {
-        const value: any = state[key];
-        if (Array.isArray(value.tags)) {
-          value.tags = value.tags.filter(filter_rule);
-        }
-        new_state[key] = value;
-      }
-      state = { ...new_state };
-    },
-    deleteCategory(state, action: PayloadAction<any>) {},
+    loadTags(state, action: PayloadAction<any>) {},
     initSearchIfNotExists(state, action: PayloadAction<any>) {
       const {
-        payload: { query, page, pageSize },
+        payload: { query },
       } = action;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
+      const hash = `{"query":"${query}"}`;
       if (state[hash] !== undefined) return;
       state[hash] = {
         tags: [],
@@ -48,14 +34,14 @@ const slice = createSlice({
     loaded(state, action: PayloadAction<any>) {
       console.log('loaded', action);
       const { query, page, pageSize, _meta } = action.payload;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
+      const hash = `{"query":"${query}"}`;
       state[hash]._meta = _meta;
       state[hash].loading = false;
-      state[hash].tags = action.payload.categories;
+      state[hash].tags = action.payload.tags;
     },
     failed(state, action: PayloadAction<any>) {
       const { query, page, pageSize } = action.payload;
-      const hash = `{"query":"${query}","page":${page},"pageSize"=${pageSize}}`;
+      const hash = `{"query":"${query}"}`;
 
       state[hash].loading = false;
       state[hash].error = action.payload.error;
@@ -63,11 +49,11 @@ const slice = createSlice({
   },
 });
 
-export const { actions: categoriesActions } = slice;
+export const { actions: tagsActions } = slice;
 
-export const useCategoriesSlice = () => {
+export const useTagsSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
-  useInjectSaga({ key: slice.name, saga: categoriesSaga });
+  useInjectSaga({ key: slice.name, saga: tagsSaga });
   return { actions: slice.actions };
 };
 
@@ -75,7 +61,7 @@ export const useCategoriesSlice = () => {
  * Example Usage:
  *
  * export function MyComponentNeedingThisSlice() {
- *  const { actions } = useBlogCategoriesSlice();
+ *  const { actions } = useTagsSlice();
  *
  *  const onButtonClick = (evt) => {
  *    dispatch(actions.someAction());
