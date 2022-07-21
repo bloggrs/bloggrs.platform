@@ -1,5 +1,5 @@
 import React from 'react';
-import ChooseMediaModal from '../ChooseMediaModal';
+import { ChooseMediaModal } from '../ChooseMediaModal';
 
 type UploadFileType = {
   onChange: Function;

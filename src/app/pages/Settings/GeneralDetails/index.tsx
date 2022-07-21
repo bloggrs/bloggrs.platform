@@ -17,8 +17,8 @@ const GeneralDetails = ({ }) => {
     const history = useHistory();
 
     const onContinueClick = data => async () => {
-        blogsService.updateBlog({ id: selectedBlogId, ...data })
-        await toast.info("Settings updated successfully!")
+        await blogsService.updateBlog({ id: selectedBlogId, ...data })
+        toast.info("Settings updated successfully!")
     }
     const onPreviousClick = data => () => history.push("/")    
     

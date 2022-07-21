@@ -42,7 +42,8 @@ export const GeneralDetails = ({
             thumbnailFile,
             ...values,
           };
-          if (onContinueClick) onContinueClick(data)();
+          if (onContinueClick) await onContinueClick(data)();
+          setSubmitting(false);
         }}
       >
         {({
@@ -128,7 +129,7 @@ export const GeneralDetails = ({
                       <button
                         className="btn btn-outline-light"
                         style={{ right: '-6vw', marginRight: '2vw' }}
-                        disabled={!onPreviousClick}
+                        disabled={!onPreviousClick || isSubmitting}
                         onClick={
                           onPreviousClick &&
                           onPreviousClick({

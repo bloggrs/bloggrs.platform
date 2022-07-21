@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { AdvancedPagination } from '../AdvancedPagination';
 
-export default props => {
+const ChooseMediaModal = props => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  let subtitle = { style: {} };
+  let subtitle: any = { style: {} };
 
   const [showEntries, setShowEntries] = React.useState(6);
   const [query, setQuery] = React.useState('');
-  const onQueryChange = () => {};
-  const onShowEntriesChange = () => {};
+  const onQueryChange = e => setQuery(e.target.value)
+  const onShowEntriesChange = e => setShowEntries(Number(e.target.value))
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (query) searchParams.set("query", query);
+    if (showEntries) searchParams.set("pageSize", showEntries);
+    window.history.pushState({ path: searchParams.toString() }, '', searchParams.toString());
+
+  }, [ query, showEntries ])
 
   function openModal(e) {
     if (e) e.preventDefault();
@@ -147,3 +155,5 @@ export default props => {
     </>
   );
 };
+
+export { ChooseMediaModal };
