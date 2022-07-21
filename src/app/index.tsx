@@ -103,6 +103,7 @@ export function App() {
   const { search } = location;
   const show404 = search.indexOf('?e=404') !== -1;
   if (show404) return <E404 />;
+  // return <>"OK"</>
   return (
     <>
       <Helmet
@@ -141,7 +142,11 @@ export function App() {
           />
           <PrivateRoute exact path="/tags" component={Tags} />
           <PrivateRoute exact path="/tags/:id" component={SingleTag} />
-          <PrivateRoute exact path="/settings/general" component={GeneralDetails} />
+          <PrivateRoute
+            exact
+            path="/settings/general"
+            component={GeneralDetails}
+          />
           <PrivateRoute exact path="/posts" component={Posts} />
           <PrivateRoute exact path="/posts/:id" component={SinglePost} />
           <PrivateRoute exact path="/teams/:id" component={SingleTeam} />

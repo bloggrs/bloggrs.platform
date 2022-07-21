@@ -2,10 +2,9 @@
  * Asynchronously loads the component for ChooseMediaModal
  */
 
- import { lazyLoad } from 'utils/loadable';
+import { lazyLoad } from 'utils/loadable';
 
- export const ChooseMediaModal = lazyLoad(
-   () => import('./index'),
-   module => module.ChooseMediaModal,
- );
- 
+export const ChooseMediaModal = lazyLoad(
+  () => import('./index'),
+  module => module.ChooseMediaModal,
+);

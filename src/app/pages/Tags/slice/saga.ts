@@ -29,12 +29,6 @@ function* deleteTag({ payload: { id } }) {
 }
 
 export function* tagsSaga() {
-  yield takeLatest<LoadTagsAction, any>(
-    actions.loadTags.type,
-    getTag,
-  );
-  yield takeLatest<DeleteTagAction, any>(
-    actions.deleteTag.type,
-    deleteTag,
-  );
+  yield takeLatest<LoadTagsAction, any>(actions.loadTags.type, getTag);
+  yield takeLatest<DeleteTagAction, any>(actions.deleteTag.type, deleteTag);
 }

@@ -3,22 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useTagsSlice } from './slice';
 import debounce from 'debounce';
-import {
-  getMetaForPagination,
-  getPaginatedTags,
-} from './slice/selectors';
+import { getMetaForPagination, getPaginatedTags } from './slice/selectors';
 import slugify from 'slugify';
 import { DeleteItemModal } from 'app/components/DeleteItemModal';
 // import { AdvancedPagination } from "app/components/AdvancedPagination";
 import { PageNavigation } from 'app/components/PageNavigation';
 import moment from 'moment';
 
-const TagsTable = ({
-  tags,
-  value,
-  setValue,
-  onChange: _onChange,
-}) => {
+const TagsTable = ({ tags, value, setValue, onChange: _onChange }) => {
   const onChange = e => {
     // e.preventDefault();
     const { value: str } = e.target;
@@ -33,8 +25,7 @@ const TagsTable = ({
     setValue(newValue);
     _onChange(newValue);
   };
-  const isChecked = tag =>
-    Boolean(value.find(value_id => tag.id === value_id));
+  const isChecked = tag => Boolean(value.find(value_id => tag.id === value_id));
   const TagItems =
     value &&
     tags.map(tag => {

@@ -15,9 +15,9 @@ export const GeneralDetails = ({
   onContinueClick,
   onPreviousClick,
   parentValue: parentValue_,
-  className_ = "card-body",
-  continueLabel = "Continue",
-  previousLabel = "Cancel",
+  className_ = 'card-body',
+  continueLabel = 'Continue',
+  previousLabel = 'Cancel',
 }) => {
   const [thumbnail, setThumbnail] = React.useState(parentValue_.thumbnail);
   const [thumbnailFile, setThumbnailFile] = React.useState(

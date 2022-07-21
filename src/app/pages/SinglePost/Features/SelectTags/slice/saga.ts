@@ -7,10 +7,7 @@ import { LoadTagsAction } from './types';
 function* getTags({ payload: { query = '', page = 1, pageSize = 10 } }) {
   yield put(actions.initSearchIfNotExists({ query, page, pageSize }));
   try {
-    const [tags, _meta]: any = yield call(
-      tagsService.getTags,
-      query,
-    );
+    const [tags, _meta]: any = yield call(tagsService.getTags, query);
     yield put(actions.loaded({ query, page, pageSize, tags, _meta }));
   } catch (err) {
     yield put(actions.failed({ query, page, pageSize, error: err }));
@@ -18,8 +15,5 @@ function* getTags({ payload: { query = '', page = 1, pageSize = 10 } }) {
 }
 
 export function* tagsSaga() {
-  yield takeLatest<LoadTagsAction, any>(
-    actions.loadTags.type,
-    getTags,
-  );
+  yield takeLatest<LoadTagsAction, any>(actions.loadTags.type, getTags);
 }

@@ -119,9 +119,7 @@ const SingleTag = props => {
                   if (mode === 'create') {
                     history.push('/tags/' + tag.id);
                   }
-                  toast.success(
-                    `Tag '${tag.name}' updated successfully!`,
-                  );
+                  toast.success(`Tag '${tag.name}' updated successfully!`);
                 } catch (err) {
                   console.log(err);
                   toast.error(

@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
 import qs from 'qs';
+import fetch from './fetch';
 
 const createBlog = ({
   name,

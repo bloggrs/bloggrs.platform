@@ -17,10 +17,10 @@ function* getBlogById({ id, onSuccess = undefined, onFail = undefined }) {
   try {
     const blog: any = yield call(blogsService.getBlog, id);
     yield put(actions.blogLoaded({ blog }));
-    if (onSuccess) call(onSuccess as any, blog)
+    if (onSuccess) call(onSuccess as any, blog);
   } catch (err) {
     console.info(err);
-    if (onFail) call(onFail as any, err)
+    if (onFail) call(onFail as any, err);
     yield put(actions.blogFailed({ error: err }));
   }
 }
@@ -31,6 +31,12 @@ function* loadCurrentBlog() {
 }
 export function* blogsSaga() {
   yield takeLatest<LoadBlogsAction, any>(actions.loadBlogs.type, getBlogs);
-  yield takeLatest<LoadBlogsAction, any>(actions.loadBlogById.type, getBlogById);
-  yield takeLatest<LoadBlogsAction, any>(actions.loadCurrentBlog.type, loadCurrentBlog);
+  yield takeLatest<LoadBlogsAction, any>(
+    actions.loadBlogById.type,
+    getBlogById,
+  );
+  yield takeLatest<LoadBlogsAction, any>(
+    actions.loadCurrentBlog.type,
+    loadCurrentBlog,
+  );
 }

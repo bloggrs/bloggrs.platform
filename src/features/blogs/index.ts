@@ -5,17 +5,17 @@ import { blogsSaga } from './saga';
 import { BlogsState } from './types';
 
 export const getSelectedBlogId = () => {
-  const saved = localStorage.getItem("__bloggrs__::select_blog_id");
+  const saved = localStorage.getItem('__bloggrs__::select_blog_id');
   const value = Number(saved);
   if (isNaN(value)) return undefined;
   return value;
-}
+};
 
 export const initialState: BlogsState = {
   blogs: [],
   loading: true,
   error: [],
-  selectedBlogId: getSelectedBlogId()
+  selectedBlogId: getSelectedBlogId(),
 };
 
 const slice = createSlice({
@@ -28,7 +28,7 @@ const slice = createSlice({
       console.log('loaded', action);
       state.loading = false;
       state.blogs = action.payload.blogs;
-      if (!state.selectedBlogId) state.selectedBlogId = state.blogs[0]?.id
+      if (!state.selectedBlogId) state.selectedBlogId = state.blogs[0]?.id;
     },
     failed(state, action: PayloadAction<any>) {
       state.loading = false;
@@ -38,13 +38,13 @@ const slice = createSlice({
       console.log('blogLoaded', action);
       const { blog }: any = action.payload;
       state.blogs = state.blogs.filter((b: any) => b.id !== blog.id);
-      state.blogs.push(blog)
+      state.blogs.push(blog);
     },
     blogFailed(state, action: PayloadAction<any>) {},
     loadCurrentBlog(state, action: PayloadAction<any>) {},
     switchToBlogId(state, action: PayloadAction<any>) {
       const id = action.payload;
-      localStorage.setItem("__bloggrs__::select_blog_id", id);
+      localStorage.setItem('__bloggrs__::select_blog_id', id);
       state.selectedBlogId = Number(id);
     },
   },

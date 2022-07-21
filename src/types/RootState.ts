@@ -9,6 +9,7 @@ export interface RootState {
   auth: any;
   users: any;
   blogs: any;
+  medias: any;
   'createBlog.blogCategories': any;
   'createBlog.blogThemes': any;
   'blogOverviewCard.blog': any;

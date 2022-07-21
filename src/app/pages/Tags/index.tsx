@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useTagsSlice } from './slice';
 import debounce from 'debounce';
-import {
-  getMetaForPagination,
-  getpaginatedTags,
-} from './slice/selectors';
+import { getMetaForPagination, getpaginatedTags } from './slice/selectors';
 import slugify from 'slugify';
 import { DeleteItemModal } from 'app/components/DeleteItemModal';
 import { Pagination } from '../../components/Pagination';
@@ -33,14 +30,9 @@ const TagsTable = ({ tags, dispatch, action }) => {
           <tr>
             <td>#{tag.id}</td>
             <td>{tag.name}</td>
-            <td style={{ textTransform: 'lowercase' }}>
-              {slugify(tag.name)}
-            </td>
+            <td style={{ textTransform: 'lowercase' }}>{slugify(tag.name)}</td>
             <td>
-              <Link
-                className="btn btn-link"
-                to={`/posts?tag_name=${tag.name}`}
-              >
+              <Link className="btn btn-link" to={`/posts?tag_name=${tag.name}`}>
                 1
               </Link>
             </td>

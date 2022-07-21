@@ -13,9 +13,7 @@ export const selectTags = createSelector([selectSlice], state =>
 );
 
 const paginatedTags = {};
-export const getPaginatedTags = ({
-  query = '',
-}) => {
+export const getPaginatedTags = ({ query = '' }) => {
   const hash = `{"query":"${query}"}`;
   if (!paginatedTags[hash]) {
     paginatedTags[hash] = createSelector(
@@ -26,9 +24,7 @@ export const getPaginatedTags = ({
   return createSelector([paginatedTags[hash]], state => state.tags);
 };
 
-export const getLoadingForPagination = ({
-  query = '',
-}) => {
+export const getLoadingForPagination = ({ query = '' }) => {
   const hash = `{"query":"${query}"}`;
   if (!paginatedTags[hash]) {
     paginatedTags[hash] = createSelector(
@@ -36,10 +32,7 @@ export const getLoadingForPagination = ({
       state => state[hash] || initialState.egPaginatedString,
     );
   }
-  return createSelector(
-    [paginatedTags[hash]],
-    state => state.loading,
-  );
+  return createSelector([paginatedTags[hash]], state => state.loading);
 };
 
 export const getMetaForPagination = ({
@@ -54,8 +47,5 @@ export const getMetaForPagination = ({
       state => state[hash] || initialState.egPaginatedString,
     );
   }
-  return createSelector(
-    [paginatedTags[hash]],
-    state => state._meta || {},
-  );
+  return createSelector([paginatedTags[hash]], state => state._meta || {});
 };

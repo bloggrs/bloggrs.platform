@@ -20,18 +20,20 @@ interface PrivateRouteProps extends RouteProps {
 }
 
 export const PrivateRoute = ({
-  component: Component, allowGuest = false,
+  component: Component,
+  allowGuest = false,
   ...rest
 }: any): ReactElement | null => {
   const location = useLocation();
   const { pathname } = location;
-  const onAuthentication = pathname.indexOf("/auth")
+  const onAuthentication = pathname.indexOf('/auth');
   const user = useSelector(authUserSelector);
   const loading = useSelector(isAuthLoading);
   if (loading) return <LineLoader />;
-  const guestRule = allowGuest ? true : user.isGuest === false
-  console.log({ allowGuest, user, guestRule })
-  if (!user || (!guestRule)) {
+  const guestRule = user && (allowGuest ? true : user.isGuest === false);
+  console.log({ allowGuest, user, guestRule });
+  if (!user || !guestRule) {
+    return null;
     if (onAuthentication) return null;
     return <Redirect to="/auth/login" />;
   }

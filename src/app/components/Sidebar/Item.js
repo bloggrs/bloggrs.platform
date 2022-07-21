@@ -33,16 +33,15 @@ const getExact = ({ pathname, to, items }) => {
 
 const Item = props => {
   const toggleOpen = () => setOpen(!open);
-  
+
   const location = useLocation();
   const { pathname } = location;
-  const [open, setOpen] = useState(pathname.indexOf( props.to ) !== -1);
+  const [open, setOpen] = useState(pathname.indexOf(props.to) !== -1);
 
   useEffect(() => {
-    const value = pathname.indexOf( props.to ) !== -1;
+    const value = pathname.indexOf(props.to) !== -1;
     setOpen(value);
-  }, [pathname])
-  
+  }, [pathname]);
 
   const exact = getExact({
     items: props.items,

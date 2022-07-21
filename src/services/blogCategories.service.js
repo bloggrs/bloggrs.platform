@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
+import fetch from './fetch';
 
 const getBlogCategories = (query = '') => {
   const requestOptions = {
