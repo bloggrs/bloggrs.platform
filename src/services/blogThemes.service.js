@@ -9,7 +9,7 @@ const getBlogThemes = (query = '') => {
       'Content-Type': 'application/json',
     },
   };
-  const endpoint = `${API_URL}/api/v1/blogThemes?query=` + query;
+  const endpoint = `${API_URL}/api/v1/blogthemes?query=` + query;
   return fetch(endpoint, requestOptions)
     .then(res => res.json())
     .then(data => {
