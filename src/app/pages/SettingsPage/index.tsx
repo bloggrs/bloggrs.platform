@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, MoreVertical, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { rolesService } from 'services/roles.service';
 
 interface Role {
   id: number;
@@ -71,6 +72,45 @@ export const SettingsPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'create' | 'edit'>('create');
 
+  const handleShowRoles = async () => {
+    try {
+      setActiveTab('roles');
+      const fetchedRoles = await rolesService.getRoles();
+      
+      // Transform the data if needed for display
+      const formattedRoles = fetchedRoles.map(role => ({
+        ...role,
+        parentRoleName: roles.find(r => r.id === role.parentRoleId)?.name || '-'
+      }));
+      
+      setRoles(formattedRoles);
+    } catch (error) {
+      console.error('Failed to fetch roles:', error);
+      // You might want to show an error message to the user here
+    }
+  };
+
+  // Add this useEffect to load roles when component mounts
+  useEffect(() => {
+    handleShowRoles();
+  }, []); // Empty dependency array means this runs once on mount
+
+  // Add useEffect to load roles
+  useEffect(() => {
+    const loadRoles = async () => {
+      try {
+        const fetchedRoles = await rolesService.getRoles();
+        setRoles(fetchedRoles);
+      } catch (error) {
+        console.error('Failed to load roles:', error);
+      }
+    };
+
+    if (activeTab === 'roles') {
+      loadRoles();
+    }
+  }, [activeTab]);
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
@@ -102,11 +142,34 @@ export const SettingsPage: React.FC = () => {
     console.log('Delete item', id);
   };
 
-  const handleSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Implement form submission logic
-    console.log('Form submitted');
+  const handleRoleSubmit = async (formData: FormData) => {
+    const roleData = {
+      name: formData.get('name'),
+      value: formData.get('value'),
+      description: formData.get('description'),
+      parentRoleId: formData.get('parentRoleId') ? Number(formData.get('parentRoleId')) : null,
+      isSystem: formData.get('isSystem') === 'on',
+      permissions: [],
+      tenantId: null
+    };
+
+    alert(JSON.stringify(roleData, null, 2));
+    await rolesService.createRole(roleData);
     setIsModalOpen(false);
+  };
+
+  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    switch (activeTab) {
+      case 'roles':
+        handleRoleSubmit(formData);
+        break;
+      // Add other cases for different tabs here
+      default:
+        console.log('Unhandled tab type:', activeTab);
+    }
   };
 
   const getCurrentItems = () => {
@@ -240,29 +303,68 @@ export const SettingsPage: React.FC = () => {
 
   const renderTableRows = () => {
     const items = getCurrentItems();
+    
+    if (items.length === 0) {
+      return (
+        <tr>
+          <td colSpan={6} className="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+            No roles found
+          </td>
+        </tr>
+      );
+    }
+
     return items.map(item => (
-      <tr key={item.id}>
+      <tr 
+        key={item.id}
+        className="hover:bg-gray-50 transition-colors duration-200"
+      >
         <td className="px-6 py-4 whitespace-nowrap">
           <input
             type="checkbox"
             checked={selectedItems.includes(item.id)}
             onChange={() => handleSelectItem(item.id)}
-            className="rounded text-blue-600 focus:ring-blue-500"
+            className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
           />
         </td>
         {activeTab === 'roles' && (
           <>
             <td className="px-6 py-4 whitespace-nowrap">
-              {(item as Role).name}
+              <div className="flex items-center">
+                <div className="text-sm font-medium text-gray-900">
+                  {(item as Role).name}
+                </div>
+              </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
-              {(item as Role).value}
+              <div className="text-sm text-gray-900">
+                {(item as Role).value}
+              </div>
+            </td>
+            <td className="px-6 py-4">
+              <div className="text-sm text-gray-500 max-w-xs overflow-hidden overflow-ellipsis">
+                {(item as Role).description || '-'}
+              </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
-              {(item as Role).description}
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                ${(item as Role).parentRoleId 
+                  ? 'bg-blue-100 text-blue-800'
+                  : 'bg-gray-100 text-gray-800'}`
+              }>
+                {(item as Role).parentRoleId 
+                  ? `ID: ${(item as Role).parentRoleId}`
+                  : 'No Parent'}
+              </span>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              {(item as Role).parentRoleId}
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                ${(item as Role).isSystem 
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-green-100 text-green-800'}`
+              }>
+                {(item as Role).isSystem ? 'System' : 'Custom'}
+              </span>
             </td>
           </>
         )}
@@ -327,30 +429,37 @@ export const SettingsPage: React.FC = () => {
             </td>
           </>
         )}
-        <td className="px-6 py-4 whitespace-nowrap">
-          <div className="relative">
+        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+          <div className="relative inline-block text-left">
             <button
-              onClick={() =>
-                setOpenDropdownId(openDropdownId === item.id ? null : item.id)
-              }
-              className="text-gray-400 hover:text-gray-600"
+              onClick={() => setOpenDropdownId(openDropdownId === item.id ? null : item.id)}
+              className="inline-flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
             >
               <MoreVertical className="h-5 w-5" />
             </button>
+            
             {openDropdownId === item.id && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                <button
-                  onClick={() => handleEditItem(item.id)}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteItem(item.id)}
-                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                >
-                  Delete
-                </button>
+              <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                <div className="py-1" role="menu">
+                  <button
+                    onClick={() => handleEditItem(item.id)}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <span className="flex items-center">
+                      <span className="mr-2">✏️</span> Edit
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => handleDeleteItem(item.id)}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"
+                    role="menuitem"
+                  >
+                    <span className="flex items-center">
+                      <span className="mr-2">🗑️</span> Delete
+                    </span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -426,18 +535,30 @@ export const SettingsPage: React.FC = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <input
                         type="checkbox"
-                        checked={
-                          selectedItems.length === getCurrentItems().length
-                        }
+                        checked={selectedItems.length === getCurrentItems().length}
                         onChange={handleSelectAll}
-                        className="rounded text-blue-600 focus:ring-blue-500"
+                        className="rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
                       />
                     </th>
-                    {renderTableHeaders()}
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Value
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Parent Role
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Type
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
@@ -468,8 +589,7 @@ export const SettingsPage: React.FC = () => {
               <div className="px-6 py-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-semibold text-gray-900">
-                    {modalType === 'create' ? 'Create' : 'Edit'}{' '}
-                    {activeTab.slice(0, -1)}
+                    {modalType === 'create' ? 'Create' : 'Edit'} {activeTab.slice(0, -1)}
                   </h3>
                   <button
                     onClick={() => setIsModalOpen(false)}
@@ -479,13 +599,77 @@ export const SettingsPage: React.FC = () => {
                   </button>
                 </div>
                 <form onSubmit={handleSubmitForm} className="space-y-4">
-                  {/* ... existing form fields with updated styling ... */}
+                  {activeTab === 'roles' && (
+                    <>
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                          placeholder="Enter role name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="value" className="block text-sm font-medium text-gray-700">
+                          Value
+                        </label>
+                        <input
+                          type="text"
+                          id="value"
+                          name="value"
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                          placeholder="Enter role value"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                          Description
+                        </label>
+                        <textarea
+                          id="description"
+                          name="description"
+                          rows={3}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                          placeholder="Enter role description"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="parentRoleId" className="block text-sm font-medium text-gray-700">
+                          Parent Role ID
+                        </label>
+                        <input
+                          type="number"
+                          id="parentRoleId"
+                          name="parentRoleId"
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                          placeholder="Enter parent role ID"
+                        />
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          id="isSystem"
+                          name="isSystem"
+                          className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        />
+                        <label htmlFor="isSystem" className="ml-2 block text-sm text-gray-700">
+                          System Role
+                        </label>
+                      </div>
+                    </>
+                  )}
                   <div className="mt-6">
                     <button
                       type="submit"
                       className="w-full px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
-                      Submit
+                      {modalType === 'create' ? 'Create' : 'Update'} Role
                     </button>
                   </div>
                 </form>
