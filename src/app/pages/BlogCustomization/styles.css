@@ -1,0 +1,22 @@
+.blog-customization-container {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  gap: 20px;
+  height: calc(100vh - 100px);
+  padding: 20px;
+}
+
+.blog-preview {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.craft-canvas {
+  min-height: 500px;
+  border: 2px dashed #e0e0e0;
+  border-radius: 4px;
+  padding: 20px;
+} 

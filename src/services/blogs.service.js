@@ -30,9 +30,18 @@ const getBlog = id => {
   };
   const endpoint = `${API_URL}/api/v1/blogs/` + id;
   return fetch(endpoint, requestOptions)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Failed to fetch blog');
+      }
+      return res.json();
+    })
     .then(data => {
       return data.data.blog;
+    })
+    .catch(error => {
+      toast.error(error.message);
+      throw error;
     });
 };
 
@@ -226,6 +235,52 @@ const getComments = ({ BlogId, query }) => {
     });
 };
 
+const updateBlogCustomization = ({ BlogId, customization }) => {
+  const requestOptions = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+    body: JSON.stringify({ customization }),
+  };
+  const endpoint = `${API_URL}/api/v1/blogs/${BlogId}/customization`;
+  return fetch(endpoint, requestOptions)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Failed to update blog customization');
+      }
+      return res.json();
+    })
+    .then(data => {
+      toast.success('Blog customization updated successfully');
+      return data.data.blog;
+    })
+    .catch(error => {
+      toast.error(error.message);
+      throw error;
+    });
+};
+
+const getBlogCustomization = BlogId => {
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+  };
+  const endpoint = `${API_URL}/api/v1/blogs/${BlogId}/customization`;
+  return fetch(endpoint, requestOptions)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Failed to fetch blog customization');
+      }
+      return res.json();
+    })
+    .then(data => data.data.customization);
+};
+
 export const blogsService = {
   createBlog,
   getBlog,
@@ -238,4 +293,6 @@ export const blogsService = {
   createBlogPost,
   deleteBlogComment,
   getComments,
+  updateBlogCustomization,
+  getBlogCustomization,
 };

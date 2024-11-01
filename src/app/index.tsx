@@ -75,13 +75,18 @@ export function App() {
         <Route exact path="/features" component={FeaturesPage} />
         <Route exact path="/pricing" component={PricingPage} />
         <Route exact path="/blog" component={BlogPage} />
-        <Route exact path="/blogs/create#/features" component={FeaturesPage} />
-        <Route exact path="/blogs/create#/pricing" component={PricingPage} />
-        <Route exact path="/blogs/create#/blog" component={BlogPage} />
+        <Route exact path="/blogs/create" render={() => {
+          const hash = window.location.hash.replace('#', '');
+          if (hash === '/features') return <FeaturesPage />;
+          if (hash === '/pricing') return <PricingPage />;
+          if (hash === '/blog') return <BlogPage />;
+          return <CreateBlog />;
+        }} />
         <Route exact path="/auth/register" component={RegisterPage} />
         <Route exact path="/auth/logout" component={LogoutPage} />
         {/* EndAuthentication routes */}
         <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
+
         <PrivateRoute
           exact
           path="/blogs/:blog_id/posts/:id"
