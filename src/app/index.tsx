@@ -34,6 +34,11 @@ import { authUserSelector } from 'features/auth/selectors';
 import { MainPanel } from './components/MainPanel';
 import { useLocation } from 'react-router-dom';
 import { EditBlog } from './pages/EditBlog/Loadable';
+import { SettingsPage } from './pages/SettingsPage/Loadable';
+import { TransferPage } from './pages/TransferPage';
+import { FeaturesPage } from './pages/FeaturesPage';
+import { PricingPage } from './pages/PricingPage';
+import { BlogPage } from './pages/BlogPage';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -43,7 +48,7 @@ export function App() {
   const location = useLocation();
 
   console.log(location, 'location');
-  
+
   (window as any).toast = toast;
 
   useEffect(() => {
@@ -67,6 +72,12 @@ export function App() {
       <Switch>
         {/* Authentication routes */}
         <Route exact path="/auth/login" component={LoginPage} />
+        <Route exact path="/features" component={FeaturesPage} />
+        <Route exact path="/pricing" component={PricingPage} />
+        <Route exact path="/blog" component={BlogPage} />
+        <Route exact path="/blogs/create#/features" component={FeaturesPage} />
+        <Route exact path="/blogs/create#/pricing" component={PricingPage} />
+        <Route exact path="/blogs/create#/blog" component={BlogPage} />
         <Route exact path="/auth/register" component={RegisterPage} />
         <Route exact path="/auth/logout" component={LogoutPage} />
         {/* EndAuthentication routes */}
@@ -98,6 +109,16 @@ export function App() {
             exact
             path="/blogs/:blog_id/edit"
             component={EditBlog}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/settings"
+            component={SettingsPage}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/settings/transfer"
+            component={TransferPage}
           />
         </MainPanel>
         <Route component={NotFoundPage} />

@@ -15,67 +15,45 @@ export const ChooseBlogName = ({
   };
   const btn_color = isNextDisabled ? 'bg-orange-200' : 'bg-yellow-500';
   return (
-    <>
-      <MainPanel
-        sidebarProps={{ collapse: true }}
-        className="container max-h-full max-w-7xl py-9 px-12"
-      >
-        <div className="px-2">
-          <div className="flex">
-            <div className="w-full w-6/6 lg:w-6/6 px-2">
-              <h1 className="text-center font-bold text-5xl text-slate-700">
-                Enter the name of your blog
-              </h1>
-              <div className="my-20 container w-3/6 lg:w-6/6 px-2">
-                <div className="flex flex-inline">
-                  <div className="w-4/6">
-                    <div className="flex flex-inline">
-                      <img
-                        src="/dist/static/icons8-search-48.png"
-                        className="py-2"
-                      />
-                      <input
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                        className="mx-5 bg-transparent w-full outline-none text-slate-900"
-                        placeholder="Enter blog name"
-                      />
-                    </div>
-                    <hr className="h-1 border-1 bg-slate-800" />
-                  </div>
-                  <div className="w-2/6">
-                    <button
-                      onClick={localNextStep}
-                      className={` w-40 rounded-md h-10 mx-10 ${btn_color} text-white font-medium`}
-                    >
-                      Next
-                    </button>
-                  </div>
-                </div>
-                {/* <div class="flex flex-inline">
-                <div class="w-4/6 bg-white overflow-y-scroll h-60 scrollbar-rounded scrollbar-thin scrollbar-thumb-yellow-500 scrollbar-track-orange-100 h-32 overflow-y-scroll">
-                  <p class="mx-10 my-2 text-blue-500">Travel</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel accessories</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Accessories Shop</p>
-                </div>
-              </div> */}
+    <MainPanel
+      sidebarProps={{ collapse: true }}
+      className="container max-h-full max-w-7xl p-4 md:py-9 md:px-12"
+    >
+      <div className="w-full">
+        <h1 className="text-center font-bold text-3xl md:text-5xl text-[#1e3a8a]">
+          Enter the name of your blog
+        </h1>
+
+        <div className="mt-10 md:mt-20 max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="w-full sm:w-4/6">
+              <div className="flex items-center bg-gray-50 rounded-lg px-4 py-2">
+                <img
+                  src="/dist/static/icons8-search-48.png"
+                  className="w-6 h-6"
+                  alt="search"
+                />
+                <input
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  className="flex-1 ml-3 bg-transparent outline-none text-slate-900"
+                  placeholder="Enter blog name"
+                />
               </div>
+            </div>
+
+            <div className="w-full sm:w-2/6">
+              <button
+                onClick={localNextStep}
+                className={`w-full sm:w-40 rounded-lg py-2 px-4 ${btn_color} text-white font-medium transition-colors`}
+                disabled={isNextDisabled}
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
-      </MainPanel>
-    </>
+      </div>
+    </MainPanel>
   );
 };

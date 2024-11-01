@@ -31,55 +31,35 @@ export const BlogCreationStatus = ({
       });
   }, []);
   return (
-    <>
-      <MainPanel
-        sidebarProps={{ collapse: true }}
-        className="container max-h-full max-w-7xl py-9 px-12"
-      >
-        <div className="px-2">
-          <div className="flex">
-            <div className="w-full w-6/6 lg:w-6/6 px-2">
-              <h1 className="text-center font-normal text-5xl text-slate-700">
-                Creation of DataAddict's Blog in progress...
-              </h1>
-              <div className="my-20 container w-3/6 lg:w-6/6 px-2">
-                <div className="flex flex-inline">
-                  <div className="w-6/6">
-                    <div>
-                      <img
-                        src="/dist/static/hugo-artificial-intelligence.png"
-                        className="py-2"
-                      />
-                      <h1 className="text-center font-normal text-2xl text-slate-700">
-                        Step 1: Setting up posts...
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-                {/* <div class="flex flex-inline">
-                <div class="w-4/6 bg-white overflow-y-scroll h-60 scrollbar-rounded scrollbar-thin scrollbar-thumb-yellow-500 scrollbar-track-orange-100 h-32 overflow-y-scroll">
-                  <p class="mx-10 my-2 text-blue-500">Travel</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel blog</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets store</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel tickets subscriptions</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Show</p>
-                  <p class="mx-10 my-2 text-slate-500">Travel accessories</p>
-                  <p class="mx-10 my-2 text-slate-500">Online Travel Accessories Shop</p>
-                </div>
-              </div> */}
+    <MainPanel
+      sidebarProps={{ collapse: true }}
+      className="container min-h-screen max-w-7xl p-4 md:p-8 lg:p-12"
+    >
+      <div className="flex flex-col items-center justify-center h-full">
+        <h1 className="text-center font-normal text-3xl md:text-4xl lg:text-5xl text-[#2B4B80] mb-12">
+          Creating your blog...
+        </h1>
+
+        <div className="w-full max-w-2xl px-4">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="flex flex-col items-center">
+              <img
+                src="/dist/static/hugo-artificial-intelligence.png"
+                className="w-32 h-32 md:w-40 md:h-40 object-contain mb-6"
+                alt="Setup illustration"
+              />
+              <h2 className="text-center font-normal text-xl md:text-2xl text-[#2B4B80]">
+                Step 1: Setting up posts...
+              </h2>
+
+              {/* Optional loading indicator */}
+              <div className="mt-6 w-full max-w-md bg-gray-100 rounded-full h-2">
+                <div className="bg-[#4B8CE8] h-2 rounded-full w-1/3 transition-all duration-500"></div>
               </div>
             </div>
           </div>
         </div>
-      </MainPanel>
-    </>
+      </div>
+    </MainPanel>
   );
 };

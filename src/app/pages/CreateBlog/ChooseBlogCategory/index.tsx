@@ -4,7 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { useBlogCategoriesSlice } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import debounce from 'debounce';
-import { getBlogsForQuery, getLoadingForQuery } from './slice/selectors';
+import {
+  getBlogsForQuery,
+  getLoadingForQuery,
+  selectToken,
+} from './slice/selectors';
 import { MainPanel } from 'app/components/MainPanel';
 
 export const ChooseBlogCategory = ({
@@ -26,11 +30,20 @@ export const ChooseBlogCategory = ({
 
   const dispatch = useDispatch();
 
+  const token = useSelector(selectToken);
+
   useEffect(
     debounce(() => {
-      dispatch(actions.loadBlogCategories({ query }));
+      dispatch(
+        actions.loadBlogCategories({
+          query,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+      );
     }, 75),
-    [query],
+    [query, token],
   );
   useEffect(() => {
     if (customCategoryName) {
@@ -103,19 +116,21 @@ export const ChooseBlogCategory = ({
               <div className="flex flex-inline">
                 {query && (
                   <div className="w-4/6 bg-white overflow-y-scroll h-60 scrollbar-rounded scrollbar-thin scrollbar-thumb-yellow-500 scrollbar-track-orange-100 h-32 overflow-y-scroll">
-                    {blogCategories.map(bg => (
-                      <p
-                        onClick={() => setBlogCategoryId(bg.id)}
-                        className={
-                          'cursor-pointer mx-10 my-2 ' +
-                          (blogCategoryId !== bg.id
-                            ? 'text-slate-500'
-                            : 'text-blue-500')
-                        }
-                      >
-                        {bg.name}
-                      </p>
-                    ))}
+                    {blogCategories &&
+                      blogCategories.map(bg => (
+                        <p
+                          key={bg.id}
+                          onClick={() => setBlogCategoryId(bg.id)}
+                          className={
+                            'cursor-pointer mx-10 my-2 ' +
+                            (blogCategoryId !== bg.id
+                              ? 'text-slate-500'
+                              : 'text-blue-500')
+                          }
+                        >
+                          {bg.name}
+                        </p>
+                      ))}
                     {loading && <div>Loading</div>}
                   </div>
                 )}
@@ -172,34 +187,5 @@ export const ChooseBlogCategory = ({
         </div>
       </div>
     </MainPanel>
-  );
-  return (
-    <>
-      <h1>Choose blog category</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="firstName"></label>
-        <input
-          id="search"
-          name="search"
-          type="text"
-          onChange={e => setQuery(e.target.value)}
-          value={query}
-        />
-
-        <button type="submit">Submit</button>
-        <ul>
-          {blogCategories.map(bg => (
-            <li
-              style={{
-                fontWeight: blogCategoryId === bg.id ? 'bold' : '',
-              }}
-              onClick={() => setBlogCategoryId(bg.id)}
-            >
-              #{bg.id} - {bg.name}
-            </li>
-          ))}
-        </ul>
-      </form>
-    </>
   );
 };

@@ -13,24 +13,26 @@ export const MainPanel = ({
   if (!sidebarProps) sidebarProps = {};
   if (!sidebarProps.style) sidebarProps.style = {};
   if (!sidebarProps.style.background) {
-    sidebarProps.style.background = '#1C5881 0% 0% no-repeat padding-box';
+    sidebarProps.style.background = '#1B4B6B';
   }
+
   return (
-    <>
+    <div className="main-layout">
       <Header />
       {hideSidebar ? null : <Sidebar {...(sidebarProps || {})} />}
-      <br />
       <div
         style={{
-          position: 'absolute',
-          maxWidth: '-webkit-fill-available',
+          marginLeft: hideSidebar ? '0' : '80px',
+          padding: '20px',
+          minHeight: '100vh',
+          backgroundColor: '#F5F7FA',
           ...style,
         }}
         id={id}
-        className={className || 'container'}
+        className={`main-content ${className || ''}`}
       >
         {children}
       </div>
-    </>
+    </div>
   );
 };

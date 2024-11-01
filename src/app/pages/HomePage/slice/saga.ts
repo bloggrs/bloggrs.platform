@@ -6,7 +6,7 @@ import { LoadBlogsAction } from './types';
 function* getMyBlogs({ payload: { query } }) {
   yield put(actions.initSearchIfNotExists({ query }));
   try {
-    const blogs: any = yield call(blogsService.getMyBlogs, query);
+    const blogs: any = yield call(blogsService.getMyBlogs);
     yield put(actions.loaded({ query, blogs }));
   } catch (err) {
     yield put(actions.failed({ query, error: err }));

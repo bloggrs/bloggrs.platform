@@ -4,17 +4,21 @@ import styled from 'styled-components';
 
 const Modal = styled.div`
   max-width: 500px;
+  width: 90%;
   background-color: white;
   position: fixed;
-  top: 75px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 5;
-  max-height: calc(100% - 200px);
-  left: calc(50% - 250px);
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   @media (max-width: 500px) {
-    left: 0px;
-    margin: 0px 10px;
+    width: calc(100% - 20px);
+    max-height: 80vh;
   }
 `;
 export const ModalContent = styled.div`
@@ -34,11 +38,19 @@ export const ConfirmButton = styled.div`
   color: white;
   height: 40px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 20px;
   text-align: center;
-  width: 200px;
+  min-width: 120px;
   cursor: pointer;
-  background-color: blue;
+  background-color: #1e3d6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #2a5494;
+  }
 `;
 const ModalShadow = styled.div`
   position: fixed;
@@ -51,14 +63,24 @@ const ModalShadow = styled.div`
 `;
 const ModalBanner = styled.div`
   margin-bottom: 20px;
-  background-color: blue;
+  background-color: #1e3d6b;
   color: white;
-  padding: 10px;
+  padding: 15px 20px;
+  border-radius: 8px 8px 0 0;
+  font-weight: 500;
 `;
 const Input = styled.input`
   text-align: right;
   width: 200px;
   margin-left: 15px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  
+  &:focus {
+    outline: none;
+    border-color: #1e3d6b;
+  }
 `;
 export const MainButton = styled.button``;
 

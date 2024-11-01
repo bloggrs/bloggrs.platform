@@ -4,18 +4,18 @@ import styled from 'styled-components';
 
 const Modal = styled.div`
   max-width: 500px;
+  width: 90%;
   background-color: white;
   position: fixed;
-  top: 75px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 5;
-  max-height: calc(100% - 200px);
-  left: calc(50% - 250px);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  @media (max-width: 500px) {
-    left: 0px;
-    margin: 0px 10px;
-  }
+  overflow: hidden;
 `;
 export const ModalContent = styled.div`
   overflow: auto;
@@ -34,11 +34,21 @@ export const ConfirmButton = styled.div`
   color: white;
   height: 40px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 20px;
   text-align: center;
-  width: 200px;
+  min-width: 120px;
   cursor: pointer;
-  background-color: blue;
+  font-weight: 500;
+  
+  ${props => props.delete ? `
+    background-color: #FF4B4B;
+  ` : `
+    background-color: #FFA162;
+  `}
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 const ModalShadow = styled.div`
   position: fixed;
@@ -50,10 +60,12 @@ const ModalShadow = styled.div`
   z-index: 4;
 `;
 const ModalBanner = styled.div`
-  margin-bottom: 20px;
-  background-color: blue;
-  color: white;
-  padding: 10px;
+  margin-bottom: 0;
+  background-color: #f8f9fa;
+  color: #2d3748;
+  padding: 15px 20px;
+  font-weight: 500;
+  border-bottom: 1px solid #edf2f7;
 `;
 const Input = styled.input`
   text-align: right;
@@ -68,14 +80,6 @@ export function ModalContainer({
   name = 'Name',
   type = 'category',
 }) {
-  const content = new Array(1).fill(
-    <p>
-      Are you sure you want to perform this action?
-      <br />
-      <br />
-      This action cannot be reversed.
-    </p>,
-  );
   return ReactDOM.createPortal(
     <>
       <ModalShadow onClick={close} />
@@ -83,10 +87,17 @@ export function ModalContainer({
         <ModalBanner>
           Delete '{name}' {type}
         </ModalBanner>
-        <ModalContent>{content}</ModalContent>
+        <ModalContent>
+          <p>
+            Are you sure you want to delete this {type}?
+            <br />
+            <br />
+            This action cannot be reversed.
+          </p>
+        </ModalContent>
         <ModalFooter>
-          <ConfirmButton onClick={onDelete}> Delete </ConfirmButton>
-          <ConfirmButton onClick={close}> Cancel </ConfirmButton>
+          <ConfirmButton delete onClick={onDelete}>Delete</ConfirmButton>
+          <ConfirmButton onClick={close}>Cancel</ConfirmButton>
         </ModalFooter>
       </Modal>
     </>,

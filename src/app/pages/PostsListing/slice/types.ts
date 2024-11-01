@@ -6,10 +6,11 @@ import { Action } from '@reduxjs/toolkit';
 //   name: string;
 // }
 export interface LatestPostsState {
-  posts: any; //[BlogCategory?];
+  posts: any[];
   loading: boolean;
   deleteLoading: boolean;
-  error: [string?] | null;
+  error: string | null;
+  isAuthorized: boolean;
 }
 
 export interface LoadPostsAction extends Action {

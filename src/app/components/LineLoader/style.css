@@ -1,9 +1,9 @@
 :root {
     --main-color: transparent;
-    --loader-color: #f79926;
-    --back-color: transparent;
-    --time: 1s;
-    --size: 5px;
+    --loader-color: #4A90E2;
+    --back-color: #f5f6f8;
+    --time: 0.8s;
+    --size: 3px;
   }
   
   .loader {
@@ -15,17 +15,18 @@
     align-items: center;
     align-content: center; 
     justify-content: flex-start;  
-    z-index: 100000;
-    position: absolute;
-    top: 6.4rem;
-    /* height: 15px; */
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    height: var(--size);
     z-index: -1;
 }
   
   .loader__element {
       height: var(--size);
-      width: 97%;
+      width: 100%;
       background: var(--back-color);
+      border-radius: 2px;
   }
   
   .loader__element:before {

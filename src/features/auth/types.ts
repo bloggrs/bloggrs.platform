@@ -2,9 +2,10 @@ import { Action } from '@reduxjs/toolkit';
 
 /* --- STATE --- */
 export interface AuthState {
-  user: any;
+  user: any | undefined;
   loading: boolean;
-  error: [string] | any;
+  error: any | undefined;
+  token: string | undefined;
 }
 
 export interface LoginAction extends Action {

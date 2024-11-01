@@ -48,12 +48,15 @@ export const ChooseBlogLogo = ({ sendValueToParent, nextStep }) => {
                   <img
                     className="my-3 mx-auto"
                     src="/dist/static/icons8-upload-100.png"
-                    style={{ opacity: src ? 1 : 0.3, marginTop: "2vh" }}
+                    style={{ opacity: src ? 1 : 0.3, marginTop: '2vh' }}
                   />
-                  <h6 className="my-2" style={{
-                    textAlign: "center",
-                    marginTop: 25
-                  }}>
+                  <h6
+                    className="my-2"
+                    style={{
+                      textAlign: 'center',
+                      marginTop: 25,
+                    }}
+                  >
                     {/* Drag and drop here <br />
                     or <br />
                     <span className='text-blue-500'>browse</span> */}
@@ -61,16 +64,16 @@ export const ChooseBlogLogo = ({ sendValueToParent, nextStep }) => {
                   </h6>
                 </div>
                 <div>
-                <button
-                  disabled={!src}
-                  onClick={next}
-                  style={{
-                    marginLeft: "6vw"
-                  }}
-                  className="my-10 mx-auto w-40 rounded-md h-10 border-2 border-yellow-500 text-yellow-500 font-medium"
-                >
-                  Next
-                </button>
+                  <button
+                    disabled={!src}
+                    onClick={next}
+                    style={{
+                      marginLeft: '6vw',
+                    }}
+                    className="my-10 mx-auto w-40 rounded-md h-10 border-2 border-yellow-500 text-yellow-500 font-medium"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
             </div>

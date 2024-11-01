@@ -21,17 +21,24 @@ export const Loading = props_ => {
   const default_props = {
     className: '',
     style: {
-      width: 75,
+      width: 'clamp(40px, 8vw, 75px)',
+      filter:
+        'invert(31%) sepia(93%) saturate(1111%) hue-rotate(182deg) brightness(91%) contrast(101%)',
     },
-    src: '/waiting-icon-gif-1.jpeg',
+    src: '/spinner.svg',
     center: true,
   };
   const props =
     Object.keys(props_).filter(k => k !== 'forModal').length > 0
-      ? props_
+      ? { ...default_props, ...props_ }
       : default_props;
   const Comp = (
-    <img src={props.src} className={props.className} style={props.style} />
+    <img
+      alt="Loading..."
+      src={props.src}
+      className={props.className}
+      style={props.style}
+    />
   );
   if (props.center) return <Center {...props_}>{Comp}</Center>;
   return Comp;

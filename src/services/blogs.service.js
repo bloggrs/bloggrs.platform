@@ -3,6 +3,7 @@ import { API_URL } from '../config';
 import qs from 'qs';
 
 const createBlog = ({ name, description, BlogCategoryId, logo_url }) => {
+  alert(name);
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -35,7 +36,7 @@ const getBlog = id => {
     });
 };
 
-const getMyBlogs = id => {
+const getMyBlogs = () => {
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -45,9 +46,18 @@ const getMyBlogs = id => {
   };
   const endpoint = `${API_URL}/api/v1/blogs`;
   return fetch(endpoint, requestOptions)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
     .then(data => {
       return data.data.blogs;
+    })
+    .catch(error => {
+      toast.error('Failed to fetch blogs: ' + error.message);
+      throw error;
     });
 };
 

@@ -4,40 +4,65 @@ import { usePostsSlice } from './slice';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, isPostsLoading } from './slice/selectors';
-import {
-  MainButton,
-  ModalContainer,
-} from '../../components/DeleteModalContainer';
-import { MainPanel } from 'app/components/MainPanel';
 import { Table } from 'app/components/Table';
-import { EditPostModal } from './EditPostModal';
 import { DeletePostModal } from './DeletePostModal';
+import { NotAuthorized } from 'app/components/NotAuthorized';
+
+// Update the interface to match your actual state structure
+interface RootState {
+  auth: {
+    user?: any;
+    token?: string;
+    loading: boolean;
+    error?: any;
+  };
+  postsListing: {
+    posts: {
+      error?: Error;
+      loading: boolean;
+      posts: any[];
+      deleteLoading: boolean;
+      isAuthorized?: boolean;
+    };
+  };
+}
 
 export const PostsListing = ({ match }) => {
   const history = useHistory();
-  const [data, setData] = useState({ onDelete: 0 });
-
   const [loadMoreClicks, setLoadMoreClicks] = useState(0);
+
   const dispatch = useDispatch();
   const { actions } = usePostsSlice();
   const params: any = useParams();
   const { blog_id } = params;
   const posts = useSelector(getPosts);
   const loading = useSelector(isPostsLoading);
+  const authState = useSelector((state: RootState) => state.auth);
+  console.log('Detailed auth state:', authState);
 
-  const onDelete = () => {
-    dispatch(actions.deletePost({ id: data.onDelete }));
-  };
+  const postsError = useSelector(
+    (state: RootState) => state.postsListing?.posts?.error,
+  );
+  const isAuthorized = useSelector(
+    (state: RootState) =>
+      !!state.auth.token && state['postsListing.posts']?.isAuthorized !== false,
+  );
 
   useEffect(() => {
-    dispatch(
-      actions.loadPosts({
-        id: blog_id,
-        page: loadMoreClicks + 1,
-        pageSize: 9999,
-      }),
-    );
-  }, [loadMoreClicks]);
+    if (isAuthorized && blog_id) {
+      dispatch(
+        actions.loadPosts({
+          id: blog_id,
+          page: loadMoreClicks + 1,
+          pageSize: 20,
+        }),
+      );
+    }
+  }, [loadMoreClicks, isAuthorized, blog_id]);
+
+  if (!isAuthorized || (postsError && !loading)) {
+    return <NotAuthorized />;
+  }
 
   const EditButton = ({ item }) => (
     <Link to={`/blogs/${params.blog_id}/posts/${item.id}`}>
@@ -47,42 +72,69 @@ export const PostsListing = ({ match }) => {
     </Link>
   );
   return (
-    <div className="flex">
-      <div className="w-screen">
-        <div className="flex w-6/6">
-          <div className="w-11/12">
-            <button
-              onClick={e => {
-                history.goBack();
-              }}
-              className="btn-base w-32 bg-white border-2 border-yellow-500 text-yellow-500 rounded-full"
-            >
-              Back
+    <div className="flex flex-col p-6 max-w-7xl mx-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+        <button
+          onClick={e => {
+            history.goBack();
+          }}
+          className="btn-base px-6 py-2 mb-4 sm:mb-0 bg-white border-2 border-blue-600 text-blue-600 rounded-full hover:bg-blue-50 transition-colors"
+        >
+          Back
+        </button>
+
+        <Link to={`/blogs/${match.params.blog_id}/posts/create`}>
+          <button className="btn-base px-8 py-2 bg-orange-400 text-white rounded-full hover:bg-orange-500 transition-colors shadow-sm">
+            Add Post
+          </button>
+        </Link>
+      </div>
+
+      <div className="mb-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl sm:text-3xl text-slate-700 font-medium">
+            Posts
+          </h1>
+          <div className="flex items-center gap-2">
+            <button className="px-4 py-1 text-sm border rounded-full text-gray-600 hover:bg-gray-50">
+              Categories
             </button>
-          </div>
-          <div className="">
-            <Link to={`/blogs/${match.params.blog_id}/posts/create`}>
-              <button className=" btn-base w-52 bg-orange-300  text-white rounded-full focus:bg-yellow-500">
-                Add Post
-              </button>
-            </Link>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Quick search..."
+                className="w-full sm:w-64 px-4 py-2 pl-10 bg-gray-50 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <svg
+                className="w-5 h-5 text-gray-400 absolute left-3 top-2.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
-        <h1 className="text-3xl text-slate-700 font-medium py-5">Posts</h1>
-        {/* <h1 class="text-xl text-slate-400 font-normal py-5">You can change this later anytime.</h1> */}
-        <Table
-          type="post"
-          fields={[
-            { key: 'id', label: '#' },
-            { key: 'title', label: 'Title' },
-            { key: 'slug', label: 'slug' },
-          ]}
-          EditButton={EditButton}
-          DeleteModal={DeletePostModal}
-          data={posts}
-          onLoadMore={e => setLoadMoreClicks(loadMoreClicks + 1)}
-        />
       </div>
+
+      <Table
+        type="post"
+        fields={[
+          { key: 'id', label: '#' },
+          { key: 'title', label: 'Title' },
+          { key: 'slug', label: 'Slug' },
+        ]}
+        EditButton={EditButton}
+        DeleteModal={DeletePostModal}
+        data={posts || []}
+        onLoadMore={(e: any) => setLoadMoreClicks(loadMoreClicks + 1)}
+      />
     </div>
   );
 };

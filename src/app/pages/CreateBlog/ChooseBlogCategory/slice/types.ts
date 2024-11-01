@@ -11,7 +11,11 @@ export interface BlogCategoriesQueryString {
   error: [string?] | null;
 }
 export interface BlogCategoriesState {
-  [queryString: string]: BlogCategoriesQueryString;
+  [key: string]: {
+    blogCategories: BlogCategory[];
+    loading: boolean;
+    error: null | Error;
+  };
 }
 
 export interface LoadBlogCategoriesAction extends Action {

@@ -16,6 +16,7 @@ import {
   convertFromHTML,
 } from 'draft-js';
 import { Loading } from 'app/components/Loading';
+import { NotAuthorized } from 'app/components/NotAuthorized';
 // import RichTextEditor from 'react-rte';
 
 export const CreatePost = ({ match }) => {
@@ -35,6 +36,17 @@ export const CreatePost = ({ match }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { blog_id } = match.params;
 
+  const [hasAccess, setHasAccess] = useState(true);
+
+  useEffect(async () => {
+    try {
+      const hasAccess = await blogsService.checkPostAccess(blog_id);
+      setHasAccess(hasAccess);
+    } catch (err) {
+      setHasAccess(false);
+    }
+  }, [blog_id]);
+
   useEffect(async () => {
     const categories = await blogsService.getBlogCategories(
       blog_id,
@@ -45,15 +57,22 @@ export const CreatePost = ({ match }) => {
 
   useEffect(async () => {
     if (createMode) return;
-    const post = await blogsService.getPost(id);
-    const categories = await blogsService.getBlogCategories(
-      blog_id,
-      categoriesQuery,
-    );
-    const newSelectedCategories = post.postcategories
-      .map(pc => categories.find(cat => cat.id === pc.CategoryId))
-      .filter(i => i !== undefined);
-    setSelectedCategories(newSelectedCategories);
+    try {
+      const post = await blogsService.getPost(id);
+      const categories = await blogsService.getBlogCategories(
+        blog_id,
+        categoriesQuery,
+      );
+      if (post && post.postcategories) {
+        const newSelectedCategories = post.postcategories
+          .map(pc => categories.find(cat => cat.id === pc.CategoryId))
+          .filter(i => i !== undefined);
+        setSelectedCategories(newSelectedCategories);
+      }
+    } catch (err) {
+      console.error('Error loading post categories:', err);
+      toast.error('Failed to load post categories');
+    }
   }, []);
 
   const { id } = match.params;
@@ -63,18 +82,20 @@ export const CreatePost = ({ match }) => {
     if (!categories) return;
     const { id } = match.params;
     if (createMode) return setLoading(false);
-    const post = await blogsService.getPost(id);
-    setTitle(post.title);
-    // const blocksFromHTML = convertFromHTML(post.html_content);
-    // const content = ContentState.createFromBlockArray(
-    //   blocksFromHTML.contentBlocks,
-    //   blocksFromHTML.entityMap,
-    // );
-    // const editorState = await EditorState.createWithContent(content);
-    // const blocks = await editorState.current.save();
-    const blocks = JSON.parse(post.html_content);
-    setBlocks(blocks);
-    setLoading(false);
+
+    try {
+      const post = await blogsService.getPost(id);
+      if (post) {
+        setTitle(post.title);
+        const blocks = JSON.parse(post.html_content);
+        setBlocks(blocks);
+      }
+    } catch (err) {
+      console.error('Error loading post:', err);
+      toast.error('Failed to load post');
+    } finally {
+      setLoading(false);
+    }
   }, [categories]);
 
   const onSubmit = async e => {
@@ -112,6 +133,7 @@ export const CreatePost = ({ match }) => {
     }
   };
 
+  if (!hasAccess) return <NotAuthorized />;
   if (loading || (!blocks && !createMode)) return <Loading />;
   const w_20_h_17_style = {};
   console.log({ selectedCategories });

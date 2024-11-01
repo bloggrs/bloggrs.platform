@@ -21,12 +21,14 @@ const Pagination = styled.div`
 const get_field_href = (field, context) => {
   const { href } = field;
   if (href === undefined) return false;
-  const t = typeof(href);
+  const t = typeof href;
   switch (t) {
-    case "function": return href(context)
-    default: return href;
+    case 'function':
+      return href(context);
+    default:
+      return href;
   }
-}
+};
 
 export const Table = ({
   fields,
@@ -69,20 +71,25 @@ export const Table = ({
               <tr>
                 {fields.map(field => {
                   const href = get_field_href(field, d[field.key]);
-                  const className = href !== false ? "cursor-pointer text-blue" : "";
+                  const className =
+                    href !== false ? 'cursor-pointer text-blue' : '';
                   const onClick = e => history.push(href);
                   return (
                     <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700">
-                      <div className={className} onClick={onClick} style={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        maxWidth: 425
-                      }}>
+                      <div
+                        className={className}
+                        onClick={onClick}
+                        style={{
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          maxWidth: 425,
+                        }}
+                      >
                         {d[field.key]}
                       </div>
                     </th>
-                  )
+                  );
                 })}
                 <td
                   style={{
@@ -94,7 +101,7 @@ export const Table = ({
                     <button className="btn-base m-2 bg-transparent border-2 border-slate-600 rounded-md">
                       View
                     </button>
-                  </Link> 
+                  </Link>
                   {EditButton ? <EditButton item={d} /> : null}
                   {EditModal && (
                     <EditModal {...{ [type]: d }}>
@@ -132,7 +139,7 @@ export const Table = ({
             ))}
           </tbody>
         </table>
-        <p className='ml-10 my-10'>
+        <p className="ml-10 my-10">
           {!data.length && `No ${plural_name || 'items'} to show`}
         </p>
       </div>

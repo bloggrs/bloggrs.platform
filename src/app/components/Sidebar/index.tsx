@@ -6,63 +6,92 @@ import {
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter, matchPath, useHistory } from 'react-router-dom';
+import { Link, withRouter, matchPath, RouteComponentProps } from 'react-router-dom';
 import { CenteredImage } from '../CenteredImage';
 import { Loading } from '../Loading';
 
-const getPathname = (blog_id, path) => `/blogs/${blog_id}${path}`;
+interface Blog {
+  id: string;
+  name: string;
+  avatar?: string;
+}
 
-const SelectBlogContainer = ({ children, loading }) => {
-  return (
-    <div className="select-blog-container cursor-pointer">
-      {loading ? <Loading forModal={true} /> : children}
-    </div>
-  );
-};
-const SelectBlog = ({ loading, selected, blogs }) => {
-  const BlogItems = blogs.map((blog, i) => (
+interface SelectBlogProps {
+  loading: boolean;
+  selected: string;
+  blogs: Blog[];
+}
+
+const getPathname = (blogId: string, path: string): string => `/blogs/${blogId}${path}`;
+
+const SelectBlogContainer: React.FC<{ loading: boolean; children: React.ReactNode }> = ({ 
+  children, 
+  loading 
+}) => (
+  <div className="">
+    {loading ? <Loading forModal={true} /> : children}
+  </div>
+);
+
+const SelectBlog: React.FC<SelectBlogProps> = ({ loading, selected, blogs }) => {
+  const BlogItems = blogs.map((blog) => (
     <div
-      onClick={e => (window.location.pathname = '/blogs/' + blog.id)}
-      // @ts-nocheck
-      data-selected={String(selected == blog.id)}
+      key={blog.id}
+      onClick={() => { window.location.pathname = `/blogs/${blog.id}`; }}
+      className="flex items-center p-3 hover:bg-slate-600 transition-colors"
+      data-selected={String(selected === blog.id)}
     >
-      <img />
-      <span>{blog.name}</span>
+      <img 
+        className="w-8 h-8 rounded-full mr-3" 
+        src={blog.avatar || '/default-blog-avatar.png'} 
+        alt={`${blog.name} avatar`}
+      />
+      <span className="text-white">{blog.name}</span>
     </div>
   ));
+
   return (
-    <>
+    <div className="absolute bottom-24 left-0 w-64 bg-slate-700 rounded-lg shadow-lg overflow-hidden">
       <SelectBlogContainer loading={loading}>{BlogItems}</SelectBlogContainer>
-    </>
+    </div>
   );
 };
-export const _Sidebar = ({ collapse, style, ...rest }: any) => {
-  const match: any = matchPath(window.location.pathname, {
+
+interface SidebarProps extends RouteComponentProps {
+  collapse?: boolean;
+  style?: React.CSSProperties;
+}
+
+export const _Sidebar: React.FC<SidebarProps> = ({ collapse, style = {}, location }) => {
+  const match = matchPath<{ blog_id: string }>(location?.pathname, {
     path: '/blogs/:blog_id',
   });
 
-  const { blog_id }: any = !match ? {} : match.params;
+  const blogId = match?.params?.blog_id;
   const { actions } = useBlogsSlice();
   const blogs = useSelector(getBlogsForQuery(undefined));
   const loading = useSelector(getLoadingForQuery(undefined));
 
   const [showSelectBlog, setShowSelectBlog] = useState(false);
 
-  const toggleSelectBlog = e => {
+  const toggleSelectBlog = (e: React.MouseEvent): void => {
     e.preventDefault();
     setShowSelectBlog(!showSelectBlog);
   };
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(actions.loadBlogs({ query: undefined }));
-  }, []);
+  }, [dispatch, actions]);
 
   if (collapse) {
     return (
       <div className="absolute h-screen max-h-screen max-w-10 w-5 py-5 bg-slate-700" />
     );
   }
+
+  if (!blogId) return null;
 
   return (
     <React.Fragment>
@@ -71,65 +100,65 @@ export const _Sidebar = ({ collapse, style, ...rest }: any) => {
           ...style,
           position: 'fixed',
           top: 0,
-          zIndex: -1,
+          zIndex: 10,
           height: '100%',
         }}
-        className={'max-w-52 w-24 py-5 bg-slate-700 center'}
+        className="w-20 md:w-24 bg-[#1e3a8a] transition-all duration-200"
       />
       <div
         style={{
           position: 'fixed',
           top: 104,
-          zIndex: 100,
+          zIndex: 20,
           ...style,
         }}
-        className={
-          'h-screen max-h-screen max-w-52 w-24 py-5 bg-slate-700 center-items'
-        }
+        className="flex flex-col items-center w-20 md:w-24 bg-[#1e3a8a] transition-all duration-200"
       >
-        <Link to={getPathname(blog_id, '/')}>
+        <Link to={getPathname(blogId, '/')}>
           <CenteredImage
             className="py-3 cursor-pointer"
             src="/dist/static/sidebar/icons8-dashboard-80.png"
+            alt="Dashboard"
           />
         </Link>
-        <Link to={getPathname(blog_id, '/posts')}>
+        <Link to={getPathname(blogId, '/posts')}>
           <CenteredImage
             className="py-3 cursor-pointer"
             src="/dist/static/sidebar/icons8-page-80.png"
+            alt="Posts"
           />
         </Link>
-        <Link to={getPathname(blog_id, '/comments')}>
+        <Link to={getPathname(blogId, '/comments')}>
           <CenteredImage
             className="py-3 cursor-pointer"
             src="/dist/static/sidebar/icons8-chat-bubble-80.png"
+            alt="Comments"
           />
         </Link>
-        <Link to={getPathname(blog_id, '/team-members')}>
+        <Link to={getPathname(blogId, '/team-members')}>
           <CenteredImage
             className="py-3 cursor-pointer"
             src="/dist/static/sidebar/icons8-team-80.png"
+            alt="Team Members"
           />
         </Link>
-        <Link to={getPathname(blog_id, '/settings')}>
+        <Link to={getPathname(blogId, '/settings')}>
           <CenteredImage
             className="py-3 cursor-pointer"
             src="/dist/static/sidebar/icons8-settings-80.png"
+            alt="Settings"
           />
         </Link>
         <div
-          style={{
-            background: '#164666 0% 0% no-repeat padding-box;',
-          }}
-          className="fixed bottom-0 bg-white h-24 py-5 w-24 bg-slate-900"
+          className="fixed bottom-0 w-20 md:w-24 h-24 bg-[#164666] cursor-pointer"
           onClick={toggleSelectBlog}
         >
-          <div className="cursor-pointer align-middle w-14 h-14 m-auto py-4 mx-5 rounded-full bg-slate-700 text-center ">
-            <span className="py-4 font-medium text-white">GK</span>
+          <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 mx-auto mt-4 rounded-full bg-slate-700">
+            <span className="text-white font-medium">GK</span>
           </div>
-          {showSelectBlog ? (
-            <SelectBlog selected={blog_id} loading={loading} blogs={blogs} />
-          ) : null}
+          {showSelectBlog && (
+            <SelectBlog selected={blogId} loading={loading} blogs={blogs} />
+          )}
         </div>
       </div>
     </React.Fragment>

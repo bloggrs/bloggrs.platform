@@ -3,15 +3,26 @@ import { postsActions as actions } from '.';
 import { blogsService } from '../../../../services/blogs.service';
 import { DeletePostAction, LoadPostsAction } from './types';
 
-function* getPosts({ payload: { id, page = 1, pageSize = 10 } }) {
+function* getPosts(action) {
   try {
-    const posts: any = yield call(blogsService.getPosts, {
-      BlogId: id,
-      query: { page, pageSize },
+    if (!action.payload.id) {
+      throw new Error('Blog ID is required');
+    }
+
+    const response = yield call(blogsService.getPosts, {
+      BlogId: action.payload.id,
+      query: action.payload.query,
     });
-    yield put(actions.loadSuccess({ posts }));
-  } catch (err) {
-    yield put(actions.loadFailed({ error: err }));
+    yield put(actions.loadSuccess({ posts: response }));
+  } catch (error: any) {
+    yield put(
+      actions.loadFailed({
+        error: {
+          message: error.response?.data?.message || error.message,
+          status: error.response?.status,
+        },
+      }),
+    );
   }
 }
 

@@ -4,6 +4,13 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { blogCategoriesSaga } from './saga';
 import { BlogCategoriesState } from './types';
 
+export interface LoadBlogCategoriesPayload {
+  query: string;
+  headers: {
+    Authorization: string;
+  };
+}
+
 export const initialState: BlogCategoriesState = {
   egQueryString: {
     blogCategories: [],
@@ -12,11 +19,31 @@ export const initialState: BlogCategoriesState = {
   },
 };
 
+interface LoadedPayload {
+  query: string;
+  blogCategories: any[]; // Consider replacing 'any' with proper type
+}
+
+interface FailedPayload {
+  query: string;
+  error: Error;
+}
+
 const slice = createSlice({
   name: 'createBlog.blogCategories',
   initialState,
   reducers: {
-    loadBlogCategories(state, action: PayloadAction<any>) {},
+    loadBlogCategories(
+      state,
+      action: PayloadAction<LoadBlogCategoriesPayload>,
+    ) {
+      const { query } = action.payload;
+      state[query] = {
+        ...state[query],
+        loading: true,
+        error: null,
+      };
+    },
     initSearchIfNotExists(state, action: PayloadAction<any>) {
       const {
         payload: { query },
@@ -27,15 +54,22 @@ const slice = createSlice({
         error: null,
       };
     },
-    loaded(state, action: PayloadAction<any>) {
-      console.log('loaded', action);
-      state[action.payload.query].loading = false;
-      state[action.payload.query].blogCategories =
-        action.payload.blogCategories;
+    loaded(state, action: PayloadAction<LoadedPayload>) {
+      const { query, blogCategories } = action.payload;
+      state[query].loading = false;
+      state[query].blogCategories = blogCategories;
     },
-    failed(state, action: PayloadAction<any>) {
-      state[action.payload.query].loading = false;
-      state[action.payload.query].error = action.payload.error;
+    failed(state, action: PayloadAction<FailedPayload>) {
+      const { query, error } = action.payload;
+      state[query].loading = false;
+      state[query].error = error;
+    },
+    setLoading(
+      state,
+      action: PayloadAction<{ query: string; loading: boolean }>,
+    ) {
+      const { query, loading } = action.payload;
+      state[query].loading = loading;
     },
   },
 });

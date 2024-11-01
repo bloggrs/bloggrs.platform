@@ -1,11 +1,12 @@
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
 
-const getBlogCategories = (query = '') => {
+const getBlogCategories = (query = '', additionalHeaders = {}) => {
   const requestOptions = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      ...additionalHeaders,
     },
   };
   const endpoint = `${API_URL}/api/v1/blogcategories?query=` + query;

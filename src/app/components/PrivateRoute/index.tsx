@@ -24,7 +24,7 @@ export const PrivateRoute = ({
 }: any): ReactElement => {
   const user = useSelector(authUserSelector);
   const loading = useSelector(isAuthLoading);
-  if (loading) return <LineLoader/>
-  if (!user) return <Redirect to='/auth/login' />;
+  if (loading) return <LineLoader />;
+  if (!user) return <Redirect to="/auth/login" />;
   return <Route {...rest} render={Component} />;
 };

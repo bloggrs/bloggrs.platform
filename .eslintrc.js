@@ -8,8 +8,16 @@ const prettierOptions = JSON.parse(
 prettierOptions.endOfLine = 'auto';
 
 module.exports = {
-  extends: ['react-app', 'prettier'],
-  plugins: ['prettier'],
+  root: true,
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'react-app',
+    'prettier'
+  ],
+  plugins: [
+    'prettier',
+    '@typescript-eslint'
+  ],
   rules: {
     'prettier/prettier': ['error', prettierOptions],
   },

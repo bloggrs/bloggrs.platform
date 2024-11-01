@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
+import { NotAuthorized } from 'app/components/NotAuthorized';
 
 const customStyles = {
   content: {
@@ -10,9 +11,12 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    width: 500,
-    height: 398,
-    borderRadius: 25,
+    width: '90%',
+    maxWidth: '500px',
+    height: 'auto',
+    minHeight: '300px',
+    borderRadius: '12px',
+    padding: '24px',
   },
 };
 
@@ -24,11 +28,13 @@ type Post = {
 interface EditPostModalProps {
   post: Partial<Post>;
   children: React.Component | string;
+  hasAccess?: boolean;
 }
 
 export const EditPostModal = ({
   post: { id, title },
   children,
+  hasAccess = true,
 }: EditPostModalProps) => {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -46,6 +52,10 @@ export const EditPostModal = ({
     setIsOpen(false);
   }
 
+  if (!hasAccess) {
+    return <NotAuthorized />;
+  }
+
   return (
     <div>
       <div onClick={openModal}>{children}</div>
@@ -57,71 +67,50 @@ export const EditPostModal = ({
         contentLabel="Example Modal"
         //   className="w-2/6 h-2/6"
       >
-        <div className="ml-2">
-          <img src="/dist/static/icons8-pencil-64.png" />
-          <h1 className="text-2xl text-slate-700 font-medium">
-            Edit '{title}' post
-          </h1>
-
-          <div className="my-2 px-2 mb-3 xl:w-96">
-            <input
-              name="name"
-              type="name"
-              placeholder="Name"
-              className="
-                    mt-10
-                    form-control
-                    block
-                    w-full
-                    h-12
-                    px-3
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-slate-700
-                    bg-white bg-clip-padding
-                    border border-solid border-slate-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    focus:text-slate-700
-                    focus:bg-white
-                    focus:border-slate-800
-                    focus:border-2
-                    focus:outline-none
-                    "
-              id="first_name"
+        <div className="flex flex-col h-full">
+          <div className="flex flex-col space-y-4">
+            <img
+              src="/dist/static/icons8-pencil-64.png"
+              className="w-16 h-16 mb-2"
             />
-            {/* <p className="error-feedback">Email is required.</p> */}
+            <h1 className="text-2xl text-[#1e3a8a] font-medium">
+              Edit '{title}' post
+            </h1>
+
+            <div className="w-full">
+              <input
+                name="name"
+                type="name"
+                placeholder="Name"
+                className="
+                  w-full
+                  px-4
+                  py-3
+                  text-base
+                  rounded-lg
+                  border-2
+                  border-gray-200
+                  focus:border-[#1e3a8a]
+                  focus:outline-none
+                  transition-colors
+                "
+                id="first_name"
+              />
+            </div>
           </div>
 
-          {/* <div>I am a modal</div> */}
-          <div
-            className="flex w-6/6"
-            style={{
-              bottom: 15,
-              position: 'absolute',
-              width: '90%',
-            }}
-          >
-            <div className="w-11/12">
-              <Link to={`/`}>
-                <button className=" btn-base w-52 bg-green-300  text-white rounded-full hover:bg-green-500">
-                  Save
-                </button>
-              </Link>
-            </div>
-            <br />
-
-            <div className="">
-              <button
-                onClick={closeModal}
-                className="btn-base w-32 bg-white border-2 border-yellow-500 text-yellow-500 rounded-full"
-              >
-                Cancel
+          <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-6">
+            <Link to={`/`} className="flex-1">
+              <button className="w-full px-6 py-2 bg-[#1e3a8a] text-white rounded-full hover:bg-[#2d4a9e] transition-colors">
+                Save
               </button>
-            </div>
+            </Link>
+            <button
+              onClick={closeModal}
+              className="flex-1 px-6 py-2 bg-white border-2 border-[#1e3a8a] text-[#1e3a8a] rounded-full hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </Modal>
