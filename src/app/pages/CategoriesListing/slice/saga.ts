@@ -10,7 +10,7 @@ function* getCategories(action) {
     }
 
     const response = yield call(blogsService.getCategories);
-    yield put(actions.loadSuccess({ categories: response }));
+    yield put(actions.loadSuccess({ blogpostcategories: response }));
   } catch (error: any) {
     yield put(
       actions.loadFailed({

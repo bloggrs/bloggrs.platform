@@ -40,6 +40,8 @@ import { TransferPage } from './pages/TransferPage';
 import { FeaturesPage } from './pages/FeaturesPage';
 import { PricingPage } from './pages/PricingPage';
 import { BlogPage } from './pages/BlogPage';
+import { CategoriesListing } from './pages/CategoriesListing';
+import { CreateCategory } from './pages/CreateCategory';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -98,6 +100,16 @@ export function App() {
             exact
             path="/blogs/:blog_id/posts"
             component={PostsListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/categories"
+            component={CategoriesListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/categories/create"
+            component={CreateCategory}
           />
           <PrivateRoute
             exact

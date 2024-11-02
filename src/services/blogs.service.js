@@ -298,7 +298,7 @@ const getCategories = () => {
       return res.json();
     })
     .then(data => {
-      return data.data.categories;
+      return data.data.blogpostcategories;
     })
     .catch(error => {
       toast.error(error.message);

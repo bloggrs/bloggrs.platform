@@ -8,6 +8,7 @@ export interface Category {
 
 export interface CategoriesState {
   categories: Category[];
+  blogpostcategories: any[];
   loading: boolean;
   deleteLoading: boolean;
   error?: string;

@@ -110,7 +110,7 @@ const createBlogPostCategory = async ({
       CategoryId: name,
       description,
       parentCategoryId,
-      BlogId: blog_id,
+      BlogId: Number(blog_id),
     }),
   };
 

@@ -8,7 +8,7 @@ const selectSlice = (state: RootState) => {
 
 export const getCategories = createSelector(
   [selectSlice],
-  state => state?.categories ?? [],
+  state => state?.blogpostcategories ?? [],
 );
 
 export const isCategoriesLoading = createSelector(

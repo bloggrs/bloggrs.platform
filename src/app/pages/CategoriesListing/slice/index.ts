@@ -12,6 +12,7 @@ declare module 'types/RootState' {
 
 export const initialState: CategoriesState = {
   categories: [],
+  blogpostcategories: [],
   loading: true,
   deleteLoading: false,
   error: undefined,
@@ -27,14 +28,14 @@ const slice = createSlice({
     },
     loadSuccess(state, action: PayloadAction<any>) {
       state.loading = false;
-      if (!Array.isArray(action.payload?.categories)) {
+      if (!Array.isArray(action.payload?.blogpostcategories)) {
         state.isAuthorized = false;
         return;
       }
 
       state.isAuthorized = true;
-      const newCategories = action.payload.categories;
-      const currentCategories = Array.isArray(state.categories) ? state.categories : [];
+      const newCategories = action.payload.blogpostcategories;
+      const currentCategories = Array.isArray(state.blogpostcategories) ? state.blogpostcategories : [];
 
       const updatedCategories = currentCategories.map(c => {
         const new_category = newCategories.find(newCat => c.id === newCat.id);
@@ -45,7 +46,7 @@ const slice = createSlice({
         c => !currentCategories.find(i => c.id === i.id),
       );
 
-      state.categories = updatedCategories.concat(addCategories);
+      state.blogpostcategories = updatedCategories.concat(addCategories);
     },
     loadFailed(
       state,
@@ -67,7 +68,7 @@ const slice = createSlice({
     },
     deleteSuccess(state, action: PayloadAction<any>) {
       const remove_id = action.payload.id;
-      state.categories = state.categories.filter(c => c.id !== remove_id);
+      state.blogpostcategories = state.blogpostcategories.filter(c => c.id !== remove_id);
       state.deleteLoading = false;
     },
     deleteFailed(state, action: PayloadAction<any>) {

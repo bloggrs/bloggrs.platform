@@ -28,14 +28,28 @@ interface RootState {
   };
 }
 
-export const CategoriesListing = (props) => {
+export const CategoriesListing = () => {
+  const { actions } = useCategoriesSlice();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { blog_id } = useParams<{ blog_id: string }>();
+  
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [loadMoreClicks, setLoadMoreClicks] = useState(0);
 
-    
+  const categories = useSelector(getCategories);
+  const loading = useSelector(isCategoriesLoading);
+
+  useEffect(() => {
+    dispatch(actions.loadCategories({ id: blog_id }));
+  }, [dispatch, blog_id]);
+
   const EditButton = ({ item }) => (
     <button
       onClick={() => {
-        props.setSelectedCategory(item);
-        props.setEditModalOpen(true);
+        setSelectedCategory(item);
+        setEditModalOpen(true);
       }}
       className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md"
     >
@@ -47,13 +61,13 @@ export const CategoriesListing = (props) => {
     <div className="flex flex-col p-6 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <button
-          onClick={() => props.history.goBack()}
+          onClick={() => history.goBack()}
           className="btn-base px-6 py-2 mb-4 sm:mb-0 bg-white border-2 border-blue-600 text-blue-600 rounded-full hover:bg-blue-50 transition-colors"
         >
           Back
         </button>
 
-        <Link to={`/blogs/${props.match.params.blog_id}/categories/create`}>
+        <Link to={`/blogs/${blog_id}/categories/create`}>
           <button className="btn-base px-8 py-2 bg-orange-400 text-white rounded-full hover:bg-orange-500 transition-colors shadow-sm">
             Add Category
           </button>
@@ -93,19 +107,22 @@ export const CategoriesListing = (props) => {
         fields={[
           { key: 'id', label: '#' },
           { key: 'name', label: 'Name' },
-          { key: 'slug', label: 'Slug' },
+          { key: 'slug', label: 'slug' },
         ]}
         EditButton={EditButton}
         DeleteModal={DeleteCategoryModal}
-        data={props.categories || []}
-        onLoadMore={(e: any) => props.setLoadMoreClicks(props.loadMoreClicks + 1)}
+        data={categories.map(category => ({
+          ...category.categories,
+          id: category.categories.id,
+        }))}
+        onLoadMore={(e: any) => setLoadMoreClicks(loadMoreClicks + 1)}
       />
 
-      {props.editModalOpen && props.selectedCategory && (
+      {editModalOpen && selectedCategory && (
         <EditCategoryModal
-          category={props.selectedCategory}
-          isOpen={props.editModalOpen}
-          onClose={() => props.setEditModalOpen(false)}
+          category={selectedCategory}
+          isOpen={editModalOpen}
+          onClose={() => setEditModalOpen(false)}
           children={null}
         />
       )}
