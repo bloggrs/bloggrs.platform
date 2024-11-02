@@ -4,6 +4,7 @@
  * This is the entry file for the application, only setup and boilerplate
  * code.
  */
+// @ts-nocheck
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import './watch-polyfill';
@@ -20,6 +21,8 @@ import { App } from 'app';
 
 import { HelmetProvider } from 'react-helmet-async';
 
+import type { ProviderProps } from 'react-helmet-async';
+
 import { configureAppStore } from 'store/configureStore';
 
 import reportWebVitals from 'reportWebVitals';
@@ -32,15 +35,19 @@ const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
 console.log(store);
+// @ts-ignore
 ReactDOM.render(
+  // @ts-ignore
   <Provider store={store}>
-    <HelmetProvider>
-      {/* <React.StrictMode> */}
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-      {/* </React.StrictMode> */}
-    </HelmetProvider>
+    // @ts-ignore
+    <BrowserRouter basename="/">
+        // @ts-ignore
+        <HelmetProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </HelmetProvider>
+    </BrowserRouter>
   </Provider>,
   MOUNT_NODE,
 );

@@ -63,12 +63,11 @@ export function App() {
   return (
     <>
       <Helmet
-        titleTemplate="%s - React Boilerplate"
-        defaultTitle="React Boilerplate"
-        htmlAttributes={{ lang: i18n.language }}
-      >
-        <meta name="description" content="A React Boilerplate application" />
-      </Helmet>
+        title="Page Title"
+        meta={[
+          { name: 'description', content: 'Description' }
+        ]}
+      />
       <Switch>
         {/* Authentication routes */}
         <Route exact path="/auth/login" component={LoginPage} />

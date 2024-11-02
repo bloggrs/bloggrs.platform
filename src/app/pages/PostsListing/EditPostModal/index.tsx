@@ -27,7 +27,7 @@ type Post = {
 
 interface EditPostModalProps {
   post: Partial<Post>;
-  children: React.Component | string;
+  children: React.ReactNode;
   hasAccess?: boolean;
 }
 

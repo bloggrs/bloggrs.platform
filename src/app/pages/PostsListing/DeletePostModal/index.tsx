@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { usePostsSlice } from '../slice';
 import { isPostDeleteLoading } from '../slice/selectors';
 import { NotAuthorized } from 'app/components/NotAuthorized';
+import { ReactNode } from 'react';
 
 const customStyles = {
   content: {
@@ -31,7 +32,7 @@ type Post = {
 
 interface DeletePostModalProps {
   post: Post;
-  children: React.Component | string;
+  children: ReactNode;
 }
 
 export const DeletePostModal = ({

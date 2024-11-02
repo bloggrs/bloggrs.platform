@@ -28,10 +28,15 @@ const RegisterPage_ = props => {
   if (user) return <Redirect to="/" />;
   return (
     <>
-      <Helmet>
-        <title>Bloggrs - Register</title>
-        <meta name="description" content="Create your Bloggrs account" />
-      </Helmet>
+      <Helmet
+        title="Bloggrs - Register"
+        meta={[
+          {
+            name: "description",
+            content: "Create your Bloggrs account"
+          }
+        ]}
+      />
       <NotAuthenticatedHeader />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">

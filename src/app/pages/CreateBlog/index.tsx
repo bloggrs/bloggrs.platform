@@ -8,7 +8,7 @@ import { ChooseBlogName } from './ChooseBlogName';
 import { ChooseBlogTheme } from './ChooseBlogTheme';
 import { InformationalStep1 } from './InformationalStep1';
 import { SuccessInformational } from './SuccessInformational';
-import { HashRouter, Route, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
@@ -37,7 +37,7 @@ export const CreateBlog = () => {
   ];
 
   return (
-    <HashRouter>
+    <>
       {components.map(({ Component, path, sendDataObject }, i) => {
         const nextStep = () => {
           var component = components[i + 1];
@@ -72,6 +72,6 @@ export const CreateBlog = () => {
           />
         );
       })}
-    </HashRouter>
+    </>
   );
 };

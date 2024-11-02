@@ -24,13 +24,11 @@ const LoginPage_ = props => {
   if (user) return <Redirect to="/" />;
   return (
     <>
-      <Helmet>
-        <title>Bloggrs - Login</title>
-        <meta
-          name="description"
-          content="A Boilerplate application LoginPage"
-        />
-      </Helmet>
+      <Helmet
+        htmlAttributes={{ lang: 'en' }}
+        title="Bloggrs - Login"
+        meta={[{ name: "description", content: "A Boilerplate application LoginPage" }]}
+      />
       <NotAuthenticatedHeader />
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row">
