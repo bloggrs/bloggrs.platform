@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  *
  * App
@@ -63,14 +64,14 @@ export function App() {
   return (
     <>
       <Helmet
-        title="Page Title"
-        meta={[
-          { name: 'description', content: 'Description' }
-        ]}
+        titleTemplate="%s - React Boilerplate"
+        defaultTitle="React Boilerplate"
+        htmlAttributes={{ lang: i18n.language }}
       />
       <Switch>
         {/* Authentication routes */}
         <Route exact path="/auth/login" component={LoginPage} />
+        <Route exact path="/" component={HomePage} />
         <Route exact path="/features" component={FeaturesPage} />
         <Route exact path="/pricing" component={PricingPage} />
         <Route exact path="/blog" component={BlogPage} />
@@ -84,7 +85,7 @@ export function App() {
         <Route exact path="/auth/register" component={RegisterPage} />
         <Route exact path="/auth/logout" component={LogoutPage} />
         {/* EndAuthentication routes */}
-        <PrivateRoute exact path="/blogs/create" component={CreateBlog} />
+        <PrivateRoute path="/blogs/create" component={CreateBlog} />
 
         <PrivateRoute
           exact

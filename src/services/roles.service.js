@@ -51,7 +51,7 @@ const getRole = roleId => {
     });
 };
 
-const createRole = ({ 
+const createRole = ({
   name,
   value,
   description,

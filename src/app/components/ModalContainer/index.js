@@ -47,7 +47,7 @@ export const ConfirmButton = styled.div`
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
-  
+
   &:hover {
     background-color: #2a5494;
   }
@@ -76,7 +76,7 @@ const Input = styled.input`
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  
+
   &:focus {
     outline: none;
     border-color: #1e3d6b;

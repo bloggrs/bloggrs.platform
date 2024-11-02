@@ -6,14 +6,24 @@ import {
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter, matchPath, RouteComponentProps } from 'react-router-dom';
-import { CenteredImage } from '../CenteredImage';
+import { Link, withRouter, matchPath, RouteComponentProps, match } from 'react-router-dom';
 import { Loading } from '../Loading';
 
 interface Blog {
   id: string;
   name: string;
   avatar?: string;
+}
+
+interface SidebarProps {
+  collapse?: boolean;
+  style?: React.CSSProperties;
+  location: {
+    pathname: string;
+    search: string;
+    state: any;
+    hash: string;
+  };
 }
 
 interface SelectBlogProps {
@@ -57,17 +67,8 @@ const SelectBlog: React.FC<SelectBlogProps> = ({ loading, selected, blogs }) => 
   );
 };
 
-interface SidebarProps extends RouteComponentProps {
-  collapse?: boolean;
-  style?: React.CSSProperties;
-}
-
 export const _Sidebar: React.FC<SidebarProps> = ({ collapse, style = {}, location }) => {
-  const match = matchPath<{ blog_id: string }>(location?.pathname, {
-    path: '/blogs/:blog_id',
-  });
-
-  const blogId = match?.params?.blog_id;
+  const blogId = window.location.pathname.split('/blogs/')[1]?.split('/')[0];
   const { actions } = useBlogsSlice();
   const blogs = useSelector(getBlogsForQuery(undefined));
   const loading = useSelector(getLoadingForQuery(undefined));
@@ -115,38 +116,87 @@ export const _Sidebar: React.FC<SidebarProps> = ({ collapse, style = {}, locatio
         className="flex flex-col items-center w-20 md:w-24 bg-[#1e3a8a] transition-all duration-200"
       >
         <Link to={getPathname(blogId, '/')}>
-          <CenteredImage
+          <div
             className="py-3 cursor-pointer"
-            src="/dist/static/sidebar/icons8-dashboard-80.png"
-            alt="Dashboard"
+            style={{
+              width: '100%',
+              height: '40px',
+              backgroundImage: 'url("/dist/static/sidebar/icons8-dashboard-80.png")',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain'
+            }}
+            title="Dashboard"
           />
         </Link>
         <Link to={getPathname(blogId, '/posts')}>
-          <CenteredImage
+          <div
             className="py-3 cursor-pointer"
-            src="/dist/static/sidebar/icons8-page-80.png"
-            alt="Posts"
+            style={{
+              width: '100%',
+              height: '40px',
+              backgroundImage: 'url("/dist/static/sidebar/icons8-page-80.png")',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain'
+            }}
+            title="Posts"
+          />
+        </Link>
+        <Link to={getPathname(blogId, '/categories')}>
+          <div
+            className="py-3 cursor-pointer"
+            style={{
+              width: '100%',
+              height: '40px',
+              backgroundImage: 'url("/dist/static/sidebar/icons8-category-40.png")',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain'
+            }}
+            title="Categories"
           />
         </Link>
         <Link to={getPathname(blogId, '/comments')}>
-          <CenteredImage
+          <div
             className="py-3 cursor-pointer"
-            src="/dist/static/sidebar/icons8-chat-bubble-80.png"
-            alt="Comments"
+            style={{
+              width: '100%',
+              height: '40px',
+              backgroundImage: 'url("/dist/static/sidebar/icons8-chat-bubble-80.png")',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain'
+            }}
+            title="Comments"
           />
         </Link>
         <Link to={getPathname(blogId, '/team-members')}>
-          <CenteredImage
+          <div
             className="py-3 cursor-pointer"
-            src="/dist/static/sidebar/icons8-team-80.png"
-            alt="Team Members"
+            style={{
+              width: '100%',
+              height: '40px',
+              backgroundImage: 'url("/dist/static/sidebar/icons8-team-80.png")',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain'
+            }}
+            title="Team Members"
           />
         </Link>
         <Link to={getPathname(blogId, '/settings')}>
-          <CenteredImage
+          <div
             className="py-3 cursor-pointer"
-            src="/dist/static/sidebar/icons8-settings-80.png"
-            alt="Settings"
+            style={{
+              width: '100%',
+              height: '40px',
+              backgroundImage: 'url("/dist/static/sidebar/icons8-settings-80.png")',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain'
+            }}
+            title="Settings"
           />
         </Link>
         <div

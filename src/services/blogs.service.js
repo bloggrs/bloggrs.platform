@@ -281,6 +281,31 @@ const getBlogCustomization = BlogId => {
     .then(data => data.data.customization);
 };
 
+const getCategories = () => {
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+  };
+  const endpoint = `${API_URL}/api/v1/blogpostcategories`;
+  return fetch(endpoint, requestOptions)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+      return res.json();
+    })
+    .then(data => {
+      return data.data.categories;
+    })
+    .catch(error => {
+      toast.error(error.message);
+      throw error;
+    });
+};
+
 export const blogsService = {
   createBlog,
   getBlog,
@@ -295,4 +320,5 @@ export const blogsService = {
   getComments,
   updateBlogCustomization,
   getBlogCustomization,
+  getCategories,
 };

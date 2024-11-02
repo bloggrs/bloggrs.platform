@@ -39,15 +39,6 @@ export const CreatePost = ({ match }) => {
   const [hasAccess, setHasAccess] = useState(true);
 
   useEffect(async () => {
-    try {
-      const hasAccess = await blogsService.checkPostAccess(blog_id);
-      setHasAccess(hasAccess);
-    } catch (err) {
-      setHasAccess(false);
-    }
-  }, [blog_id]);
-
-  useEffect(async () => {
     const categories = await blogsService.getBlogCategories(
       blog_id,
       categoriesQuery,

@@ -8,23 +8,24 @@ import {
   Redirect,
   Route,
   RouteComponentProps,
-  RouteProps,
 } from 'react-router-dom';
 import { LineLoader } from '../LineLoader';
 
-interface PrivateRouteProps extends RouteProps {
+interface PrivateRouteProps {
   component:
     | React.ComponentType<RouteComponentProps<any>>
     | React.ComponentType<any>;
+  path: string;
+  exact?: boolean;
 }
 
 export const PrivateRoute = ({
   component: Component,
   ...rest
-}: any): ReactElement => {
+}: PrivateRouteProps): ReactElement => {
   const user = useSelector(authUserSelector);
   const loading = useSelector(isAuthLoading);
   if (loading) return <LineLoader />;
   if (!user) return <Redirect to="/auth/login" />;
-  return <Route {...rest} render={Component} />;
+  return <Route {...rest} Component={Component} />;
 };

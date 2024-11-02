@@ -39,10 +39,13 @@ export const ConfirmButton = styled.div`
   min-width: 120px;
   cursor: pointer;
   font-weight: 500;
-  
-  ${props => props.delete ? `
+
+  ${props =>
+    props.delete
+      ? `
     background-color: #FF4B4B;
-  ` : `
+  `
+      : `
     background-color: #FFA162;
   `}
 
@@ -96,7 +99,9 @@ export function ModalContainer({
           </p>
         </ModalContent>
         <ModalFooter>
-          <ConfirmButton delete onClick={onDelete}>Delete</ConfirmButton>
+          <ConfirmButton delete onClick={onDelete}>
+            Delete
+          </ConfirmButton>
           <ConfirmButton onClick={close}>Cancel</ConfirmButton>
         </ModalFooter>
       </Modal>

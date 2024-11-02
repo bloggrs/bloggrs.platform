@@ -39,9 +39,7 @@ console.log(store);
 ReactDOM.render(
   // @ts-ignore
   <Provider store={store}>
-    // @ts-ignore
     <BrowserRouter basename="/">
-        // @ts-ignore
         <HelmetProvider>
           <React.StrictMode>
             <App />

@@ -31,8 +31,8 @@ const get_field_href = (field, context) => {
 };
 
 export const Table = ({
-  fields,
-  data,
+  fields = [],
+  data = [],
   page,
   pageSize,
   onLoadMore,
@@ -42,21 +42,27 @@ export const Table = ({
   DeleteModal,
   EditButton,
 }: any) => {
-  // page = page || 1;
-  // pageSize = pageSize || 3;
-
-  // const sliceRule1 = (page - 1) * pageSize;
-  // const sliceRule = [sliceRule1, sliceRule1 + pageSize];
-  // console.log(sliceRule);
   const history = useHistory();
+
+  if (!fields || !data) {
+    return (
+      <div className="block w-full overflow-x-auto bg-white">
+        <p className="ml-10 my-10">No data available</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="block w-full overflow-x-auto bg-white">
         <table className="items-center bg-transparent w-full border-collapse ">
           <thead>
             <tr>
-              {fields.map(f => (
-                <th className="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+              {fields.map((f, index) => (
+                <th 
+                  key={`header-${index}`}
+                  className="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                >
                   {f.label}
                 </th>
               ))}
@@ -66,16 +72,17 @@ export const Table = ({
             </tr>
           </thead>
           <tbody>
-            {/* {data.slice(...sliceRule).map(d => ( */}
-            {data.map(d => (
-              <tr>
-                {fields.map(field => {
+            {data.map((d, rowIndex) => (
+              <tr key={d.id || `row-${rowIndex}`}>
+                {fields.map((field, colIndex) => {
                   const href = get_field_href(field, d[field.key]);
-                  const className =
-                    href !== false ? 'cursor-pointer text-blue' : '';
-                  const onClick = e => history.push(href);
+                  const className = href !== false ? 'cursor-pointer text-blue' : '';
+                  const onClick = href !== false ? () => history.push(href) : undefined;
                   return (
-                    <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700">
+                    <th 
+                      key={`cell-${rowIndex}-${colIndex}`}
+                      className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700"
+                    >
                       <div
                         className={className}
                         onClick={onClick}
@@ -117,24 +124,7 @@ export const Table = ({
                       </button>
                     </DeleteModal>
                   )}
-                  {/* <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
-                      Edit
-                    </button>
-                  </Link> */}
-                  {/* <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
-                      Delete
-                    </button>
-                  </Link> */}
                 </td>
-                {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                  <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base  w-full bg-transparent border-2 border-red-800 text-red-800 rounded-md">
-                      Delete
-                    </button>
-                  </Link>
-                </td> */}
               </tr>
             ))}
           </tbody>

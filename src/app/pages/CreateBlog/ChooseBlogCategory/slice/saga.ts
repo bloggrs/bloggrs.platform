@@ -14,7 +14,6 @@ function* loadBlogCategories(action: PayloadAction<LoadBlogCategoriesPayload>) {
     const response = yield call(
       blogCategoriesService.getBlogCategories,
       query,
-      headers,
     );
 
     // Only dispatch loaded action if we got a valid response
