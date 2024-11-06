@@ -1,37 +1,17 @@
 import React from 'react';
 
 export const HeaderWidget = () => (
-  <nav className="bg-white shadow-md max-h-96 py-5">
-    <div className="mx-32 px-2 sm:px-6 lg:px-8">
+  <nav className="bg-white shadow-sm border-b border-gray-200">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="relative flex items-center justify-between h-16">
         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          {/* Mobile menu button*/}
           <button
             type="button"
-            className="
-                  inline-flex
-                  items-center
-                  justify-center
-                  p-2
-                  rounded-md
-                  text-slate-400
-                  hover:text-white hover:bg-slate-700
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-inset
-                  focus:ring-white
-                "
+            className="inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#1a365d]"
             aria-controls="mobile-menu"
             aria-expanded="false"
           >
             <span className="sr-only">Open main menu</span>
-            {/*
-                Icon when menu is closed.
-
-                Heroicon name: outline/menu
-
-                Menu open: "hidden", Menu closed: "block"
-              */}
             <svg
               className="block h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -47,13 +27,6 @@ export const HeaderWidget = () => (
                 d="M4 6h16M4 12h16M4 18h16"
               />
             </svg>
-            {/*
-                Icon when menu is open.
-
-                Heroicon name: outline/x
-
-                Menu open: "block", Menu closed: "hidden"
-              */}
             <svg
               className="hidden h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -71,137 +44,64 @@ export const HeaderWidget = () => (
             </svg>
           </button>
         </div>
-        <div className="flex-1 flex items-center justify-center sm:justify-start">
-          <div className="w-9/12 flex-shrink-0 flex items-center">
+        <div className="flex-1 flex items-center justify-between">
+          <div className="flex-shrink-0 flex items-center">
             <img
-              className="block w-40 lg:hidden h-8 w-auto h-auto"
+              className="block h-8 w-auto lg:hidden"
               src="/dist/static/logo-placeholder-image.png"
-              alt="Workflow"
+              alt="Logo"
             />
             <img
-              className="hidden absolute lg:block h-32 w-auto h-auto"
-              style={{ width: '12rem' }}
+              className="hidden lg:block h-8 w-auto"
               src="/dist/static/logo-placeholder-image.png"
-              alt="Workflow"
+              alt="Logo"
             />
-            <h1 className="text-xl lg:px-52 md:px-22 font-bold text-slate-700">
+            <h1 className="ml-4 text-xl font-semibold text-gray-900">
               DataAddict's Blog
             </h1>
           </div>
-          <div className="w-3/12 hidden sm:block sm:ml-6">
-            <div className="flex space-x-4">
-              {/* Current: "bg-slate-900 text-white", Default: "text-slate-300 hover:bg-slate-700 hover:text-white" */}
-              <a
-                href="#"
-                className="
-                      text-slate-600
-                      hover:text-slate-900
-                      px-3
-                      py-2
-                      rounded-md
-                      text-base
-                      font-medium
-                    "
-              >
-                Home
-              </a>
-              <a
-                href="#"
-                className="
-                      text-slate-600
-                      hover:text-slate-900
-                      px-3
-                      py-2
-                      rounded-md
-                      text-base
-                      font-medium
-                    "
-              >
-                About Me
-              </a>
-              <a
-                href="#"
-                className="
-                      text-slate-600
-                      hover:text-slate-900
-                      px-3
-                      py-2
-                      rounded-md
-                      text-base
-                      font-medium
-                    "
-              >
-                Contact
-              </a>
-            </div>
+          <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a
+              href="#"
+              className="border-transparent text-gray-500 hover:border-[#1a365d] hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              Home
+            </a>
+            <a
+              href="#"
+              className="border-transparent text-gray-500 hover:border-[#1a365d] hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              About Me
+            </a>
+            <a
+              href="#"
+              className="border-transparent text-gray-500 hover:border-[#1a365d] hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              Contact
+            </a>
           </div>
         </div>
       </div>
     </div>
-    {/* Mobile menu, show/hide based on menu state. */}
     <div className="sm:hidden" id="mobile-menu">
-      <div className="px-2 pt-2 pb-3 space-y-1">
-        {/* Current: "bg-slate-900 text-white", Default: "text-slate-300  hover:text-slate-900" */}
+      <div className="pt-2 pb-3 space-y-1">
         <a
           href="#"
-          className="
-                bg-slate-900
-                text-white
-                block
-                px-3
-                py-2
-                rounded-md
-                text-base
-                font-medium
-              "
-          aria-current="page"
+          className="bg-gray-50 border-[#1a365d] text-gray-900 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
         >
-          Dashboard
+          Home
         </a>
         <a
           href="#"
-          className="
-                text-slate-300
-                hover:text-slate-900
-                block
-                px-3
-                py-2
-                rounded-md
-                text-base
-                font-medium
-              "
+          className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
         >
-          Features
+          About Me
         </a>
         <a
           href="#"
-          className="
-                text-slate-300
-                hover:text-slate-900
-                block
-                px-3
-                py-2
-                rounded-md
-                text-base
-                font-medium
-              "
+          className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
         >
-          Pricing
-        </a>
-        <a
-          href="#"
-          className="
-                text-slate-300
-                hover:text-slate-900
-                block
-                px-3
-                py-2
-                rounded-md
-                text-base
-                font-medium
-              "
-        >
-          Blog
+          Contact
         </a>
       </div>
     </div>

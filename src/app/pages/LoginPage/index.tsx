@@ -27,105 +27,112 @@ const LoginPage_ = props => {
       <Helmet
         htmlAttributes={{ lang: 'en' }}
         title="Bloggrs - Login"
-        meta={[{ name: "description", content: "A Boilerplate application LoginPage" }]}
+        meta={[
+          {
+            name: 'description',
+            content: 'A Boilerplate application LoginPage',
+          },
+        ]}
       />
       <NotAuthenticatedHeader />
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row">
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            validationSchema={LoginSchema}
-            onSubmit={async (values, { setSubmitting }) => {
-              console.log(values);
-              dispatch(authActions.login(values));
-            }}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              /* and other goodies */
-            }) => (
-              <form onSubmit={handleSubmit} className="w-full lg:w-1/2 px-4">
-                <div>
-                  <h1 className="text-4xl font-bold text-slate-900 mb-4">
-                    Log in
-                  </h1>
-                  <h2 className="text-xl text-slate-600 mb-6">
-                    What are you waiting for? Get
-                    <br />
-                    blogging already!
-                  </h2>
-                  <hr className="mb-8" />
-
-                  <div className="space-y-6">
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="flex flex-col lg:flex-row">
+              <Formik
+                initialValues={{ email: '', password: '' }}
+                validationSchema={LoginSchema}
+                onSubmit={async (values, { setSubmitting }) => {
+                  console.log(values);
+                  dispatch(authActions.login(values));
+                }}
+              >
+                {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isSubmitting,
+                  /* and other goodies */
+                }) => (
+                  <form onSubmit={handleSubmit} className="w-full lg:w-1/2 p-8">
                     <div>
-                      <input
-                        name="email"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.email}
-                        type="email"
-                        placeholder="E-Mail"
-                        className="w-full p-3 border border-slate-300 rounded-md focus:border-slate-800 focus:ring-1 focus:ring-slate-800"
-                      />
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.email && touched.email && errors.email}
-                      </p>
-                    </div>
+                      <h1 className="text-2xl font-semibold text-gray-900">
+                        Log in
+                      </h1>
+                      <h2 className="mt-2 text-sm text-gray-600">
+                        What are you waiting for? Get blogging already!
+                      </h2>
+                      <div className="mt-8 space-y-6">
+                        <div>
+                          <input
+                            name="email"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.email}
+                            type="email"
+                            placeholder="E-Mail"
+                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                          />
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.email && touched.email && errors.email}
+                          </p>
+                        </div>
 
-                    <div>
-                      <input
-                        type="password"
-                        name="password"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.password}
-                        placeholder="Password"
-                        className="w-full p-3 border border-slate-300 rounded-md focus:border-slate-800 focus:ring-1 focus:ring-slate-800"
-                      />
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.password && touched.password && errors.password}
-                      </p>
-                    </div>
+                        <div>
+                          <input
+                            type="password"
+                            name="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            placeholder="Password"
+                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                          />
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.password && touched.password && errors.password}
+                          </p>
+                        </div>
 
-                    <button
-                      type="submit"
-                      className={`w-full py-3 rounded-md shadow-md ${
-                        Object.keys(errors).length
-                          ? 'bg-slate-200 text-slate-900'
-                          : 'bg-slate-600 text-white'
-                      }`}
-                    >
-                      Sign In
-                    </button>
+                        <button
+                          type="submit"
+                          className={`w-full py-2.5 px-4 rounded-lg shadow-sm text-sm font-medium ${
+                            Object.keys(errors).length
+                              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                              : 'bg-[#1a365d] text-white hover:bg-[#2d4a7c] transition-colors'
+                          }`}
+                        >
+                          Sign In
+                        </button>
 
-                    <div className="flex items-center justify-center space-x-2">
-                      <p className="text-slate-900">Don't have an account?</p>
-                      <Link
-                        to="/auth/register"
-                        className="text-blue-500 font-medium"
-                      >
-                        Sign up!
-                      </Link>
+                        <div className="text-center">
+                          <p className="text-sm text-gray-600">
+                            Don't have an account?{' '}
+                            <Link
+                              to="/auth/register"
+                              className="font-medium text-[#1a365d] hover:text-[#2d4a7c]"
+                            >
+                              Sign up!
+                            </Link>
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </form>
+                )}
+              </Formik>
+
+              <div className="hidden lg:flex lg:w-1/2 bg-gray-50 items-center justify-center p-12">
+                <div className="w-4/5">
+                  <img
+                    src="/dist2/static/twitter_outline.png"
+                    alt="Decorative"
+                    className="w-full"
+                  />
                 </div>
-              </form>
-            )}
-          </Formik>
-
-          <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8">
-            <div className="w-4/5">
-              <img
-                src="/dist2/static/twitter_outline.png"
-                alt="Decorative"
-                className="w-full"
-              />
+              </div>
             </div>
           </div>
         </div>

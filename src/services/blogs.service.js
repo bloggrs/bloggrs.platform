@@ -306,6 +306,37 @@ const getCategories = () => {
     });
 };
 
+const logError = ({ BlogId, error }) => {
+  const errorMessage = error?.message || 'Unknown error';
+  const errorStack = error?.stack || '';
+
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
+    },
+    body: JSON.stringify({
+      timestamp: new Date().toISOString(),
+      message: errorMessage,
+      stackTrace: errorStack,
+    }),
+  };
+  const endpoint = `${API_URL}/api/v1/blogs/${BlogId}/errors`;
+  return fetch(endpoint, requestOptions)
+    .then(res => {
+      if (!res.ok) {
+        console.error('Failed to log error:', error);
+        return;
+      }
+      return res.json();
+    })
+    .catch(err => {
+      console.error('Error logging failed:', err);
+      console.error('Original error:', error);
+    });
+};
+
 export const blogsService = {
   createBlog,
   getBlog,
@@ -321,4 +352,6 @@ export const blogsService = {
   updateBlogCustomization,
   getBlogCustomization,
   getCategories,
+  logError,
 };
+

@@ -13,23 +13,17 @@ export const MainPanel = ({
   if (!sidebarProps) sidebarProps = {};
   if (!sidebarProps.style) sidebarProps.style = {};
   if (!sidebarProps.style.background) {
-    sidebarProps.style.background = '#1B4B6B';
+    sidebarProps.style.background = '#1a365d';
   }
 
   return (
-    <div className="main-layout">
+    <div className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
       <Header />
       {hideSidebar ? null : <Sidebar {...(sidebarProps || {})} />}
       <div
-        style={{
-          marginLeft: hideSidebar ? '0' : '80px',
-          padding: '20px',
-          minHeight: '100vh',
-          backgroundColor: '#F5F7FA',
-          ...style,
-        }}
+        style={{...style }}
         id={id}
-        className={`main-content ${className || ''}`}
+        className={`flex-1 p-8 ${className || ''}`}
       >
         {children}
       </div>

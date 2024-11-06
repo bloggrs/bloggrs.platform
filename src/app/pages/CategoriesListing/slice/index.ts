@@ -35,7 +35,9 @@ const slice = createSlice({
 
       state.isAuthorized = true;
       const newCategories = action.payload.blogpostcategories;
-      const currentCategories = Array.isArray(state.blogpostcategories) ? state.blogpostcategories : [];
+      const currentCategories = Array.isArray(state.blogpostcategories)
+        ? state.blogpostcategories
+        : [];
 
       const updatedCategories = currentCategories.map(c => {
         const new_category = newCategories.find(newCat => c.id === newCat.id);
@@ -68,7 +70,9 @@ const slice = createSlice({
     },
     deleteSuccess(state, action: PayloadAction<any>) {
       const remove_id = action.payload.id;
-      state.blogpostcategories = state.blogpostcategories.filter(c => c.id !== remove_id);
+      state.blogpostcategories = state.blogpostcategories.filter(
+        c => c.id !== remove_id,
+      );
       state.deleteLoading = false;
     },
     deleteFailed(state, action: PayloadAction<any>) {
@@ -83,4 +87,4 @@ export const useCategoriesSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
   useInjectSaga({ key: slice.name, saga: categoriesSaga });
   return { actions: slice.actions };
-}; 
+};

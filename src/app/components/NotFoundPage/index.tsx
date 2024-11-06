@@ -1,6 +1,4 @@
 import * as React from 'react';
-import styled from 'styled-components/macro';
-import { P } from './P';
 import { Helmet } from 'react-helmet-async';
 
 export function NotFoundPage() {
@@ -10,66 +8,27 @@ export function NotFoundPage() {
         defaultTitle="404 Page Not Found"
         meta={[
           {
-            name: "description",
-            content: "Page not found",
+            name: 'description',
+            content: 'Page not found',
           },
         ]}
       />
-      <Wrapper>
-        <Title>
+      <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-4 bg-gray-50">
+        <div className="text-[#1a365d] text-[clamp(2.5rem,8vw,4rem)] font-bold mb-4">
           4
-          <span role="img" aria-label="Crying Face">
+          <span className="text-[0.9em]" role="img" aria-label="Crying Face">
             😥
           </span>
           4
-        </Title>
-        <P>The page you're looking for doesn't exist.</P>
-        <StyledButton onClick={() => window.history.back()}>
+        </div>
+        <p className="text-gray-600 mb-6">The page you're looking for doesn't exist.</p>
+        <button 
+          onClick={() => window.history.back()}
+          className="px-8 py-3 bg-[#1a365d] text-white rounded-lg font-medium transition-colors hover:bg-[#142c4b] md:px-6 md:py-2"
+        >
           Go Back
-        </StyledButton>
-      </Wrapper>
+        </button>
+      </div>
     </>
   );
 }
-
-const Wrapper = styled.div`
-  height: calc(100vh - 80px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  min-height: 320px;
-  padding: 1rem;
-  background-color: #f8f9fa;
-`;
-
-const Title = styled.div`
-  margin-bottom: 1rem;
-  font-weight: bold;
-  color: #1e4d7b;
-  font-size: clamp(2.5rem, 8vw, 4rem);
-
-  span {
-    font-size: 0.9em;
-  }
-`;
-
-const StyledButton = styled.button`
-  margin-top: 1.5rem;
-  padding: 0.75rem 2rem;
-  background-color: #1e4d7b;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #163a5f;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0.5rem 1.5rem;
-  }
-`;

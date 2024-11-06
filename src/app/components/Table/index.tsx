@@ -30,6 +30,27 @@ const get_field_href = (field, context) => {
   }
 };
 
+const TableContainer = styled.div`
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.2s ease;
+`;
+
+const TableRow = styled.tr`
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: #f8fafc;
+  }
+`;
+
+const getNestedValue = (obj, path) => {
+  return path.split('.').reduce((current, key) => 
+    current ? current[key] : undefined, obj
+  );
+};
+
 export const Table = ({
   fields = [],
   data = [],
@@ -46,45 +67,55 @@ export const Table = ({
 
   if (!fields || !data) {
     return (
-      <div className="block w-full overflow-x-auto bg-white">
-        <p className="ml-10 my-10">No data available</p>
+      <div className="bg-white rounded-xl shadow-sm">
+        <p className="p-12 text-center text-gray-500">No data available</p>
       </div>
     );
   }
 
   return (
-    <>
-      <div className="block w-full overflow-x-auto bg-white">
-        <table className="items-center bg-transparent w-full border-collapse ">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+      <div className="p-4">
+        <table className="w-full">
           <thead>
-            <tr>
+            <tr className="border-b border-gray-100">
               {fields.map((f, index) => (
-                <th 
+                <th
                   key={`header-${index}`}
-                  className="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                  className="pb-4 text-left text-sm font-medium text-gray-500"
                 >
                   {f.label}
                 </th>
               ))}
-              <th className="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-100 py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+              <th className="pb-4 text-left text-sm font-medium text-gray-500">
                 Options
               </th>
             </tr>
           </thead>
           <tbody>
             {data.map((d, rowIndex) => (
-              <tr key={d.id || `row-${rowIndex}`}>
+              <tr key={d.id || `row-${rowIndex}`} className="group hover:bg-gray-50">
                 {fields.map((field, colIndex) => {
                   const href = get_field_href(field, d[field.key]);
-                  const className = href !== false ? 'cursor-pointer text-blue' : '';
-                  const onClick = href !== false ? () => history.push(href) : undefined;
+                  const className =
+                    href !== false
+                      ? 'cursor-pointer text-blue-600 hover:text-blue-800'
+                      : '';
+                  const onClick =
+                    href !== false ? () => history.push(href) : undefined;
+                  
+                  const value = getNestedValue(d, field.key);
+                  const content = field.render 
+                    ? field.render(value)
+                    : value;
+
                   return (
-                    <th 
+                    <td
                       key={`cell-${rowIndex}-${colIndex}`}
-                      className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 text-left text-slate-700"
+                      className="py-3"
                     >
                       <div
-                        className={className}
+                        className={`${className} font-medium text-gray-900`}
                         onClick={onClick}
                         style={{
                           whiteSpace: 'nowrap',
@@ -93,89 +124,45 @@ export const Table = ({
                           maxWidth: 425,
                         }}
                       >
-                        {d[field.key]}
+                        {content}
                       </div>
-                    </th>
+                    </td>
                   );
                 })}
-                <td
-                  style={{
-                    display: 'inline-flex',
-                  }}
-                  className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4"
-                >
-                  <Link to={window.location.pathname + '/' + d.id}>
-                    <button className="btn-base m-2 bg-transparent border-2 border-slate-600 rounded-md">
-                      View
-                    </button>
-                  </Link>
-                  {EditButton ? <EditButton item={d} /> : null}
-                  {EditModal && (
-                    <EditModal {...{ [type]: d }}>
-                      <button className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
-                        Edit
+                <td className="py-3 pr-4">
+                  <div className="flex items-center space-x-2">
+                    <Link to={window.location.pathname + '/' + d.id}>
+                      <button className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg transition-colors">
+                        View
                       </button>
-                    </EditModal>
-                  )}
-                  {DeleteModal && (
-                    <DeleteModal {...{ [type]: d }}>
-                      <button className="btn-base m-2 bg-transparent border-2 border-red-800 text-red-800 rounded-md">
-                        Delete
-                      </button>
-                    </DeleteModal>
-                  )}
+                    </Link>
+                    {EditButton ? <EditButton item={d} /> : null}
+                    {EditModal && (
+                      <EditModal {...{ [type]: d }}>
+                        <button className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-yellow-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg transition-colors">
+                          Edit
+                        </button>
+                      </EditModal>
+                    )}
+                    {DeleteModal && (
+                      <DeleteModal {...{ [type]: d }}>
+                        <button className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-colors">
+                          Delete
+                        </button>
+                      </DeleteModal>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <p className="ml-10 my-10">
-          {!data.length && `No ${plural_name || 'items'} to show`}
-        </p>
+        {!data.length && (
+          <div className="p-12 text-center text-gray-500">
+            No {plural_name || 'items'} to show
+          </div>
+        )}
       </div>
-      <br />
-      {/* <nav aria-label="Page navigation example">
-        <ul className="inline-flex -space-x-px">
-          <li>
-            <a href="#" className="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-          </li>
-          <li>
-            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-          </li>
-          <li>
-            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-          </li>
-          <li>
-            <a href="#" aria-current="page" className="py-2 px-3 text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-          </li>
-          <li>
-            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-          </li>
-          <li>
-            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-          </li>
-          <li>
-            <a href="#" className="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-          </li>
-        </ul>
-      </nav> */}
-
-      <br />
-      {/* <h3 className="cursor-pointer" onClick={onLoadMore}>
-        Load More
-      </h3> */}
-      {/* <Pagination>
-        <a href="#">&laquo;</a>
-        <a className="selected" href="#">
-          1
-        </a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
-      </Pagination> */}
-    </>
+    </div>
   );
 };

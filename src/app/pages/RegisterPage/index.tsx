@@ -32,154 +32,145 @@ const RegisterPage_ = props => {
         title="Bloggrs - Register"
         meta={[
           {
-            name: "description",
-            content: "Create your Bloggrs account"
-          }
+            name: 'description',
+            content: 'Create your Bloggrs account',
+          },
         ]}
       />
       <NotAuthenticatedHeader />
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Form Section */}
-            <div className="w-full lg:w-2/3">
-              <Formik
-                initialValues={{
-                  first_name: '',
-                  last_name: '',
-                  email: '',
-                  password: '',
-                }}
-                validationSchema={RegisterSchema}
-                onSubmit={async (values, { setSubmitting }) => {
-                  dispatch(actions.register(values));
-                }}
-              >
-                {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  isSubmitting,
-                  /* and other goodies */
-                }) => (
-                  <form onSubmit={handleSubmit} className="w-full max-w-xl">
-                    <div className="mb-8">
-                      <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        Create Account
-                      </h1>
-                      <p className="text-gray-600">
-                        Start your blogging journey today
-                      </p>
-                    </div>
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-8">
+              {/* Form Section */}
+              <div className="p-8">
+                <Formik
+                  initialValues={{
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                    password: '',
+                  }}
+                  validationSchema={RegisterSchema}
+                  onSubmit={async (values, { setSubmitting }) => {
+                    dispatch(actions.register(values));
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    /* and other goodies */
+                  }) => (
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div>
+                        <h1 className="text-2xl font-semibold text-gray-900">
+                          Create your account
+                        </h1>
+                        <p className="mt-2 text-sm text-gray-600">
+                          Start your blogging journey today
+                        </p>
+                      </div>
 
-                    {/* Input fields with updated styling */}
-                    <div className="space-y-4">
-                      <div>
-                        <input
-                          name="first_name"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.first_name}
-                          type="first_name"
-                          placeholder="First name"
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        />
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.first_name &&
-                            touched.first_name &&
-                            errors.first_name}
-                        </p>
+                      <div className="space-y-4">
+                        <div>
+                          <input
+                            name="first_name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.first_name}
+                            type="first_name"
+                            placeholder="First name"
+                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
+                          />
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.first_name && touched.first_name && errors.first_name}
+                          </p>
+                        </div>
+                        <div>
+                          <input
+                            name="last_name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.last_name}
+                            type="last_name"
+                            placeholder="Last name"
+                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
+                          />
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.last_name && touched.last_name && errors.last_name}
+                          </p>
+                        </div>
+                        <div>
+                          <input
+                            name="email"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.email}
+                            type="email"
+                            placeholder="E-Mail"
+                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
+                          />
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.email && touched.email && errors.email}
+                          </p>
+                        </div>
+                        <div>
+                          <input
+                            type="password"
+                            name="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            placeholder="Password"
+                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
+                          />
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.password && touched.password && errors.password}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <input
-                          name="last_name"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.last_name}
-                          type="last_name"
-                          placeholder="Last name"
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        />
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.last_name &&
-                            touched.last_name &&
-                            errors.last_name}
-                        </p>
-                      </div>
-                      <div>
-                        <input
-                          name="email"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.email}
-                          type="email"
-                          placeholder="E-Mail"
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        />
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.email && touched.email && errors.email}
-                        </p>
-                      </div>
-                      <div>
-                        <input
-                          type="password"
-                          name="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                          placeholder="Password"
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        />
-                        <p className="text-red-500 text-sm mt-1">
-                          {errors.password &&
-                            touched.password &&
-                            errors.password}
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Submit button */}
-                    <div className="mt-6">
-                      <button
-                        type="submit"
-                        disabled={Object.keys(errors).length > 0 || loading}
-                        className={`w-full py-3 rounded-lg font-medium ${
-                          Object.keys(errors).length > 0
-                            ? 'bg-gray-100 text-gray-500'
-                            : 'bg-blue-600 text-white hover:bg-blue-700'
-                        }`}
-                      >
-                        {loading ? 'Creating account...' : 'Sign Up'}
-                      </button>
-                    </div>
-
-                    {/* Sign in link */}
-                    <div className="mt-4 text-center">
-                      <p className="text-gray-600">
-                        Already have an account?{' '}
-                        <Link
-                          to="/auth/login"
-                          className="text-blue-600 hover:text-blue-700 font-medium"
+                      <div>
+                        <button
+                          type="submit"
+                          disabled={Object.keys(errors).length > 0 || loading}
+                          className={`w-full flex justify-center py-2.5 px-4 rounded-lg text-sm font-semibold text-white shadow-sm ${
+                            Object.keys(errors).length > 0 || loading
+                              ? 'bg-gray-300 cursor-not-allowed'
+                              : 'bg-[#1a365d] hover:bg-[#2d4a7c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a365d]'
+                          }`}
                         >
-                          Sign In
-                        </Link>
-                      </p>
-                    </div>
-                  </form>
-                )}
-              </Formik>
-            </div>
+                          {loading ? 'Creating account...' : 'Create account'}
+                        </button>
+                      </div>
 
-            {/* Right side image/illustration */}
-            <div className="hidden lg:flex lg:w-1/3 items-center justify-center">
-              <div className="w-full max-w-sm">
+                      <div className="text-center">
+                        <p className="text-sm text-gray-500">
+                          Already have an account?{' '}
+                          <Link
+                            to="/auth/login"
+                            className="font-semibold text-[#1a365d] hover:text-[#2d4a7c]"
+                          >
+                            Sign in
+                          </Link>
+                        </p>
+                      </div>
+                    </form>
+                  )}
+                </Formik>
+              </div>
+
+              {/* Image Section */}
+              <div className="hidden lg:block relative">
                 <img
                   src="/dist2/static/twitter_outline.png"
                   alt="Illustration"
-                  className="w-full h-auto"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>
             </div>

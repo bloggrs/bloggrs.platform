@@ -58,83 +58,94 @@ export const HomePage = ({ parentValue }) => {
   //   <p className="cursor-pointer mx-10 my-2 text-blue-500">Travel</p>,
   //   <p className="cursor-pointer mx-10 my-2 text-slate-500">Food</p>,
   // ];
-  return (
-    <MainPanel sidebarProps={{ collapse: true }} className="container min-h-screen max-w-7xl p-4 md:p-8 lg:p-12">
 
-      <div className="container mx-auto px-4 py-8">
+  return (
+    <MainPanel
+      sidebarProps={{ collapse: true }}
+      className="min-h-screen bg-gray-50"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-center font-bold text-3xl md:text-4xl lg:text-5xl text-slate-700 mb-12">
-            Select one of your blogs to continue on the platform
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl mb-8">
+            Select your blog
           </h1>
 
-          <div className="w-full max-w-2xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              {/* Search Input */}
-              <div className="w-full md:w-2/3">
-                <div className="flex items-center border-b-2 border-slate-800">
-                  <img
-                    src="/dist/static/icons8-search-48.png"
-                    className="w-6 h-6"
-                    alt="Search"
-                  />
-                  <input
-                    className="w-full px-4 py-2 bg-transparent outline-none text-slate-900"
-                    placeholder="Search your blogs"
-                    value={query}
-                    onChange={e => {
-                      setCustomBlogName(e.target.value);
-                      setQuery(e.target.value);
-                    }}
-                  />
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-6">
+              <div className="flex flex-col sm:flex-row gap-4">
+                {/* Search Input */}
+                <div className="flex-1">
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <img
+                        src="/dist/static/icons8-search-48.png"
+                        className="h-5 w-5 text-gray-400"
+                        alt="Search"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                      placeholder="Search your blogs"
+                      value={query}
+                      onChange={e => {
+                        setCustomBlogName(e.target.value);
+                        setQuery(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Action Button */}
-              <div className="w-full md:w-1/3">
-                {query && blogs?.length === 0 ? (
-                  <Link to="/blogs/create" className="block w-full">
-                    <button className="w-full rounded-md py-2 px-4 text-white font-medium bg-yellow-500 hover:bg-yellow-600 transition">
-                      Create
-                    </button>
-                  </Link>
-                ) : (
-                  <button
-                    onClick={e => !blogId && nextStep()}
-                    className={`w-full rounded-md py-2 px-4 text-white font-medium transition ${
-                      blogId
-                        ? 'bg-orange-200'
-                        : 'bg-yellow-500 hover:bg-yellow-600'
-                    }`}
-                  >
-                    <Link to="/blogs/create">Next</Link>
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Search Results */}
-            {query && (
-              <div className="mt-4 w-full bg-white rounded-lg shadow-lg">
-                <div className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-500 scrollbar-track-orange-100">
-                  {blogs.map(bg => (
-                    <p
-                      key={bg.id}
-                      onClick={() => setBlogId(bg.id)}
-                      className={`cursor-pointer px-4 py-3 hover:bg-slate-50 transition ${
-                        blogId !== bg.id
-                          ? 'text-slate-600'
-                          : 'text-yellow-500 font-medium'
+                {/* Action Button */}
+                <div className="flex-shrink-0">
+                  {query && blogs?.length === 0 ? (
+                    <Link
+                      to="/blogs/create"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                    >
+                      Create New Blog
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={e => !blogId && nextStep()}
+                      className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white ${
+                        blogId
+                          ? 'bg-gray-300 cursor-not-allowed'
+                          : 'bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500'
                       }`}
                     >
-                      {bg.name}
-                    </p>
-                  ))}
-                  {loading && (
-                    <div className="px-4 py-3 text-slate-500">Loading...</div>
+                      Continue
+                    </button>
                   )}
                 </div>
               </div>
-            )}
+
+              {/* Search Results */}
+              {query && (
+                <div className="mt-4">
+                  <div className="max-h-60 overflow-y-auto divide-y divide-gray-200">
+                    {blogs.map(bg => (
+                      <div
+                        key={bg.id}
+                        onClick={() => setBlogId(bg.id)}
+                        className={`cursor-pointer p-4 hover:bg-gray-50 transition ${
+                          blogId === bg.id ? 'bg-yellow-50' : ''
+                        }`}
+                      >
+                        <p className={`text-sm ${
+                          blogId === bg.id ? 'text-yellow-600 font-medium' : 'text-gray-900'
+                        }`}>
+                          {bg.name}
+                        </p>
+                      </div>
+                    ))}
+                    {loading && (
+                      <div className="p-4 text-sm text-gray-500">Loading...</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

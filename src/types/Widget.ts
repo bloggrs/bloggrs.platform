@@ -5,4 +5,4 @@ export interface Widget {
   description?: string;
   config?: Record<string, any>;
   component?: React.ComponentType<any>;
-} 
+}

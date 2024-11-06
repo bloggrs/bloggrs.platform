@@ -64,50 +64,46 @@ export const EditPostModal = ({
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
-        //   className="w-2/6 h-2/6"
+        contentLabel="Edit Post Modal"
       >
         <div className="flex flex-col h-full">
-          <div className="flex flex-col space-y-4">
-            <img
-              src="/dist/static/icons8-pencil-64.png"
-              className="w-16 h-16 mb-2"
-            />
-            <h1 className="text-2xl text-[#1e3a8a] font-medium">
-              Edit '{title}' post
-            </h1>
+          <div className="flex flex-col space-y-6">
+            <div className="flex items-center space-x-4">
+              <img
+                src="/dist/static/icons8-pencil-64.png"
+                className="w-12 h-12"
+              />
+              <h1 className="text-2xl font-semibold text-gray-800">
+                Edit Post
+              </h1>
+            </div>
 
-            <div className="w-full">
+            <div className="space-y-2">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                Title
+              </label>
               <input
-                name="name"
-                type="name"
-                placeholder="Name"
-                className="
-                  w-full
-                  px-4
-                  py-3
-                  text-base
-                  rounded-lg
-                  border-2
-                  border-gray-200
-                  focus:border-[#1e3a8a]
-                  focus:outline-none
-                  transition-colors
-                "
-                id="first_name"
+                name="title"
+                type="text"
+                defaultValue={title}
+                className="w-full px-4 py-2 rounded-lg bg-gray-100 border border-gray-200 
+                          focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                id="title"
               />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-6">
-            <Link to={`/`} className="flex-1">
-              <button className="w-full px-6 py-2 bg-[#1e3a8a] text-white rounded-full hover:bg-[#2d4a9e] transition-colors">
-                Save
-              </button>
-            </Link>
+          <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-8">
+            <button
+              className="flex-1 px-4 py-2 bg-[#f4a261] hover:bg-[#e76f51] 
+                         text-white rounded-lg transition-colors"
+            >
+              Save Changes
+            </button>
             <button
               onClick={closeModal}
-              className="flex-1 px-6 py-2 bg-white border-2 border-[#1e3a8a] text-[#1e3a8a] rounded-full hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 
+                         text-gray-700 rounded-lg transition-colors"
             >
               Cancel
             </button>

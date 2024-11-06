@@ -9,18 +9,18 @@ export const FileInput = ({ value, onChange, ...rest }) => {
     <div className="w-full">
       <label className="block w-full cursor-pointer">
         {(Boolean(value) && (
-          <div className="p-4 rounded-lg border-2 border-blue-500 bg-white">
-            <span className="text-gray-700">Selected file: {value.name}</span>
+          <div className="p-4 rounded-lg border border-gray-200 bg-white shadow-sm">
+            <span className="text-gray-900 font-medium">Selected file: {value.name}</span>
           </div>
         )) || (
-          <div className="p-6 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition-colors text-center">
+          <div className="p-6 rounded-lg border border-gray-200 bg-white shadow-sm hover:bg-gray-50 transition-colors text-center">
             <span onClick={clickInputRef} className="text-gray-600">
               Drag and drop here or
             </span>
             <br />
             <span
               onClick={clickInputRef}
-              className="text-blue-500 hover:text-blue-600"
+              className="text-[#f4a261] hover:text-[#e76f51] transition-colors font-medium"
             >
               browse
             </span>

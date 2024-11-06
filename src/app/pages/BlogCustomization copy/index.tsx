@@ -5,10 +5,7 @@ import { MainPanel } from '../../components/MainPanel';
 export const BlogCustomization = () => {
   return (
     <>
-      <Helmet
-        defaultTitle="Blog Customize"
-        titleTemplate="Blog Customize"
-      />
+      <Helmet defaultTitle="Blog Customize" titleTemplate="Blog Customize" />
       <MainPanel
         className="container-custom max-h-full max-w-7xl  border-2 border-dashed border-slate-700 my-16 h-screen"
         style={{ height: '100%' }}

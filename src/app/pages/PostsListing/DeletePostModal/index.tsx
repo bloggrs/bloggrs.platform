@@ -22,6 +22,9 @@ const customStyles = {
     minHeight: '300px',
     borderRadius: '12px',
     padding: '24px',
+    backgroundColor: '#ffffff',
+    border: '1px solid #e5e7eb',
+    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
   },
 };
 
@@ -85,8 +88,7 @@ export const DeletePostModal = ({
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
-        //   className="w-2/6 h-2/6"
+        contentLabel="Delete Post Modal"
       >
         {!isAuthorized ? (
           <NotAuthorized />
@@ -97,12 +99,12 @@ export const DeletePostModal = ({
             <div className="flex flex-col space-y-4">
               <img
                 src="/dist/static/icons8-delete-96 (1).png"
-                className="w-16 h-16 mb-2"
+                className="w-12 h-12 mb-2"
               />
-              <h1 className="text-2xl text-[#1e3a8a] font-medium">
+              <h1 className="text-2xl font-semibold text-gray-900">
                 Delete '{title}' post
               </h1>
-              <h2 className="text-lg text-gray-700 font-medium">
+              <h2 className="text-base text-gray-600">
                 Are you sure you want to perform this action?
               </h2>
               <span className="text-sm text-gray-500">
@@ -110,16 +112,16 @@ export const DeletePostModal = ({
               </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-6">
+            <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-8">
               <button
                 onClick={onDelete(id)}
-                className="btn-base px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                className="inline-flex justify-center items-center px-4 py-2.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
               >
                 Delete
               </button>
               <button
                 onClick={closeModal}
-                className="btn-base px-6 py-2 bg-white border-2 border-[#1e3a8a] text-[#1e3a8a] rounded-full hover:bg-gray-50 transition-colors"
+                className="inline-flex justify-center items-center px-4 py-2.5 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
               >
                 Cancel
               </button>

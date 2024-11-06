@@ -18,7 +18,6 @@ import { WidgetWrapper } from './components/WidgetWrapper';
 import { RenderNode } from './components/RenderNode';
 import { BlogPreview, BlogPreviewConfig } from './components/BlogPreview';
 
-
 interface BlogCustomization {
   initialData: any;
   onSave: (updatedConfig: any) => Promise<void>;
@@ -63,10 +62,8 @@ export const BlogCustomization: React.FC<BlogCustomization> = () => {
       setLoading(true);
       const updatedBlog = {
         ...updatedConfig,
-        widgets: widgets.map(w => 
-          w.id === selectedWidget?.id 
-            ? { ...w, config: previewConfig }
-            : w
+        widgets: widgets.map(w =>
+          w.id === selectedWidget?.id ? { ...w, config: previewConfig } : w,
         ),
       };
       await blogsService.updateBlog(blog_id, updatedBlog);
@@ -100,7 +97,7 @@ export const BlogCustomization: React.FC<BlogCustomization> = () => {
     h2: ({ children, ...props }) => <h2 {...props}>{children}</h2>,
     h3: ({ children, ...props }) => <h3 {...props}>{children}</h3>,
     span: ({ children, ...props }) => <span {...props}>{children}</span>,
-    img: (props) => <img {...props} />,
+    img: props => <img {...props} />,
     a: ({ children, ...props }) => <a {...props}>{children}</a>,
   };
 
@@ -122,73 +119,76 @@ export const BlogCustomization: React.FC<BlogCustomization> = () => {
 
   return (
     <Layout>
-      <div className="edit-blog-page">
-        <header className="edit-blog-header">
-          <h1>Edit Blog: {blog?.name}</h1>
-        </header>
-        
-        <Editor
-          resolver={resolverComponents}
-          enabled={true}
-          onRender={RenderNode}
-        >
-          <div className="blog-customization-container">
-            <WidgetToolbox 
-              widgets={widgets} 
-              onWidgetSelect={handleWidgetSelect}
-            />
-            
-            <div className="blog-preview-container">
-              <Frame>
-                <Element is="div" canvas id="root">
-                  <BlogPreview
-                    blog={blog}
-                    widgets={widgets}
-                    previewConfig={previewConfig}
-                  >
-                    <Header />
-                    <div className="blog-content">
-                      <BlogPost />
-                      <Sidebar />
-                    </div>
-                  </BlogPreview>
-                </Element>
-              </Frame>
+      <div className="min-h-screen bg-gray-50">
+        <div className="py-6">
+          <header className="px-8 mb-8">
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-semibold text-gray-900">
+                Edit Blog: {blog?.name}
+              </h1>
+              <div className="flex items-center space-x-4">
+                <button 
+                  onClick={() => history.push('/blogs')}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleSave}
+                  className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700"
+                >
+                  Save Changes
+                </button>
+              </div>
             </div>
+          </header>
 
-            {selectedWidget && (
-              <WidgetCustomizer
-                widget={selectedWidget}
-                currentConfig={previewConfig}
-                onConfigChange={handleWidgetChange}
-              />
-            )}
-          </div>
-        </Editor>
+          <Editor
+            resolver={resolverComponents}
+            enabled={true}
+            onRender={RenderNode}
+          >
+            <div className="px-8">
+              <div className="grid grid-cols-[250px_1fr_300px] gap-6">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                  <WidgetToolbox
+                    widgets={widgets}
+                    onWidgetSelect={handleWidgetSelect}
+                  />
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 overflow-auto">
+                  <Frame>
+                    <Element is="div" canvas id="root">
+                      <BlogPreview
+                        blog={blog}
+                        widgets={widgets}
+                        previewConfig={previewConfig}
+                      >
+                        <Header />
+                        <div className="grid grid-cols-[1fr_300px] gap-6">
+                          <BlogPost />
+                          <Sidebar />
+                        </div>
+                      </BlogPreview>
+                    </Element>
+                  </Frame>
+                </div>
+
+                {selectedWidget && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <WidgetCustomizer
+                      widget={selectedWidget}
+                      currentConfig={previewConfig}
+                      onConfigChange={handleWidgetChange}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </Editor>
+        </div>
       </div>
-
-      <style>{`
-        .blog-customization-container {
-          display: grid;
-          grid-template-columns: 250px 1fr 300px;
-          gap: 20px;
-          height: calc(100vh - 100px);
-        }
-        
-        .blog-preview-container {
-          background: #fff;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          padding: 20px;
-          overflow: auto;
-        }
-
-        .blog-content {
-          display: grid;
-          grid-template-columns: 1fr 300px;
-          gap: 20px;
-        }
-      `}</style>
     </Layout>
   );
 };

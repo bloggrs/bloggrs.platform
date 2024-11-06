@@ -1,81 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
-
-const Modal = styled.div`
-  max-width: 500px;
-  width: 90%;
-  background-color: white;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`;
-export const ModalContent = styled.div`
-  overflow: auto;
-  min-height: 200px;
-  padding: 0px 40px;
-  padding-bottom: 80px;
-`;
-export const ModalFooter = styled.div`
-  box-shadow: 0px -2px 10px 0px grey;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-`;
-export const ConfirmButton = styled.div`
-  margin: 10px;
-  color: white;
-  height: 40px;
-  border-radius: 5px;
-  padding: 5px 20px;
-  text-align: center;
-  min-width: 120px;
-  cursor: pointer;
-  font-weight: 500;
-
-  ${props =>
-    props.delete
-      ? `
-    background-color: #FF4B4B;
-  `
-      : `
-    background-color: #FFA162;
-  `}
-
-  &:hover {
-    opacity: 0.9;
-  }
-`;
-const ModalShadow = styled.div`
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0px;
-  background-color: black;
-  opacity: 0.7;
-  z-index: 4;
-`;
-const ModalBanner = styled.div`
-  margin-bottom: 0;
-  background-color: #f8f9fa;
-  color: #2d3748;
-  padding: 15px 20px;
-  font-weight: 500;
-  border-bottom: 1px solid #edf2f7;
-`;
-const Input = styled.input`
-  text-align: right;
-  width: 200px;
-  margin-left: 15px;
-`;
-export const MainButton = styled.button``;
 
 export function ModalContainer({
   close,
@@ -85,26 +9,47 @@ export function ModalContainer({
 }) {
   return ReactDOM.createPortal(
     <>
-      <ModalShadow onClick={close} />
-      <Modal>
-        <ModalBanner>
-          Delete '{name}' {type}
-        </ModalBanner>
-        <ModalContent>
-          <p>
+      {/* Modal Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-70 z-40"
+        onClick={close}
+      />
+      
+      {/* Modal */}
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-white rounded-lg shadow-lg z-50 flex flex-col overflow-hidden">
+        {/* Header */}
+        <div className="bg-gray-50 px-5 py-4 border-b border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900">
+            Delete '{name}' {type}
+          </h3>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 min-h-[200px]">
+          <p className="text-gray-700">
             Are you sure you want to delete this {type}?
             <br />
             <br />
             This action cannot be reversed.
           </p>
-        </ModalContent>
-        <ModalFooter>
-          <ConfirmButton delete onClick={onDelete}>
+        </div>
+
+        {/* Footer */}
+        <div className="bg-gray-50 px-4 py-3 border-t border-gray-200 flex justify-end space-x-3">
+          <button
+            onClick={onDelete}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+          >
             Delete
-          </ConfirmButton>
-          <ConfirmButton onClick={close}>Cancel</ConfirmButton>
-        </ModalFooter>
-      </Modal>
+          </button>
+          <button
+            onClick={close}
+            className="bg-white hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-md text-sm font-medium border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:ring-offset-2"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </>,
     document.getElementById('app-modal'),
   );

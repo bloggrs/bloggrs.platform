@@ -10,14 +10,8 @@ prettierOptions.endOfLine = 'auto';
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  extends: [
-    'react-app',
-    'prettier'
-  ],
-  plugins: [
-    'prettier',
-    '@typescript-eslint'
-  ],
+  extends: ['react-app', 'prettier'],
+  plugins: ['prettier', '@typescript-eslint'],
   rules: {
     'prettier/prettier': ['error', prettierOptions],
   },

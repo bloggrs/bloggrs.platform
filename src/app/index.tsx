@@ -42,6 +42,7 @@ import { PricingPage } from './pages/PricingPage';
 import { BlogPage } from './pages/BlogPage';
 import { CategoriesListing } from './pages/CategoriesListing';
 import { CreateCategory } from './pages/CreateCategory';
+import { TeamMembersListing } from './pages/TeamMembersListing';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -77,13 +78,17 @@ export function App() {
         <Route exact path="/features" component={FeaturesPage} />
         <Route exact path="/pricing" component={PricingPage} />
         <Route exact path="/blog" component={BlogPage} />
-        <Route exact path="/blogs/create" render={() => {
-          const hash = window.location.hash.replace('#', '');
-          if (hash === '/features') return <FeaturesPage />;
-          if (hash === '/pricing') return <PricingPage />;
-          if (hash === '/blog') return <BlogPage />;
-          return <CreateBlog />;
-        }} />
+        <Route
+          exact
+          path="/blogs/create"
+          render={() => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash === '/features') return <FeaturesPage />;
+            if (hash === '/pricing') return <PricingPage />;
+            if (hash === '/blog') return <BlogPage />;
+            return <CreateBlog />;
+          }}
+        />
         <Route exact path="/auth/register" component={RegisterPage} />
         <Route exact path="/auth/logout" component={LogoutPage} />
         {/* EndAuthentication routes */}
@@ -136,6 +141,11 @@ export function App() {
             exact
             path="/blogs/:blog_id/settings/transfer"
             component={TransferPage}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/team-members"
+            component={TeamMembersListing}
           />
         </MainPanel>
         <Route component={NotFoundPage} />

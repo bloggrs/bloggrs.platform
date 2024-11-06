@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { Check } from 'lucide-react';
 
 export const PricingPage = () => {
   const plans = [
@@ -13,10 +14,10 @@ export const PricingPage = () => {
         'Comments system',
         'Mobile responsive',
         'SSL security',
-        'Basic analytics'
+        'Basic analytics',
       ],
       cta: 'Start Free',
-      popular: false
+      popular: false,
     },
     {
       name: 'Pro',
@@ -30,10 +31,10 @@ export const PricingPage = () => {
         'Advanced analytics',
         'Remove branding',
         'Team collaboration',
-        'API access'
+        'API access',
       ],
       cta: 'Get Pro',
-      popular: true
+      popular: true,
     },
     {
       name: 'Enterprise',
@@ -47,22 +48,22 @@ export const PricingPage = () => {
         'Advanced security',
         'SLA guarantee',
         'Dedicated account manager',
-        'Custom features'
+        'Custom features',
       ],
       cta: 'Contact Sales',
-      popular: false
-    }
+      popular: false,
+    },
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+          <h1 className="text-3xl font-semibold text-gray-800 sm:text-4xl">
             Simple, transparent pricing
           </h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
             Choose the perfect plan for your blogging needs
           </p>
         </div>
@@ -72,78 +73,68 @@ export const PricingPage = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative bg-white rounded-lg shadow-lg p-8 ${
-                plan.popular ? 'border-2 border-yellow-500' : ''
+              className={`relative bg-white rounded-xl shadow-sm border ${
+                plan.popular ? 'border-[#f4a261]' : 'border-gray-200'
               }`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-yellow-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-[#f4a261] text-white px-4 py-1 rounded-full text-sm font-medium">
                     Most Popular
                   </span>
                 </div>
               )}
 
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">
-                  {plan.name}
-                </h3>
-                <div className="flex items-center justify-center mb-2">
-                  <span className="text-4xl font-bold text-slate-800">$</span>
-                  <span className="text-6xl font-bold text-slate-800">
-                    {plan.price}
-                  </span>
-                  <span className="text-slate-600 ml-2">/month</span>
+              <div className="p-8">
+                <div className="text-center mb-8">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {plan.name}
+                  </h3>
+                  <div className="flex items-center justify-center mb-3">
+                    <span className="text-3xl font-semibold text-gray-900">$</span>
+                    <span className="text-5xl font-semibold text-gray-900">
+                      {plan.price}
+                    </span>
+                    <span className="text-gray-500 ml-2">/month</span>
+                  </div>
+                  <p className="text-gray-500">{plan.description}</p>
                 </div>
-                <p className="text-slate-600">{plan.description}</p>
+
+                <ul className="space-y-4 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center text-gray-600">
+                      <Check className="w-5 h-5 text-[#f4a261] mr-3" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  to="/blogs/create"
+                  className={`block w-full text-center py-3 px-6 rounded-lg transition-colors ${
+                    plan.popular
+                      ? 'bg-[#f4a261] hover:bg-[#e76f51] text-white'
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                  }`}
+                >
+                  {plan.cta}
+                </Link>
               </div>
-
-              <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center text-slate-700">
-                    <svg
-                      className="w-5 h-5 text-yellow-500 mr-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                to="/blogs/create"
-                className={`block text-center py-3 px-6 rounded-md transition font-medium ${
-                  plan.popular
-                    ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
-                    : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
-                }`}
-              >
-                {plan.cta}
-              </Link>
             </div>
           ))}
         </div>
 
         {/* FAQ Section */}
         <div className="mt-24 text-center">
-          <h2 className="text-3xl font-bold text-slate-800 mb-4">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-slate-600 mb-4">
+          <p className="text-gray-600 mb-4">
             Need help? Check out our FAQ or contact support
           </p>
           <Link
             to="/support"
-            className="text-yellow-500 hover:text-yellow-600 font-medium"
+            className="text-[#f4a261] hover:text-[#e76f51] font-medium"
           >
             Contact Support →
           </Link>
@@ -151,4 +142,4 @@ export const PricingPage = () => {
       </div>
     </div>
   );
-}; 
+};

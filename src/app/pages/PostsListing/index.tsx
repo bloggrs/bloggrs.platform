@@ -7,6 +7,7 @@ import { getPosts, isPostsLoading } from './slice/selectors';
 import { Table } from 'app/components/Table';
 import { DeletePostModal } from './DeletePostModal';
 import { NotAuthorized } from 'app/components/NotAuthorized';
+import { MoreHorizontal, ChevronLeft, Search } from 'lucide-react';
 
 // Update the interface to match your actual state structure
 interface RootState {
@@ -66,75 +67,62 @@ export const PostsListing = ({ match }) => {
 
   const EditButton = ({ item }) => (
     <Link to={`/blogs/${params.blog_id}/posts/${item.id}`}>
-      <button className="btn-base m-2 bg-transparent border-2 border-yellow-800 text-yellow-800 rounded-md">
-        Edit
+      <button className="p-2 hover:bg-gray-100 rounded-lg transition-all text-gray-600">
+        <MoreHorizontal className="w-5 h-5" />
       </button>
     </Link>
   );
+
   return (
-    <div className="flex flex-col p-6 max-w-7xl mx-auto">
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-        <button
-          onClick={e => {
-            history.goBack();
-          }}
-          className="btn-base px-6 py-2 mb-4 sm:mb-0 bg-white border-2 border-blue-600 text-blue-600 rounded-full hover:bg-blue-50 transition-colors"
-        >
-          Back
-        </button>
-
-        <Link to={`/blogs/${match.params.blog_id}/posts/create`}>
-          <button className="btn-base px-8 py-2 bg-orange-400 text-white rounded-full hover:bg-orange-500 transition-colors shadow-sm">
-            Add Post
-          </button>
-        </Link>
-      </div>
-
-      <div className="mb-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl sm:text-3xl text-slate-700 font-medium">
-            Posts
-          </h1>
-          <div className="flex items-center gap-2">
-            <button className="px-4 py-1 text-sm border rounded-full text-gray-600 hover:bg-gray-50">
-              Categories
-            </button>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Quick search..."
-                className="w-full sm:w-64 px-4 py-2 pl-10 bg-gray-50 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <svg
-                className="w-5 h-5 text-gray-400 absolute left-3 top-2.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+    <div className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
+      <div className="flex-1 p-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => history.goBack()}
+                className="flex items-center text-[#f4a261] hover:text-[#e76f51] transition-colors"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+                <ChevronLeft className="w-5 h-5 mr-1" />
+                Back
+              </button>
+              <h1 className="text-2xl font-semibold text-gray-800">Posts</h1>
             </div>
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search posts..."
+                  className="w-64 pl-10 pr-4 py-2 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                />
+                <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
+              </div>
+              <Link to={`/blogs/${match.params.blog_id}/posts/create`}>
+                <button className="px-4 py-2 bg-[#f4a261] hover:bg-[#e76f51] text-white rounded-lg transition-colors">
+                  Add Post
+                </button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+            <Table
+              type="post"
+              fields={[
+                { key: 'id', label: '#' },
+                { key: 'title', label: 'Title' },
+                { key: 'slug', label: 'Slug' },
+              ]}
+              EditButton={EditButton}
+              DeleteModal={DeletePostModal}
+              data={posts || []}
+              onLoadMore={(e: any) => setLoadMoreClicks(loadMoreClicks + 1)}
+            />
           </div>
         </div>
       </div>
-
-      <Table
-        type="post"
-        fields={[
-          { key: 'id', label: '#' },
-          { key: 'title', label: 'Title' },
-          { key: 'slug', label: 'Slug' },
-        ]}
-        EditButton={EditButton}
-        DeleteModal={DeletePostModal}
-        data={posts || []}
-        onLoadMore={(e: any) => setLoadMoreClicks(loadMoreClicks + 1)}
-      />
     </div>
   );
 };

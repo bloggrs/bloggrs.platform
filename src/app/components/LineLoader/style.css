@@ -1,43 +1,45 @@
 :root {
-    --main-color: transparent;
-    --loader-color: #4A90E2;
-    --back-color: #f5f6f8;
-    --time: 0.8s;
-    --size: 3px;
-  }
-  
-  .loader {
-    background-color: var(--main-color);
-    overflow: hidden;
-    width: 100%;
-    left: 0;
-    display: flex;
-    align-items: center;
-    align-content: center; 
-    justify-content: flex-start;  
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    height: var(--size);
-    z-index: -1;
+  --main-color: transparent;
+  --loader-color: #4a90e2;
+  --back-color: #f5f6f8;
+  --time: 0.8s;
+  --size: 3px;
 }
-  
-  .loader__element {
-      height: var(--size);
-      width: 100%;
-      background: var(--back-color);
-      border-radius: 2px;
+
+.loader {
+  background-color: var(--main-color);
+  overflow: hidden;
+  width: 100%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  height: var(--size);
+  z-index: -1;
+}
+
+.loader__element {
+  height: var(--size);
+  width: 100%;
+  background: var(--back-color);
+  border-radius: 2px;
+}
+
+.loader__element:before {
+  content: '';
+  display: block;
+  background-color: var(--loader-color);
+  height: var(--size);
+  width: 0;
+  animation: getWidth var(--time) ease-in forwards;
+}
+
+@keyframes getWidth {
+  100% {
+    width: 100%;
   }
-  
-  .loader__element:before {
-      content: '';
-      display: block;
-      background-color: var(--loader-color);
-      height: var(--size);
-      width: 0;
-    animation: getWidth var(--time) ease-in forwards;
-  }
-  
-  @keyframes getWidth {
-      100% { width: 100%; }
-  }
+}

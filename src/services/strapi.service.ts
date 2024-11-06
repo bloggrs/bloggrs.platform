@@ -10,7 +10,7 @@ const getContent = (pageId: string) => {
       Authorization: 'Bearer ' + localStorage.getItem('bloggrs:token'),
     },
   };
-  
+
   const endpoint = `${API_URL}/pages/${pageId}`;
   return fetch(endpoint, requestOptions)
     .then(res => {
@@ -37,7 +37,7 @@ const updateContent = (pageId: string, content: any) => {
     },
     body: JSON.stringify({ content }),
   };
-  
+
   const endpoint = `${API_URL}/pages/${pageId}`;
   return fetch(endpoint, requestOptions)
     .then(res => {

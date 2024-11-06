@@ -18,6 +18,27 @@ import {
 import { Loading } from 'app/components/Loading';
 import { NotAuthorized } from 'app/components/NotAuthorized';
 // import RichTextEditor from 'react-rte';
+import { SEOPanel } from 'app/components/EditBlog/panels/SEOPanel';
+import { EngagementPanel } from 'app/components/EditBlog/panels/EngagementPanel';
+import { DesignPanel } from 'app/components/EditBlog/panels/DesignPanel';
+import { MonetizationPanel } from 'app/components/EditBlog/panels/MonetizationPanel';
+
+import { CollaborationTools } from 'app/components/EditBlog/tools/CollaborationTools';
+import { Analytics } from 'app/components/EditBlog/settings/Analytics';
+import { AccessibilityChecker } from 'app/components/EditBlog/panels/AccessibilityChecker';
+import { IntegrationsPanel } from 'app/components/EditBlog/panels/IntegrationsPanel';
+import { PublishStatus } from 'app/components/EditBlog/components/PublishStatus';
+import { SaveButton } from 'app/components/EditBlog/components/SaveButton';
+import { PreviewButton } from 'app/components/EditBlog/components/PreviewButton';
+import { VersionHistoryDropdown } from 'app/components/EditBlog/components/VersionHistoryDropdown';
+import { SettingsButton } from 'app/components/EditBlog/components/SettingsButton';
+import { WordCount } from 'app/components/EditBlog/components/WordCount';
+import { ReadingTime } from 'app/components/EditBlog/components/ReadingTime';
+import { PerformanceStatus } from 'app/components/EditBlog/components/PerformanceStatus';
+import { PublishSettings } from 'app/components/EditBlog/components/PublishSettings';
+import { ChevronLeft } from 'react-feather';
+
+
 
 export const CreatePost = ({ match }) => {
   const history = useHistory();
@@ -37,6 +58,73 @@ export const CreatePost = ({ match }) => {
   const { blog_id } = match.params;
 
   const [hasAccess, setHasAccess] = useState(true);
+
+  const [activeTab, setActiveTab] = useState(0);
+  const [lastSavedTime, setLastSavedTime] = useState('Never');
+  const [autoSaveTimer, setAutoSaveTimer] = useState(null);
+  
+  const [seoSettings, setSeoSettings] = useState({
+    metaTitle: '',
+    metaDescription: '',
+    // ... other SEO settings
+  });
+
+  const [designSettings, setDesignSettings] = useState({
+    template: 'default',
+    colors: { primary: '#000000', secondary: '#ffffff' },
+    typography: {
+      headings: {
+        h1: { size: '2.5rem', weight: '700', lineHeight: '1.2' },
+        h2: { size: '2rem', weight: '600', lineHeight: '1.3' },
+        h3: { size: '1.75rem', weight: '600', lineHeight: '1.3' },
+        h4: { size: '1.5rem', weight: '600', lineHeight: '1.4' },
+        h5: { size: '1.25rem', weight: '600', lineHeight: '1.4' },
+        h6: { size: '1rem', weight: '600', lineHeight: '1.4' }
+      },
+      body: {
+        size: '1rem',
+        lineHeight: '1.5',
+        paragraphSpacing: '1.5rem'
+      },
+      fontFamily: 'Arial',
+      fontSize: '16px'
+    },
+    templates: [
+      { id: 'default', name: 'Default Template' },
+      { id: 'modern', name: 'Modern Template' },
+    ],
+    // ... other design settings
+  });
+
+  const [engagementSettings, setEngagementSettings] = useState({
+    comments: {
+      enabled: true,
+      requireModeration: true,
+      allowReplies: true
+    },
+    newsletter: {
+      enabled: true,
+      position: 'bottom'
+    },
+    socialSharing: {
+      enabled: true,
+      platforms: ['facebook', 'twitter', 'linkedin']
+    }
+  });
+
+  const [monetizationSettings, setMonetizationSettings] = useState({
+    adsEnabled: false,
+    subscriptionRequired: false,
+    affiliateLinks: [],
+    adSpots: [],
+    subscriptionPlans: [],
+    paywallRules: [],
+    paywallContent: {
+      title: 'Subscribe to Continue Reading'
+    }
+  });
+
+  const [thumbnail, setThumbnail] = useState('');
 
   useEffect(async () => {
     const categories = await blogsService.getBlogCategories(
@@ -89,305 +177,390 @@ export const CreatePost = ({ match }) => {
     }
   }, [categories]);
 
-  const onSubmit = async e => {
-    e.preventDefault();
+  const handleSave = async () => {
     const { blog_id: BlogId, id } = match.params;
-    const transform_category = category => ({ id: category.id });
-    const categories = selectedCategories.map(transform_category);
-    const blocks = await editorState.current.save();
-    const html_content = JSON.stringify(blocks);
-    const args = {
-      id,
-      title,
-      html_content,
-      BlogId,
-      categories,
-    };
-    console.log(args);
-    const success_message = createMode
-      ? `Successfully published post!`
-      : `Successfully updated post!`;
-    const fail_message = createMode
-      ? `Failed to publish post!`
-      : `Failed to update post!`;
+    
     try {
-      const fn = createMode
-        ? blogsService.createBlogPost
-        : blogsService.updateBlogPost;
-      const post = await fn(args);
-      toast.success(success_message);
-      if (createMode) {
-        window.location.pathname = '/blogs/' + BlogId + '/posts/' + post.id;
+      // Get current editor content
+      const blocks = await editorState.current.save();
+      const html_content = JSON.stringify(blocks);
+
+      // Prepare post data
+      const postData = {
+        title,
+        html_content,
+        BlogId,
+        categories: selectedCategories.map(cat => ({ id: cat.id })),
+        status: 'published',
+        thumbnail
+      };
+
+      // Create or update post
+      const fn = createMode ? blogsService.createBlogPost : blogsService.updateBlogPost;
+      if (!createMode) {
+        postData.id = id;
       }
+
+      const post = await fn(postData);
+
+      // Show success message
+      toast.success(createMode ? 'Post published successfully!' : 'Post updated successfully!');
+
+      // Redirect after create
+      if (createMode) {
+        history.push(`/blogs/${BlogId}/posts/${post.id}`);
+      }
+
     } catch (err) {
-      toast.error(fail_message);
+      console.error('Error saving post:', err);
+      toast.error(createMode ? 'Failed to publish post' : 'Failed to update post');
     }
+  };
+
+  useEffect(() => {
+    if (autoSaveTimer) clearTimeout(autoSaveTimer);
+    const timer = setTimeout(() => {
+      handleAutoSave();
+    }, 30000);
+    setAutoSaveTimer(timer);
+    
+    return () => {
+      if (autoSaveTimer) clearTimeout(autoSaveTimer);
+    };
+  }, [blocks]);
+
+  const handleAutoSave = async () => {
+    // Implement save logic here
+    setLastSavedTime(new Date().toLocaleTimeString());
   };
 
   if (!hasAccess) return <NotAuthorized />;
   if (loading || (!blocks && !createMode)) return <Loading />;
-  const w_20_h_17_style = {};
-  console.log({ selectedCategories });
+
   return (
-    <>
-      <Helmet>
-        <script
-          src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
-          defer
-        ></script>
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css"
-          rel="stylesheet"
-        />
-      </Helmet>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-            .grid-cols-24 {
-              grid-template-columns: repeat(24, minmax(0, 1fr));
-            }
-            .col-span-13 {
-              grid-column: span 13 / span 13;
-            }
-            .col-span-14 {
-              grid-column: span 14 / span 14;
-            }
-            .col-span-15 {
-              grid-column: span 15 / span 15;
-            }
-            .col-span-16 {
-              grid-column: span 16 / span 16;
-            }
-            .col-span-17 {
-              grid-column: span 17 / span 17;
-            }
-            .col-span-18 {
-              grid-column: span 18 / span 18;
-            }
-            .col-span-19 {
-              grid-column: span 19 / span 19;
-            }
-            .col-span-20 {
-              grid-column: span 20 / span 20;
-            }
-            .col-span-21 {
-              grid-column: span 21 / span 21;
-            }
-            .col-span-22 {
-              grid-column: span 22 / span 22;
-            }
-            .col-span-23 {
-              grid-column: span 23 / span 23;
-            }
-            .col-span-24 {
-              grid-column: span 24 / span 24;
-            }
-          `,
-        }}
-      />
-      <MainPanel>
-        <div className="grid grid-cols-24">
-          <div
-            style={{
-              gridColumn: 'span 18 / span 18',
-              gridColumnStart: 1,
-            }}
-            className=" flex"
-          >
-            <div className="w-full w-6/6 lg:w-6/6 px-2">
-              <div className="flex w-6/6">
-                <div className="w-11/12">
-                  <button
-                    onClick={e => history.goBack()}
-                    className=" btn-base w-32 h-8 text-sm bg-slate-600 border-2 border-slate-600 text-white rounded-full justify-center text-center"
-                  >
-                    <span className>Back</span>
-                  </button>
-                </div>
-              </div>
-              <h1
-                editable={'true'}
-                className="text-3xl text-slate-700 font-medium py-5"
-              >
-                <ContentEditable
-                  innerRef={titleContentEditableRef}
-                  html={title} // innerHTML of the editable div
-                  disabled={false} // use true to disable editing
-                  onChange={evt => {
-                    setTitle(evt.target.value);
-                  }} // handle innerHTML change
-                  tagName="span" // Use a custom HTML tag (uses a div by default)
-                />
-              </h1>
-              <div className="flex flex-inline">
-                <div className=" w-11/12">
-                  <PostContentEditor
-                    defaultValue={blocks}
-                    editorState={editorState}
-                    onInitialize={value => {
-                      setEditorState(value);
-                      // console.log({ value });
-                      // setEditorState(value.toString('html'));
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+    <MainPanel>
+      <div className="min-h-screen flex flex-col bg-gray-50">
+        {/* Top Action Bar */}
+        <div className="bg-white border-b px-6 py-4 flex justify-between items-center" style={{ marginLeft: "3%"}}>
+          <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => history.goBack()}
+              className="flex items-center text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              <span className="ml-1">Back</span>
+            </button>
+            <PublishStatus />
+            <SaveButton onClick={handleSave} createMode={createMode} />
+            <PreviewButton />
           </div>
-          <div
-            class="m-0 right btn-base w-full h-8 text-sm bg-transparent  text-slate-600 justify-center text-center"
-            style={{
-              gridColumn: 'span 4 / span 4',
-              top: '0px',
-              minHeight: '100%',
-              position: 'fixed',
-              width: '25rem',
-              right: 0,
-              background: 'white',
-              zIndex: -1,
-            }}
-          />
-          <div
-            style={{
-              gridColumn: 'span 4 / span 4',
-              minHeight: '100%',
-              position: 'fixed',
-              width: '25rem',
-              right: 0,
-            }}
-            className="h-screen max-h-screen bg-white border-l-black center-items"
-          >
-            <div className="p-5">
-              <button
-                onClick={onSubmit}
-                class="m-0 right btn-base w-full h-8 text-sm bg-transparent border-2 border-slate-600 text-slate-600 rounded-full justify-center text-center"
-                style={{}}
-              >
-                <span>{createMode ? 'Publish' : 'Save'}</span>
-              </button>
-              <br />
-              <br />
-              <button
-                class="m-0 right btn-base w-full h-8 text-sm bg-transparent border-2 border-slate-600 text-slate-600 rounded-full justify-center text-center"
-                style={{}}
-              >
-                <span>Preview</span>
-              </button>
-              <br />
-              <div className="d-flex">
-                <h1 className="text-xl text-slate-700 font-medium py-5">
-                  <span>Status:</span>
-                  <select
-                    style={{
-                      padding: '5px',
-                    }}
-                    className="text-md ml-4 border-2 border-slate-300 bg-slate-100 rounded-xl"
-                  >
-                    <option>Published</option>
-                    <option>Draft</option>
-                    <option>Archived</option>
-                  </select>
-                </h1>
-              </div>
-              <hr className="bg-slate-300" />
-              <hr className="bg-slate-300" />
-              <div
-                className="grid grid-cols-12"
-                style={{ gridTemplateRows: 'repeat(2, minmax(0, 0.65fr))' }}
-              >
-                <div className="col-span-4 flex flex-inline flex flex-inline ">
-                  <h1 className="col-span-5 text-lg text-slate-700 font-medium py-5">
-                    Categories:
-                  </h1>
-                </div>
-                <div
-                  className="col-span-7 flex flex-inline flex flex-inline border-4 rounded-xl"
-                  style={{ height: 40, marginTop: 25 }}
-                >
-                  <img
-                    src="/dist/static/icons8-search-48.png"
-                    className="py-2 ml-1"
-                  />
-                  <input
-                    className="mx-5 bg-transparent w-full outline-none text-slate-900"
-                    placeholder="Enter category name"
-                    onChange={e => setCategoriesQuery(e.target.value)}
-                  />
-                </div>
-                <div className="col-span-12 my-10">
-                  <ul>
-                    {categories.map(cat => (
-                      <>
-                        <input
-                          id={`category_${cat.id}`}
-                          // value={cat.name}
-                          type="checkbox"
-                          className="accent-blue-800"
-                          style={w_20_h_17_style}
-                          checked={selectedCategories.find(
-                            scat => scat.id === cat.id,
-                          )}
-                          onChange={e => {
-                            let prevSelectedCategories = selectedCategories;
-                            const find_category_rule = pscat =>
-                              pscat.id === cat.id;
-                            const exists =
-                              prevSelectedCategories.find(find_category_rule);
-                            const remove = Boolean(exists);
-                            if (remove) {
-                              const filter_rule = i => !find_category_rule(i);
-                              prevSelectedCategories =
-                                prevSelectedCategories.filter(filter_rule);
-                            } else prevSelectedCategories.push(cat);
-                            setSelectedCategories(prevSelectedCategories);
-                          }}
-                        />
-                        <label
-                          style={{
-                            ...w_20_h_17_style,
-                            cursor: 'pointer',
-                          }}
-                          className="noselect"
-                          htmlFor={`category_${cat.id}`}
-                        >
-                          {cat.name}
-                        </label>
-                        <br />
-                      </>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <div className="flex items-center space-x-4">
+            <VersionHistoryDropdown />
+            <SettingsButton />
           </div>
-          {/* <div
-            id="menu_toggler"
-            className="cursor-pointer w-42 absolute right-10 top-14 my-16 align-right flex"
-          >
-            <span className="font-medium text-slate-700">Menu</span>
-            <div className="">
-              <img className="w-10 h-2 mx-3" src="/dist/static/MenuLine.png" />
-              <img className="w-8 h-2 mx-5" src="/dist/static/MenuLine.png" />
-              <img className="w-8 h-2 mx-5" src="/dist/static/MenuLine.png" />
-            </div>
-          </div> */}
         </div>
-      </MainPanel>
-    </>
+
+        {/* Main Content Area */}
+        <div className="flex-1 p-8">
+          <div className="max-w-5xl mx-auto">
+            {/* Tab Navigation */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+              <div className="flex border-b border-gray-100">
+                {['Content', 'Design', 'SEO', 'Engagement', 'Monetization', 'Accessibility', 'Integrations'].map((tab, index) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(index)}
+                    className={`px-6 py-4 font-medium text-sm transition-colors
+                      ${activeTab === index 
+                        ? 'text-[#1a365d] border-b-2 border-[#1a365d]' 
+                        : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Content Area */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              {activeTab === 0 && (
+                <div className="space-y-8">
+                  {/* Title */}
+                  <ContentEditable
+                    innerRef={titleContentEditableRef}
+                    html={title}
+                    disabled={false}
+                    onChange={evt => setTitle(evt.target.value)}
+                    tagName="h1"
+                    className="text-3xl font-semibold text-gray-800 focus:outline-none hover:bg-gray-50 transition-colors p-2 rounded-lg"
+                  />
+
+                  {/* Thumbnail Upload */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Featured Image
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setThumbnail(URL.createObjectURL(file));
+                        }
+                      }}
+                      className="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-lg file:border-0
+                        file:text-sm file:font-medium
+                        file:bg-[#1a365d] file:text-white
+                        hover:file:bg-[#2a4365]
+                        transition-colors"
+                    />
+                    {thumbnail && (
+                      <img 
+                        src={thumbnail} 
+                        alt="Post thumbnail" 
+                        className="mt-2 h-32 w-32 object-cover rounded-lg border border-gray-200"
+                      />
+                    )}
+                  </div>
+
+                  {/* Editor */}
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+                    <PostContentEditor
+                      defaultValue={blocks}
+                      editorState={editorState}
+                      onInitialize={setEditorState}
+                    />
+                  </div>
+                </div>
+              )}
+              {activeTab === 1 && (
+                <DesignPanel 
+                  settings={designSettings}
+                  onChange={setDesignSettings}
+                  components={{
+                    TemplateSelector: {},
+                    LayoutBuilder: {},
+                    ColorSchemeManager: {},
+                    TypographyControls: {},
+                    CustomCSS: {},    
+                    templates: [
+                      { id: 'default', name: 'Default Template' },
+                      { id: 'modern', name: 'Modern Template' },
+                    ],
+                    blocks: []
+                  }}
+                />
+              )}
+              {activeTab === 2 && (
+                <SEOPanel 
+                  settings={seoSettings}
+                  onChange={setSeoSettings}
+                />
+              )}
+              {activeTab === 3 && (
+                <EngagementPanel 
+                  components={{
+                    CommentSettings,
+                    NewsletterForm,
+                    SocialSharing,
+                    RelatedPosts,
+                    TableOfContents
+                  }}
+                />
+              )}
+              {activeTab === 4 && (
+                <MonetizationPanel 
+                  settings={monetizationSettings}
+                  onChange={setMonetizationSettings}
+                  features={{
+                    adProviders: [],
+                    subscriptionFeatures: [],
+                    affiliatePrograms: []
+                  }}
+                />
+              )}
+              {activeTab === 5 && (
+                <AccessibilityChecker 
+                  features={{
+                    wcagCompliance: {},
+                    screenReader: {},
+                    colorContrast: {},
+                  }}
+                />
+              )}
+              {activeTab === 6 && (
+                <IntegrationsPanel 
+                  connections={{
+                    socialMedia: {},
+                    emailMarketing: {},
+                    analytics: {},
+                    ecommerce: {},
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Status Bar */}
+        <div className="bg-white border-t px-6 py-3 flex justify-between items-center" style={{ marginLeft: "3%"}}>
+          <div className="text-sm text-gray-500">
+            Last saved: {lastSavedTime}
+          </div>
+          <div className="flex items-center space-x-6">
+            <WordCount content={blocks ? JSON.stringify(blocks) : ''} />
+            <ReadingTime content={blocks ? JSON.stringify(blocks) : ''} />
+            <PerformanceStatus />
+          </div>
+        </div>
+      </div>
+    </MainPanel>
   );
+};
+
+const CommentSettings = () => {
+  const [settings, setSettings] = useState({
+    enabled: true,
+    requireModeration: true,
+    allowReplies: true,
+    notifyOnNewComments: true,
+    allowAnonymous: false,
+    sortBy: 'newest'
+  });
+
   return (
-    <>
-      <input value={title} onChange={e => setTitle(e.target.value)} />
-      <button onClick={onSubmit}>Publish</button>
-      <br />
-      <hr />
-      <Editor
-        editorState={editorState}
-        toolbarClassName="toolbarClassName"
-        wrapperClassName="wrapperClassName"
-        editorClassName="editorClassName"
-        onEditorStateChange={setEditorState}
-      />
-    </>
+    <div className="space-y-4">
+      <h3 className="font-medium">Comment Settings</h3>
+      <div className="space-y-3">
+        <label className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            checked={settings.enabled}
+            onChange={e => setSettings({...settings, enabled: e.target.checked})}
+          />
+          <span>Enable comments</span>
+        </label>
+        {/* Add other settings controls */}
+      </div>
+    </div>
+  );
+};
+
+const NewsletterForm = () => {
+  const [settings, setSettings] = useState({
+    enabled: true,
+    position: 'bottom',
+    title: 'Subscribe to our newsletter',
+    description: 'Get the latest updates directly in your inbox.',
+    buttonText: 'Subscribe Now'
+  });
+
+  return (
+    <div className="space-y-4">
+      <h3 className="font-medium">Newsletter Form</h3>
+      <div className="space-y-3">
+        <input
+          type="text"
+          value={settings.title}
+          onChange={e => setSettings({...settings, title: e.target.value})}
+          className="block w-full border rounded p-2"
+          placeholder="Form Title"
+        />
+        {/* Add other newsletter controls */}
+      </div>
+    </div>
+  );
+};
+
+const SocialSharing = () => {
+  const [settings, setSettings] = useState({
+    enabled: true,
+    platforms: ['facebook', 'twitter', 'linkedin'],
+    position: 'bottom',
+    showShareCount: true
+  });
+
+  return (
+    <div className="space-y-4">
+      <h3 className="font-medium">Social Sharing</h3>
+      <div className="space-y-3">
+        {['facebook', 'twitter', 'linkedin', 'pinterest'].map(platform => (
+          <label key={platform} className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={settings.platforms.includes(platform)}
+              onChange={e => {
+                const newPlatforms = e.target.checked
+                  ? [...settings.platforms, platform]
+                  : settings.platforms.filter(p => p !== platform);
+                setSettings({...settings, platforms: newPlatforms});
+              }}
+            />
+            <span className="capitalize">{platform}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const RelatedPosts = () => {
+  const [settings, setSettings] = useState({
+    enabled: true,
+    count: 3,
+    layout: 'grid',
+    showThumbnail: true,
+    showExcerpt: true,
+    matchBy: ['category', 'tags']
+  });
+
+  return (
+    <div className="space-y-4">
+      <h3 className="font-medium">Related Posts</h3>
+      <div className="space-y-3">
+        <select 
+          value={settings.layout}
+          onChange={e => setSettings({...settings, layout: e.target.value})}
+          className="block w-full border rounded p-2"
+        >
+          <option value="grid">Grid Layout</option>
+          <option value="list">List Layout</option>
+        </select>
+        {/* Add other related posts controls */}
+      </div>
+    </div>
+  );
+};
+
+const TableOfContents = () => {
+  const [settings, setSettings] = useState({
+    enabled: true,
+    position: 'right',
+    sticky: true,
+    maxDepth: 3,
+    smooth: true,
+    numbered: true
+  });
+
+  return (
+    <div className="space-y-4">
+      <h3 className="font-medium">Table of Contents</h3>
+      <div className="space-y-3">
+        <select 
+          value={settings.position}
+          onChange={e => setSettings({...settings, position: e.target.value})}
+          className="block w-full border rounded p-2"
+        >
+          <option value="right">Right Sidebar</option>
+          <option value="left">Left Sidebar</option>
+          <option value="top">Top of Content</option>
+        </select>
+        {/* Add other TOC controls */}
+      </div>
+    </div>
   );
 };

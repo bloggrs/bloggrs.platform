@@ -40,11 +40,11 @@ ReactDOM.render(
   // @ts-ignore
   <Provider store={store}>
     <BrowserRouter basename="/">
-        <HelmetProvider>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </HelmetProvider>
+      <HelmetProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   MOUNT_NODE,

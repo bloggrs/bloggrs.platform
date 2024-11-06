@@ -19,4 +19,4 @@ export const isCategoriesLoading = createSelector(
 export const isCategoryDeleteLoading = createSelector(
   [selectSlice],
   state => state?.deleteLoading ?? false,
-); 
+);

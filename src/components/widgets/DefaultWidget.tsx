@@ -5,6 +5,9 @@ interface DefaultWidgetProps {
   onChange: (config: Record<string, any>) => void;
 }
 
-export const DefaultWidget: React.FC<DefaultWidgetProps> = ({ config, onChange }) => {
+export const DefaultWidget: React.FC<DefaultWidgetProps> = ({
+  config,
+  onChange,
+}) => {
   return <div>Default Widget</div>;
-}; 
+};

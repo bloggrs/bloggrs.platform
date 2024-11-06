@@ -34,6 +34,12 @@ function* deleteCategory({ payload: { id, onSuccess } }) {
 }
 
 export function* categoriesSaga() {
-  yield takeLatest<LoadCategoriesAction, any>(actions.loadCategories.type, getCategories);
-  yield takeLatest<DeleteCategoryAction, any>(actions.deleteCategory.type, deleteCategory);
+  yield takeLatest<LoadCategoriesAction, any>(
+    actions.loadCategories.type,
+    getCategories,
+  );
+  yield takeLatest<DeleteCategoryAction, any>(
+    actions.deleteCategory.type,
+    deleteCategory,
+  );
 }

@@ -14,21 +14,21 @@ export const NotAuthorized: React.FC<NotAuthorizedProps> = ({
   showBackButton = true,
 }) => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F8F9FD] py-6 px-4 sm:py-12 sm:px-6 lg:px-8">
-      <div className="max-w-lg w-full space-y-6 text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-6 px-4 sm:py-12 sm:px-6 lg:px-8">
+      <div className="max-w-lg w-full space-y-8 text-center">
         <div>
-          <ShieldX className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-[#1B3A57]" />
-          <h2 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-bold text-[#1B3A57]">
+          <ShieldX className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-[#1a365d]" />
+          <h2 className="mt-6 text-3xl font-bold text-gray-800">
             Not Authorized
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-gray-600">{message}</p>
+          <p className="mt-3 text-base text-gray-500">{message}</p>
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
           {showBackButton && (
             <button
               onClick={() => window.history.back()}
-              className="inline-flex items-center justify-center px-4 py-2 border border-[#1B3A57] shadow-sm text-sm font-medium rounded-md text-[#1B3A57] bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B3A57]"
+              className="inline-flex items-center justify-center px-4 py-2 border border-gray-200 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1a365d]"
             >
               Go Back
             </button>
@@ -37,14 +37,14 @@ export const NotAuthorized: React.FC<NotAuthorizedProps> = ({
           {showHomeButton && (
             <Link
               to="/"
-              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#1B3A57] hover:bg-[#152c42] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B3A57]"
+              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-[#f4a261] hover:bg-[#e76f51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f4a261] transition-colors"
             >
               Go to Home
             </Link>
           )}
         </div>
 
-        <div className="mt-4 text-sm text-gray-500">
+        <div className="text-sm text-gray-500">
           If you believe this is a mistake, please contact your administrator.
         </div>
       </div>

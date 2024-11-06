@@ -8,7 +8,10 @@ interface WidgetComponentProps {
   onChange: (config: Record<string, any>) => void;
 }
 
-export const widgetRegistry: Record<string, ComponentType<WidgetComponentProps>> = {
+export const widgetRegistry: Record<
+  string,
+  ComponentType<WidgetComponentProps>
+> = {
   // Register at least one widget
   default: DefaultWidget,
-}; 
+};

@@ -87,7 +87,7 @@ export const PostContentEditor = ({ onInitialize, defaultValue }) => {
   }, []);
 
   return (
-    <div className="editor-wrapper">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <ReactEditorJS
         onInitialize={handleInitialize}
         tools={EDITOR_JS_TOOLS}
@@ -96,13 +96,6 @@ export const PostContentEditor = ({ onInitialize, defaultValue }) => {
         className="bloggrs-editor"
       />
       <style jsx global>{`
-        .editor-wrapper {
-          background: white;
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-          margin: 10px 0;
-        }
         .bloggrs-editor {
           max-width: 100%;
           min-height: 100px;
@@ -110,20 +103,51 @@ export const PostContentEditor = ({ onInitialize, defaultValue }) => {
 
         .ce-block__content {
           max-width: 100%;
-          padding: 0 20px;
+          padding: 0;
         }
 
         .ce-toolbar__content {
           max-width: calc(100% - 50px);
         }
 
-        /* Match the theme colors */
         .ce-block--selected .ce-block__content {
           background: #f8f9fa;
+          border-radius: 0.5rem;
         }
 
         .codex-editor__redactor {
-          padding-bottom: 100px !important;
+          padding-bottom: 2rem !important;
+        }
+
+        /* Modern TailwindUI-like styling */
+        .ce-toolbar__plus {
+          background: #f3f4f6;
+          border-radius: 0.375rem;
+          transition: all 0.2s;
+        }
+
+        .ce-toolbar__plus:hover {
+          background: #e5e7eb;
+        }
+
+        .ce-toolbar__settings-btn {
+          background: #f3f4f6;
+          border-radius: 0.375rem;
+          transition: all 0.2s;
+        }
+
+        .ce-toolbar__settings-btn:hover {
+          background: #e5e7eb;
+        }
+
+        .cdx-block {
+          padding: 0.75rem 0;
+        }
+
+        .ce-paragraph {
+          font-size: 1rem;
+          line-height: 1.5rem;
+          color: #374151;
         }
       `}</style>
     </div>
