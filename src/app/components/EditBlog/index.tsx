@@ -726,11 +726,19 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
             )}
             {activeTab === 4 && (
               <IntegrationsPanel 
-                connections={{
-                  socialMedia: {},
-                  emailMarketing: {},
-                  analytics: {},
-                  ecommerce: {},
+                integrations={{
+                  googleAnalytics: {
+                    enabled: false,
+                    apiKey: ''
+                  },
+                  mailchimp: {
+                    enabled: false,
+                    apiKey: ''
+                  },
+                  facebook: {
+                    enabled: false,
+                    apiKey: ''
+                  }
                 }}
               />
             )}

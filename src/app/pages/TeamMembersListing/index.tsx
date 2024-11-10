@@ -30,7 +30,7 @@ interface DeleteTeamMemberModalProps {
     UserId: number;
     BlogId: number;
     isOwner: boolean;
-    name?: string;
+    name: string;
     users: {
       id: number;
       email: string;

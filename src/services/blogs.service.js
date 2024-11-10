@@ -3,7 +3,6 @@ import { API_URL } from '../config';
 import qs from 'qs';
 
 const createBlog = ({ name, description, BlogCategoryId, logo_url }) => {
-  alert(name);
   const requestOptions = {
     method: 'POST',
     headers: {

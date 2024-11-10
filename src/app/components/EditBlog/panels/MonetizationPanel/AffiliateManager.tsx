@@ -27,8 +27,8 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
   onChange,
 }) => {
   const generateId = () => {
-    if (crypto.randomUUID) {
-      return crypto.randomUUID();
+    if (typeof window !== 'undefined' && 'randomUUID' in crypto) {
+      return (crypto as any).randomUUID();
     }
     return Math.random().toString(36).substring(2) + Date.now().toString(36);
   };

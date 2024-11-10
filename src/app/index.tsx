@@ -43,6 +43,8 @@ import { BlogPage } from './pages/BlogPage';
 import { CategoriesListing } from './pages/CategoriesListing';
 import { CreateCategory } from './pages/CreateCategory';
 import { TeamMembersListing } from './pages/TeamMembersListing';
+import { CreateTeamMember } from './pages/CreateTeamMember';
+import { Console } from './pages/Console';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -99,12 +101,23 @@ export function App() {
           path="/blogs/:blog_id/posts/:id"
           component={CreatePost}
         />
+
+        <PrivateRoute
+          exact
+          path="/blogs/:blog_id/team-members/:team_member_id"
+          component={CreateTeamMember}
+        />
         <MainPanel sidebarProps={{ collapse: collapse_main_panel }}>
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute
             exact
             path="/blogs/:blog_id/posts"
             component={PostsListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/console"
+            component={Console}
           />
           <PrivateRoute
             exact
