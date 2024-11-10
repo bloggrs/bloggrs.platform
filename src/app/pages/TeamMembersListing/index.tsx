@@ -54,7 +54,7 @@ export const TeamMembersListing = () => {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    
+
     teamMembersService
       .getTeamMembers({ blog_id })
       .then(response => {
@@ -87,7 +87,7 @@ export const TeamMembersListing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8" style={{marginTop: "3%"}}>
+    <div className="min-h-screen bg-gray-50 p-8" style={{ marginTop: '3%' }}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -96,14 +96,26 @@ export const TeamMembersListing = () => {
               onClick={() => history.goBack()}
               className="flex items-center text-[#1a365d] hover:text-[#2c5282] transition-colors"
             >
-              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <svg
+                className="w-5 h-5 mr-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
               </svg>
               Back
             </button>
-            <h1 className="text-2xl font-semibold text-gray-800">Team Members</h1>
+            <h1 className="text-2xl font-semibold text-gray-800">
+              Team Members
+            </h1>
           </div>
-          
+
           <div className="flex items-center space-x-4">
             <div className="relative">
               <input
@@ -117,7 +129,12 @@ export const TeamMembersListing = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
               </svg>
             </div>
 
@@ -134,20 +151,30 @@ export const TeamMembersListing = () => {
           <Table
             type="teammember"
             fields={[
-              { key: 'id', label: '#', render: (value) => <span className="text-gray-400">#{value}</span> },
+              {
+                key: 'id',
+                label: '#',
+                render: value => (
+                  <span className="text-gray-400">#{value}</span>
+                ),
+              },
               { key: 'users.first_name', label: 'First Name' },
               { key: 'users.last_name', label: 'Last Name' },
               { key: 'users.email', label: 'Email' },
-              { 
-                key: 'isOwner', 
-                label: 'Role', 
-                render: (value) => (
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    value ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
+              {
+                key: 'isOwner',
+                label: 'Role',
+                render: value => (
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      value
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-gray-100 text-gray-800'
+                    }`}
+                  >
                     {value ? 'Owner' : 'Member'}
                   </span>
-                )
+                ),
               },
             ]}
             EditButton={EditButton}

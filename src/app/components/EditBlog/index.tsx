@@ -38,14 +38,14 @@ interface DesignSettings {
     background: string;
     text: string;
   };
-  typography: { 
+  typography: {
     headings: {
-      h1: { size: string; weight: string; lineHeight: string; };
-      h2: { size: string; weight: string; lineHeight: string; };
-      h3: { size: string; weight: string; lineHeight: string; };
-      h4: { size: string; weight: string; lineHeight: string; };
-      h5: { size: string; weight: string; lineHeight: string; };
-      h6: { size: string; weight: string; lineHeight: string; };
+      h1: { size: string; weight: string; lineHeight: string };
+      h2: { size: string; weight: string; lineHeight: string };
+      h3: { size: string; weight: string; lineHeight: string };
+      h4: { size: string; weight: string; lineHeight: string };
+      h5: { size: string; weight: string; lineHeight: string };
+      h6: { size: string; weight: string; lineHeight: string };
     };
     body: {
       size: string;
@@ -176,14 +176,20 @@ interface EngagementPanelComponents {
 }
 
 // Add placeholder components
-const PlaceholderComponent: React.FC = () => <div>Component coming soon...</div>;
+const PlaceholderComponent: React.FC = () => (
+  <div>Component coming soon...</div>
+);
 
 // Add these new components at the top of the file
 const TabList: React.FC<{
   children: React.ReactNode;
   vertical?: boolean;
 }> = ({ children, vertical }) => (
-  <div className={`flex ${vertical ? 'flex-col' : ''} ${vertical ? 'space-y-1' : 'space-x-2'} ${vertical ? 'p-4' : 'px-6 py-3'} bg-white border-b border-gray-200`}>
+  <div
+    className={`flex ${vertical ? 'flex-col' : ''} ${
+      vertical ? 'space-y-1' : 'space-x-2'
+    } ${vertical ? 'p-4' : 'px-6 py-3'} bg-white border-b border-gray-200`}
+  >
     {children}
   </div>
 );
@@ -195,8 +201,8 @@ const TabButton: React.FC<{
 }> = ({ isActive, onClick, children }) => (
   <button
     className={`px-4 py-2.5 rounded-lg transition-all duration-200 text-sm font-medium ${
-      isActive 
-        ? 'bg-[#1a365d] text-white shadow-sm' 
+      isActive
+        ? 'bg-[#1a365d] text-white shadow-sm'
         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
     }`}
     onClick={onClick}
@@ -213,7 +219,7 @@ const CommentSettings: React.FC = () => {
     allowReplies: true,
     notifyOnNewComments: true,
     allowAnonymous: false,
-    sortBy: 'newest'
+    sortBy: 'newest',
   });
 
   return (
@@ -224,14 +230,16 @@ const CommentSettings: React.FC = () => {
           <input
             type="checkbox"
             checked={settings.enabled}
-            onChange={e => setSettings({...settings, enabled: e.target.checked})}
+            onChange={e =>
+              setSettings({ ...settings, enabled: e.target.checked })
+            }
           />
           <span>Enable comments</span>
         </label>
         {/* Add other toggle options similarly */}
-        <select 
+        <select
           value={settings.sortBy}
-          onChange={e => setSettings({...settings, sortBy: e.target.value})}
+          onChange={e => setSettings({ ...settings, sortBy: e.target.value })}
           className="block w-full border rounded p-2"
         >
           <option value="newest">Newest First</option>
@@ -250,7 +258,7 @@ const NewsletterForm: React.FC = () => {
     title: 'Subscribe to our newsletter',
     description: 'Get the latest updates directly in your inbox.',
     buttonText: 'Subscribe Now',
-    collectName: true
+    collectName: true,
   });
 
   return (
@@ -260,13 +268,13 @@ const NewsletterForm: React.FC = () => {
         <input
           type="text"
           value={form.title}
-          onChange={e => setForm({...form, title: e.target.value})}
+          onChange={e => setForm({ ...form, title: e.target.value })}
           className="block w-full border rounded p-2"
           placeholder="Form Title"
         />
-        <select 
+        <select
           value={form.position}
-          onChange={e => setForm({...form, position: e.target.value})}
+          onChange={e => setForm({ ...form, position: e.target.value })}
           className="block w-full border rounded p-2"
         >
           <option value="bottom">Bottom of Post</option>
@@ -285,7 +293,7 @@ const SocialSharing: React.FC = () => {
     twitter: true,
     linkedin: true,
     pinterest: false,
-    email: true
+    email: true,
   });
 
   const [position, setPosition] = useState('bottom'); // top, bottom, floating
@@ -299,12 +307,14 @@ const SocialSharing: React.FC = () => {
             <input
               type="checkbox"
               checked={enabled}
-              onChange={e => setPlatforms({...platforms, [platform]: e.target.checked})}
+              onChange={e =>
+                setPlatforms({ ...platforms, [platform]: e.target.checked })
+              }
             />
             <span className="capitalize">{platform}</span>
           </label>
         ))}
-        <select 
+        <select
           value={position}
           onChange={e => setPosition(e.target.value)}
           className="block w-full border rounded p-2"
@@ -325,7 +335,7 @@ const RelatedPosts: React.FC = () => {
     layout: 'grid', // grid, list
     showThumbnail: true,
     showExcerpt: true,
-    matchBy: ['category', 'tags']
+    matchBy: ['category', 'tags'],
   });
 
   return (
@@ -335,14 +345,16 @@ const RelatedPosts: React.FC = () => {
         <input
           type="number"
           value={settings.count}
-          onChange={e => setSettings({...settings, count: parseInt(e.target.value)})}
+          onChange={e =>
+            setSettings({ ...settings, count: parseInt(e.target.value) })
+          }
           className="block w-full border rounded p-2"
           min="1"
           max="6"
         />
-        <select 
+        <select
           value={settings.layout}
-          onChange={e => setSettings({...settings, layout: e.target.value})}
+          onChange={e => setSettings({ ...settings, layout: e.target.value })}
           className="block w-full border rounded p-2"
         >
           <option value="grid">Grid</option>
@@ -360,16 +372,16 @@ const TableOfContents: React.FC = () => {
     sticky: true,
     maxDepth: 3,
     smooth: true,
-    numbered: true
+    numbered: true,
   });
 
   return (
     <div className="space-y-4">
       <h3 className="font-medium">Table of Contents</h3>
       <div className="space-y-3">
-        <select 
+        <select
           value={settings.position}
-          onChange={e => setSettings({...settings, position: e.target.value})}
+          onChange={e => setSettings({ ...settings, position: e.target.value })}
           className="block w-full border rounded p-2"
         >
           <option value="right">Right Sidebar</option>
@@ -379,7 +391,9 @@ const TableOfContents: React.FC = () => {
         <input
           type="number"
           value={settings.maxDepth}
-          onChange={e => setSettings({...settings, maxDepth: parseInt(e.target.value)})}
+          onChange={e =>
+            setSettings({ ...settings, maxDepth: parseInt(e.target.value) })
+          }
           className="block w-full border rounded p-2"
           min="1"
           max="6"
@@ -405,7 +419,7 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout>();
   const [activeTab, setActiveTab] = useState(0);
   const [lastSavedTime, setLastSavedTime] = useState<string>('Never');
-  
+
   // Feature-specific States
   const [seoSettings, setSeoSettings] = useState<SEOSettings>({
     metaTitle: '',
@@ -420,16 +434,16 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
     robotsDirectives: 'index,follow',
     content: '',
     schemaType: 'Article',
-    schemaData: {}
+    schemaData: {},
   });
-  
+
   const [designSettings, setDesignSettings] = useState<DesignSettings>({
     template: 'default',
-    colors: { 
-      primary: '#000000', 
+    colors: {
+      primary: '#000000',
       secondary: '#ffffff',
       background: '#ffffff',
-      text: '#000000'
+      text: '#000000',
     },
     typography: {
       headings: {
@@ -438,50 +452,51 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
         h3: { size: '1.75rem', weight: '600', lineHeight: '1.3' },
         h4: { size: '1.5rem', weight: '600', lineHeight: '1.4' },
         h5: { size: '1.25rem', weight: '600', lineHeight: '1.4' },
-        h6: { size: '1rem', weight: '600', lineHeight: '1.4' }
+        h6: { size: '1rem', weight: '600', lineHeight: '1.4' },
       },
       body: {
         size: '1rem',
         lineHeight: '1.5',
-        paragraphSpacing: '1.5rem'
+        paragraphSpacing: '1.5rem',
       },
       fontFamily: 'Arial',
-      fontSize: '16px'
+      fontSize: '16px',
     },
     layout: 'standard',
     fonts: ['Arial', 'Helvetica'],
     fontSizes: ['12px', '14px', '16px'],
-    customCSS: ''
+    customCSS: '',
   });
-  
-  const [monetizationSettings, setMonetizationSettings] = useState<MonetizationSettings>({
-    adsEnabled: false,
-    subscriptionRequired: false,
-    affiliateLinks: [],
-    adSpots: [],
-    subscriptionPlans: [],
-    paywallRules: [],
-    paywallContent: {
-      title: 'Subscribe to Continue Reading',
-      description: 'Get unlimited access to all our content',
-      buttonText: 'Subscribe Now',
-      plans: []
-    }
-  });
-  
+
+  const [monetizationSettings, setMonetizationSettings] =
+    useState<MonetizationSettings>({
+      adsEnabled: false,
+      subscriptionRequired: false,
+      affiliateLinks: [],
+      adSpots: [],
+      subscriptionPlans: [],
+      paywallRules: [],
+      paywallContent: {
+        title: 'Subscribe to Continue Reading',
+        description: 'Get unlimited access to all our content',
+        buttonText: 'Subscribe Now',
+        plans: [],
+      },
+    });
+
   const [collaborators, setCollaborators] = useState<TeamMember[]>([
     {
-      id: "1",
-      name: "John Doe",
-      email: "john@example.com",
+      id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
       role: {
-        id: "editor-role",
-        name: "editor",
-        permissions: ["edit", "review", "comment"],
-        color: "#4A90E2"
+        id: 'editor-role',
+        name: 'editor',
+        permissions: ['edit', 'review', 'comment'],
+        color: '#4A90E2',
       },
-      canReview: true
-    }
+      canReview: true,
+    },
   ]);
 
   // Add state for publish settings
@@ -500,7 +515,7 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
       handleAutoSave();
     }, 30000); // Auto-save every 30 seconds
     setAutoSaveTimer(timer);
-    
+
     return () => {
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
     };
@@ -527,63 +542,88 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
         <div className="flex-1 overflow-auto">
           <div className="bg-white border-b border-gray-200">
             <TabList>
-              {['Content', 'Design', 'SEO', 'Engagement', 'Monetization'].map((tab, index) => (
-                <TabButton
-                  key={tab}
-                  isActive={activeTab === index}
-                  onClick={() => setActiveTab(index)}
-                >
-                  {tab}
-                </TabButton>
-              ))}
+              {['Content', 'Design', 'SEO', 'Engagement', 'Monetization'].map(
+                (tab, index) => (
+                  <TabButton
+                    key={tab}
+                    isActive={activeTab === index}
+                    onClick={() => setActiveTab(index)}
+                  >
+                    {tab}
+                  </TabButton>
+                ),
+              )}
             </TabList>
           </div>
-          
+
           <div className="p-6">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200">
               {activeTab === 0 && (
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                   <Editor
                     initialValue={initialData?.content}
-                    onChange={(e) => setContent(e.target.getContent())}
+                    onChange={e => setContent(e.target.getContent())}
                     plugins={[
-                      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-                      'preview', 'anchor', 'searchreplace', 'visualblocks', 'code',
-                      'fullscreen', 'insertdatetime', 'media', 'table', 'code',
-                      'help', 'wordcount', 'markdown'
+                      'advlist',
+                      'autolink',
+                      'lists',
+                      'link',
+                      'image',
+                      'charmap',
+                      'preview',
+                      'anchor',
+                      'searchreplace',
+                      'visualblocks',
+                      'code',
+                      'fullscreen',
+                      'insertdatetime',
+                      'media',
+                      'table',
+                      'code',
+                      'help',
+                      'wordcount',
+                      'markdown',
                     ]}
                   />
                 </div>
               )}
               {activeTab === 1 && (
-                <DesignPanel 
+                <DesignPanel
                   settings={designSettings}
-                  onChange={(val: Partial<DesignSettings>) => setDesignSettings(prev => ({ ...prev, ...val }))}
-                  components={{
-                    TemplateSelector: {},
-                    LayoutBuilder: {},
-                    ColorSchemeManager: {},
-                    TypographyControls: {},
-                    CustomCSS: {},    
-                    templates: [],
-                    blocks: []
-                  } as DesignComponents}
+                  onChange={(val: Partial<DesignSettings>) =>
+                    setDesignSettings(prev => ({ ...prev, ...val }))
+                  }
+                  components={
+                    {
+                      TemplateSelector: {},
+                      LayoutBuilder: {},
+                      ColorSchemeManager: {},
+                      TypographyControls: {},
+                      CustomCSS: {},
+                      templates: [],
+                      blocks: [],
+                    } as DesignComponents
+                  }
                 />
               )}
               {activeTab === 2 && (
-                <SEOPanel 
+                <SEOPanel
                   settings={seoSettings}
-                  onChange={(settings: Partial<SEOSettings>) => setSeoSettings(prev => ({ ...prev, ...settings }))}
-                  tools={{
-                    MetaEditor: {},
-                    SchemaMarkup: {},
-                    KeywordOptimizer: {},
-                    SocialPreview: {},
-                  } as SEOTools}
+                  onChange={(settings: Partial<SEOSettings>) =>
+                    setSeoSettings(prev => ({ ...prev, ...settings }))
+                  }
+                  tools={
+                    {
+                      MetaEditor: {},
+                      SchemaMarkup: {},
+                      KeywordOptimizer: {},
+                      SocialPreview: {},
+                    } as SEOTools
+                  }
                 />
               )}
               {activeTab === 3 && (
-                <EngagementPanel 
+                <EngagementPanel
                   components={{
                     CommentSettings,
                     NewsletterForm,
@@ -594,14 +634,18 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
                 />
               )}
               {activeTab === 4 && (
-                <MonetizationPanel 
+                <MonetizationPanel
                   settings={monetizationSettings}
-                  onChange={(settings: Partial<MonetizationSettings>) => 
-                    setMonetizationSettings({...monetizationSettings, ...settings})}
+                  onChange={(settings: Partial<MonetizationSettings>) =>
+                    setMonetizationSettings({
+                      ...monetizationSettings,
+                      ...settings,
+                    })
+                  }
                   features={{
                     adProviders: [],
                     subscriptionFeatures: [],
-                    affiliatePrograms: []
+                    affiliatePrograms: [],
                   }}
                 />
               )}
@@ -612,7 +656,13 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
         {/* Right Sidebar */}
         <div className="w-80 border-l border-gray-200 bg-white overflow-y-auto">
           <TabList vertical>
-            {['Publish', 'Analytics', 'Collaboration', 'Accessibility', 'Integrations'].map((tab, index) => (
+            {[
+              'Publish',
+              'Analytics',
+              'Collaboration',
+              'Accessibility',
+              'Integrations',
+            ].map((tab, index) => (
               <TabButton
                 key={tab}
                 isActive={activeTab === index}
@@ -622,23 +672,23 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
               </TabButton>
             ))}
           </TabList>
-          
+
           <div className="p-4">
             {activeTab === 0 && (
-              <PublishSettings 
+              <PublishSettings
                 isPublic={isPublic}
                 onPublishChange={setIsPublic}
               />
             )}
             {activeTab === 1 && (
-              <Analytics 
+              <Analytics
                 metrics={{
                   pageViews: 0,
                   engagement: {
                     timeOnPage: 0,
                     scrollDepth: 0,
                     interactions: 0,
-                    commentCount: 0
+                    commentCount: 0,
                   },
                   traffic: 0,
                   heatmaps: {},
@@ -649,25 +699,25 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
                       source: 'Direct',
                       count: 0,
                       visits: 0,
-                      percentage: 0
+                      percentage: 0,
                     },
                     {
                       source: 'Search',
                       count: 0,
                       visits: 0,
-                      percentage: 0
+                      percentage: 0,
                     },
                     {
                       source: 'Social',
                       count: 0,
                       visits: 0,
-                      percentage: 0
-                    }
+                      percentage: 0,
+                    },
                   ],
                   sourceTrends: {},
                   userBehavior: {
                     scrollDepth: 0,
-                    clickPatterns: {}
+                    clickPatterns: {},
                   },
                   conversionRate: 0,
                   socialShares: {},
@@ -675,7 +725,7 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
                   contentEngagement: {
                     comments: 0,
                     likes: 0,
-                    shareCount: 0
+                    shareCount: 0,
                   },
                   clickMap: [],
                   scrollDepth: [],
@@ -684,8 +734,8 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
                   goalPerformance: {
                     daily: 0,
                     weekly: 0,
-                    monthly: 0
-                  }
+                    monthly: 0,
+                  },
                 }}
               />
             )}
@@ -696,27 +746,27 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
                 features={{
                   availableRoles: [
                     {
-                      id: "editor-role",
-                      name: "Editor",
-                      permissions: ["edit", "review", "comment"],
-                      color: "#4A90E2"
+                      id: 'editor-role',
+                      name: 'Editor',
+                      permissions: ['edit', 'review', 'comment'],
+                      color: '#4A90E2',
                     },
                     {
-                      id: "viewer-role",
-                      name: "Viewer",
-                      permissions: ["view", "comment"],
-                      color: "#7ED321"
-                    }
+                      id: 'viewer-role',
+                      name: 'Viewer',
+                      permissions: ['view', 'comment'],
+                      color: '#7ED321',
+                    },
                   ],
                   pendingReviews: [],
                   communicationThreads: [],
                   recentActivities: [],
-                  activityFilters: []
+                  activityFilters: [],
                 }}
               />
             )}
             {activeTab === 3 && (
-              <AccessibilityChecker 
+              <AccessibilityChecker
                 features={{
                   wcagCompliance: {},
                   screenReader: {},
@@ -725,20 +775,20 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
               />
             )}
             {activeTab === 4 && (
-              <IntegrationsPanel 
+              <IntegrationsPanel
                 integrations={{
                   googleAnalytics: {
                     enabled: false,
-                    apiKey: ''
+                    apiKey: '',
                   },
                   mailchimp: {
                     enabled: false,
-                    apiKey: ''
+                    apiKey: '',
                   },
                   facebook: {
                     enabled: false,
-                    apiKey: ''
-                  }
+                    apiKey: '',
+                  },
                 }}
               />
             )}
@@ -748,9 +798,7 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
 
       {/* Footer Status Bar */}
       <div className="bg-white border-t border-gray-200 px-6 py-3 flex justify-between items-center">
-        <div className="text-sm text-gray-500">
-          Last saved: {lastSavedTime}
-        </div>
+        <div className="text-sm text-gray-500">Last saved: {lastSavedTime}</div>
         <div className="flex items-center space-x-6">
           <WordCount content={content} />
           <ReadingTime />
@@ -759,4 +807,4 @@ export const EditBlog: React.FC<EditBlogProps> = ({ blogId, initialData }) => {
       </div>
     </div>
   );
-}; 
+};

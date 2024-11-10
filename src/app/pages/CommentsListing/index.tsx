@@ -79,7 +79,7 @@ export const CommentsListing = ({ match }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" style={{marginTop: "3%"}}>
+    <div className="min-h-screen bg-gray-50" style={{ marginTop: '3%' }}>
       <div className="max-w-7xl mx-auto p-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -88,14 +88,24 @@ export const CommentsListing = ({ match }) => {
               onClick={() => history.goBack()}
               className="flex items-center text-[#f4a261] hover:text-[#e76f51] transition-colors"
             >
-              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="w-5 h-5 mr-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
               Back
             </button>
             <h1 className="text-2xl font-semibold text-gray-800">Comments</h1>
           </div>
-          
+
           <div className="flex items-center space-x-4">
             <div className="relative">
               <input
@@ -109,7 +119,12 @@ export const CommentsListing = ({ match }) => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
               </svg>
             </div>
 

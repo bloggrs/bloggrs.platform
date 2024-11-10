@@ -73,25 +73,33 @@ interface ContentItem {
   shares: number;
 }
 
-export const Analytics: React.FC<AnalyticsProps> = ({ metrics, period, onPeriodChange }) => {
-  const transformedTrends = Object.entries(metrics.sourceTrends).map(([source, data]) => ({
-    source,
-    data,
-    dates: data.map((_, index) => `Day ${index + 1}`)
-  }));
+export const Analytics: React.FC<AnalyticsProps> = ({
+  metrics,
+  period,
+  onPeriodChange,
+}) => {
+  const transformedTrends = Object.entries(metrics.sourceTrends).map(
+    ([source, data]) => ({
+      source,
+      data,
+      dates: data.map((_, index) => `Day ${index + 1}`),
+    }),
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-semibold text-gray-800">Analytics Dashboard</h1>
+            <h1 className="text-2xl font-semibold text-gray-800">
+              Analytics Dashboard
+            </h1>
           </div>
           {period && onPeriodChange && (
             <div className="flex items-center space-x-4">
-              <select 
+              <select
                 value={period}
-                onChange={(e) => onPeriodChange(e.target.value)}
+                onChange={e => onPeriodChange(e.target.value)}
                 className="w-40 pl-3 pr-10 py-2 rounded-lg bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
               >
                 <option value="daily">Daily</option>
@@ -110,21 +118,21 @@ export const Analytics: React.FC<AnalyticsProps> = ({ metrics, period, onPeriodC
               bounceRate={metrics.bounceRate}
             />
           </div>
-          
+
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <TrafficSources
               sources={metrics.trafficSources}
               trends={transformedTrends}
             />
           </div>
-          
+
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <ContentPerformance
               popular={metrics.popularContent}
               engagement={metrics.contentEngagement}
             />
           </div>
-          
+
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <HeatmapVisualization
               clicks={metrics.clickMap}
@@ -132,7 +140,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ metrics, period, onPeriodC
               attention={metrics.attentionHotspots}
             />
           </div>
-          
+
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <ConversionMetrics
               goals={metrics.conversionGoals}
@@ -143,4 +151,4 @@ export const Analytics: React.FC<AnalyticsProps> = ({ metrics, period, onPeriodC
       </div>
     </div>
   );
-}; 
+};

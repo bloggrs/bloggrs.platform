@@ -14,14 +14,14 @@ interface DesignSettings {
     background: string;
     text: string;
   };
-  typography: { 
+  typography: {
     headings: {
-      h1: { size: string; weight: string; lineHeight: string; };
-      h2: { size: string; weight: string; lineHeight: string; };
-      h3: { size: string; weight: string; lineHeight: string; };
-      h4: { size: string; weight: string; lineHeight: string; };
-      h5: { size: string; weight: string; lineHeight: string; };
-      h6: { size: string; weight: string; lineHeight: string; };
+      h1: { size: string; weight: string; lineHeight: string };
+      h2: { size: string; weight: string; lineHeight: string };
+      h3: { size: string; weight: string; lineHeight: string };
+      h4: { size: string; weight: string; lineHeight: string };
+      h5: { size: string; weight: string; lineHeight: string };
+      h6: { size: string; weight: string; lineHeight: string };
     };
     body: {
       size: string;
@@ -52,13 +52,19 @@ interface DesignPanelProps {
   components: DesignComponents;
 }
 
-export const DesignPanel: React.FC<DesignPanelProps> = ({ settings, onChange, components }) => {
+export const DesignPanel: React.FC<DesignPanelProps> = ({
+  settings,
+  onChange,
+  components,
+}) => {
   return (
     <div className="flex-1 p-8 bg-gray-50">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-semibold text-gray-800">Design Settings</h1>
+          <h1 className="text-2xl font-semibold text-gray-800">
+            Design Settings
+          </h1>
         </div>
 
         {/* Settings Panel */}
@@ -67,36 +73,38 @@ export const DesignPanel: React.FC<DesignPanelProps> = ({ settings, onChange, co
             <TemplateSelector
               currentTemplate={settings.template}
               templates={components.templates || []}
-              onSelect={(template) => onChange({ ...settings, template })}
+              onSelect={template => onChange({ ...settings, template })}
             />
-            
+
             <div className="border-t border-gray-100 pt-6">
               <LayoutBuilder
                 layout={settings.layout}
                 blocks={components.blocks || []}
-                onChange={(layout) => onChange({ ...settings, layout })}
+                onChange={layout => onChange({ ...settings, layout })}
               />
             </div>
-            
+
             <div className="border-t border-gray-100 pt-6">
               <ColorSchemeManager
                 colors={settings.colors}
-                onChange={(colors) => onChange({ ...settings, colors })}
+                onChange={colors => onChange({ ...settings, colors })}
               />
             </div>
-            
+
             <div className="border-t border-gray-100 pt-6">
               <TypographyControls
                 fonts={settings.fonts}
                 sizes={settings.fontSizes}
-                onChange={(typography) => onChange({ ...settings, ...typography })}
+                onChange={typography =>
+                  onChange({ ...settings, ...typography })
+                }
               />
             </div>
-            
+
             <div className="border-t border-gray-100 pt-6">
               <CustomCSS
                 value={settings.customCSS}
-                onChange={(css) => onChange({ ...settings, customCSS: css })}
+                onChange={css => onChange({ ...settings, customCSS: css })}
               />
             </div>
           </div>
@@ -104,4 +112,4 @@ export const DesignPanel: React.FC<DesignPanelProps> = ({ settings, onChange, co
       </div>
     </div>
   );
-}; 
+};

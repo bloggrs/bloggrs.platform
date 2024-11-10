@@ -17,29 +17,29 @@ export const ChooseBlogTheme = () => {
       name: 'Modern Minimal',
       description: 'Clean and minimalistic design for a professional look',
       thumbnail: '/dist/static/theme-1.png',
-      tag: 'Popular'
+      tag: 'Popular',
     },
     {
       id: '2',
       name: 'Creative Portfolio',
       description: 'Perfect for showcasing your work and creativity',
       thumbnail: '/dist/static/theme-2.png',
-      tag: 'New'
+      tag: 'New',
     },
     {
       id: '3',
       name: 'Magazine Pro',
       description: 'Rich layout ideal for content-heavy blogs',
       thumbnail: '/dist/static/theme-3.png',
-      tag: 'Premium'
+      tag: 'Premium',
     },
     {
       id: '4',
       name: 'Personal Blog',
       description: 'Simple and elegant design for personal stories',
       thumbnail: '/dist/static/theme-4.png',
-      tag: 'Popular'
-    }
+      tag: 'Popular',
+    },
   ];
 
   return (
@@ -58,12 +58,18 @@ export const ChooseBlogTheme = () => {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {[
-            { icon: <Palette className="w-6 h-6" />, text: 'Customizable colors' },
+            {
+              icon: <Palette className="w-6 h-6" />,
+              text: 'Customizable colors',
+            },
             { icon: <Layout className="w-6 h-6" />, text: 'Flexible layouts' },
             { icon: <Grid className="w-6 h-6" />, text: 'Responsive design' },
             { icon: <Layers className="w-6 h-6" />, text: 'Multiple styles' },
           ].map((feature, index) => (
-            <div key={index} className="flex items-center space-x-3 p-4 bg-white rounded-lg border border-gray-200">
+            <div
+              key={index}
+              className="flex items-center space-x-3 p-4 bg-white rounded-lg border border-gray-200"
+            >
               <div className="text-[#1a365d]">{feature.icon}</div>
               <span className="text-gray-700 font-medium">{feature.text}</span>
             </div>
@@ -73,7 +79,10 @@ export const ChooseBlogTheme = () => {
         {/* Themes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {themes.map(theme => (
-            <div key={theme.id} className="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+            <div
+              key={theme.id}
+              className="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+            >
               <div className="relative aspect-video bg-gray-100">
                 <img
                   src={theme.thumbnail}
@@ -81,11 +90,15 @@ export const ChooseBlogTheme = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-3 right-3">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    theme.tag === 'Popular' ? 'bg-[#f4a261]/10 text-[#f4a261]' :
-                    theme.tag === 'New' ? 'bg-green-100 text-green-800' :
-                    'bg-purple-100 text-purple-800'
-                  }`}>
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      theme.tag === 'Popular'
+                        ? 'bg-[#f4a261]/10 text-[#f4a261]'
+                        : theme.tag === 'New'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-purple-100 text-purple-800'
+                    }`}
+                  >
                     {theme.tag}
                   </span>
                 </div>

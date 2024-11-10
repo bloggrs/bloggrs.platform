@@ -132,15 +132,21 @@ export const HomePage = ({ parentValue }) => {
                           blogId === bg.id ? 'bg-yellow-50' : ''
                         }`}
                       >
-                        <p className={`text-sm ${
-                          blogId === bg.id ? 'text-yellow-600 font-medium' : 'text-gray-900'
-                        }`}>
+                        <p
+                          className={`text-sm ${
+                            blogId === bg.id
+                              ? 'text-yellow-600 font-medium'
+                              : 'text-gray-900'
+                          }`}
+                        >
                           {bg.name}
                         </p>
                       </div>
                     ))}
                     {loading && (
-                      <div className="p-4 text-sm text-gray-500">Loading...</div>
+                      <div className="p-4 text-sm text-gray-500">
+                        Loading...
+                      </div>
                     )}
                   </div>
                 </div>

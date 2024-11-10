@@ -194,20 +194,22 @@ interface FormModalProps {
   editingItem: any; // Consider creating a union type of all possible item types
 }
 
-const FormModal: React.FC<FormModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  onSubmit, 
-  modalType, 
-  activeTab, 
-  editingItem 
+const FormModal: React.FC<FormModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  modalType,
+  activeTab,
+  editingItem,
 }) => {
   if (!isOpen) return null;
 
   const getFormFields = () => {
-    const inputClassName = "w-full px-4 py-3 text-base rounded-lg border-2 border-gray-200 focus:border-[#1e3a8a] focus:outline-none transition-colors";
-    const labelClassName = "block text-sm font-medium text-gray-700 mb-1";
-    const checkboxClassName = "h-4 w-4 rounded border-2 border-gray-200 text-[#1e3a8a] focus:ring-[#1e3a8a]";
+    const inputClassName =
+      'w-full px-4 py-3 text-base rounded-lg border-2 border-gray-200 focus:border-[#1e3a8a] focus:outline-none transition-colors';
+    const labelClassName = 'block text-sm font-medium text-gray-700 mb-1';
+    const checkboxClassName =
+      'h-4 w-4 rounded border-2 border-gray-200 text-[#1e3a8a] focus:ring-[#1e3a8a]';
 
     switch (activeTab) {
       case 'userRoles':
@@ -366,7 +368,9 @@ const FormModal: React.FC<FormModalProps> = ({
                 defaultChecked={editingItem?.isCustom || false}
                 className={checkboxClassName}
               />
-              <label className="ml-2 text-sm text-gray-700">Custom Override</label>
+              <label className="ml-2 text-sm text-gray-700">
+                Custom Override
+              </label>
             </div>
           </>
         );
@@ -418,7 +422,11 @@ const FormModal: React.FC<FormModalProps> = ({
               <label className={labelClassName}>Permissions</label>
               <textarea
                 name="permissions"
-                defaultValue={editingItem?.permissions ? JSON.stringify(editingItem.permissions, null, 2) : '{}'}
+                defaultValue={
+                  editingItem?.permissions
+                    ? JSON.stringify(editingItem.permissions, null, 2)
+                    : '{}'
+                }
                 className={inputClassName}
                 rows={3}
                 required
@@ -452,7 +460,9 @@ const FormModal: React.FC<FormModalProps> = ({
           padding: '24px',
         },
       }}
-      contentLabel={`${modalType === 'create' ? 'Add new' : 'Edit'} ${activeTab.slice(0, -1)}`}
+      contentLabel={`${
+        modalType === 'create' ? 'Add new' : 'Edit'
+      } ${activeTab.slice(0, -1)}`}
     >
       <form onSubmit={onSubmit} className="flex flex-col h-full">
         <div className="flex flex-col space-y-4">
@@ -461,12 +471,13 @@ const FormModal: React.FC<FormModalProps> = ({
             className="w-16 h-16 mb-2"
           />
           <h1 className="text-2xl text-[#1e3a8a] font-medium">
-            {modalType === 'create' ? 'Add new' : `Edit '${editingItem?.name || ''}'`} {activeTab.slice(0, -1)}
+            {modalType === 'create'
+              ? 'Add new'
+              : `Edit '${editingItem?.name || ''}'`}{' '}
+            {activeTab.slice(0, -1)}
           </h1>
 
-          <div className="space-y-4">
-            {getFormFields()}
-          </div>
+          <div className="space-y-4">{getFormFields()}</div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-6">
@@ -523,8 +534,12 @@ export const SettingsPage: React.FC = () => {
   const [roles, setRoles] = useState<Role[]>([]);
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [blogPermissions, setBlogPermissions] = useState<BlogPermission[]>([]);
-  const [teamMemberPermissions, setTeamMemberPermissions] = useState<TeamMemberPermission[]>([]);
-  const [resourcePolicies, setResourcePolicies] = useState<ResourcePolicy[]>([]);
+  const [teamMemberPermissions, setTeamMemberPermissions] = useState<
+    TeamMemberPermission[]
+  >([]);
+  const [resourcePolicies, setResourcePolicies] = useState<ResourcePolicy[]>(
+    [],
+  );
 
   const [activeTab, setActiveTab] = useState<
     | 'userRoles'
@@ -593,7 +608,8 @@ export const SettingsPage: React.FC = () => {
 
     const loadTeamMemberPermissions = async () => {
       try {
-        const response = await teamMemberPermissionsService.getTeamMemberPermissions();
+        const response =
+          await teamMemberPermissionsService.getTeamMemberPermissions();
         // Add type checking and default to empty array if data is missing
         const permissions = response?.teammemberpermissions || [];
         console.log('Loaded permissions:', permissions); // Debug log
@@ -696,19 +712,29 @@ export const SettingsPage: React.FC = () => {
           break;
         case 'accessRights':
           await permissionsService.deletePermission(itemToDelete.id);
-          setPermissions(prev => prev.filter(perm => perm.id !== itemToDelete.id));
+          setPermissions(prev =>
+            prev.filter(perm => perm.id !== itemToDelete.id),
+          );
           break;
         case 'blogAccess':
           await blogPermissionsService.deleteBlogPermission(itemToDelete.id);
-          setBlogPermissions(prev => prev.filter(bp => bp.id !== itemToDelete.id));
+          setBlogPermissions(prev =>
+            prev.filter(bp => bp.id !== itemToDelete.id),
+          );
           break;
         case 'memberAccess':
-          await teamMemberPermissionsService.deleteTeamMemberPermission(itemToDelete.id);
-          setTeamMemberPermissions(prev => prev.filter(tmp => tmp.id !== itemToDelete.id));
+          await teamMemberPermissionsService.deleteTeamMemberPermission(
+            itemToDelete.id,
+          );
+          setTeamMemberPermissions(prev =>
+            prev.filter(tmp => tmp.id !== itemToDelete.id),
+          );
           break;
         case 'accessPolicies':
           await resourcePoliciesService.deleteResourcePolicy(itemToDelete.id);
-          setResourcePolicies(prev => prev.filter(rp => rp.id !== itemToDelete.id));
+          setResourcePolicies(prev =>
+            prev.filter(rp => rp.id !== itemToDelete.id),
+          );
           break;
       }
       toast.success('Item deleted successfully');
@@ -759,25 +785,30 @@ export const SettingsPage: React.FC = () => {
       action: formData.get('action') as string,
       resourceId: Number(formData.get('resourceId')),
       resourceType: formData.get('resourceType') as string,
-      teammemberId: Number(formData.get('teamMemberId'))
+      teammemberId: Number(formData.get('teamMemberId')),
     };
 
     try {
       if (modalType === 'edit' && editingItem) {
-        const updatedPermission = await blogPermissionsService.updateBlogPermission(
-          editingItem.id,
-          blogPermissionData
-        );
+        const updatedPermission =
+          await blogPermissionsService.updateBlogPermission(
+            editingItem.id,
+            blogPermissionData,
+          );
         setBlogPermissions(prev =>
-          prev.map(bp => (bp.id === editingItem.id ? updatedPermission : bp))
+          prev.map(bp => (bp.id === editingItem.id ? updatedPermission : bp)),
         );
       } else {
         const newPermission = await blogPermissionsService.createBlogPermission(
-          blogPermissionData
+          blogPermissionData,
         );
         setBlogPermissions(prev => [...prev, newPermission]);
       }
-      toast.success(`Blog permission ${modalType === 'edit' ? 'updated' : 'created'} successfully`);
+      toast.success(
+        `Blog permission ${
+          modalType === 'edit' ? 'updated' : 'created'
+        } successfully`,
+      );
       setIsModalOpen(false);
       setEditingItem(null);
     } catch (error) {
@@ -791,24 +822,28 @@ export const SettingsPage: React.FC = () => {
       name: formData.get('name') as string,
       action: formData.get('action') as string,
       resource: formData.get('resource') as string,
-      description: formData.get('description') as string || null,
+      description: (formData.get('description') as string) || null,
       isSystem: formData.get('isSystem') === 'on',
       roleId: null,
-      tenantId: null
+      tenantId: null,
     };
 
     try {
       if (modalType === 'edit' && editingItem) {
         const updatedPermission = await permissionsService.updatePermission(
           editingItem.id,
-          permissionData
+          permissionData,
         );
         setPermissions(prev =>
-          prev.map(permission => (permission.id === editingItem.id ? updatedPermission : permission))
+          prev.map(permission =>
+            permission.id === editingItem.id ? updatedPermission : permission,
+          ),
         );
         toast.success('Permission updated successfully');
       } else {
-        const newPermission = await permissionsService.createPermission(permissionData);
+        const newPermission = await permissionsService.createPermission(
+          permissionData,
+        );
         setPermissions(prev => [...prev, newPermission]);
         toast.success('Permission created successfully');
       }
@@ -829,26 +864,32 @@ export const SettingsPage: React.FC = () => {
 
     try {
       if (modalType === 'edit' && editingItem) {
-        const updatedPermission = await teamMemberPermissionsService.updateTeamMemberPermission(
-          editingItem.id,
-          teamMemberPermissionData,
-        );
+        const updatedPermission =
+          await teamMemberPermissionsService.updateTeamMemberPermission(
+            editingItem.id,
+            teamMemberPermissionData,
+          );
         setTeamMemberPermissions((prev: TeamMemberPermission[]) => {
           if (!Array.isArray(prev)) return [updatedPermission];
-          return prev.map(tmp => 
-            tmp.id === editingItem.id ? updatedPermission : tmp
+          return prev.map(tmp =>
+            tmp.id === editingItem.id ? updatedPermission : tmp,
           );
         });
       } else {
-        const newPermission = await teamMemberPermissionsService.createTeamMemberPermission(
-          teamMemberPermissionData,
-        );
+        const newPermission =
+          await teamMemberPermissionsService.createTeamMemberPermission(
+            teamMemberPermissionData,
+          );
         setTeamMemberPermissions((prev: TeamMemberPermission[]) => {
           if (!Array.isArray(prev)) return [newPermission];
           return [...prev, newPermission];
         });
       }
-      toast.success(`Team member permission ${modalType === 'edit' ? 'updated' : 'created'} successfully`);
+      toast.success(
+        `Team member permission ${
+          modalType === 'edit' ? 'updated' : 'created'
+        } successfully`,
+      );
       setIsModalOpen(false);
       setEditingItem(null);
     } catch (error) {
@@ -879,12 +920,15 @@ export const SettingsPage: React.FC = () => {
       };
 
       if (modalType === 'edit' && editingItem) {
-        const updatedPolicy = await resourcePoliciesService.updateResourcePolicy(
-          editingItem.id,
-          resourcePolicyData,
-        );
+        const updatedPolicy =
+          await resourcePoliciesService.updateResourcePolicy(
+            editingItem.id,
+            resourcePolicyData,
+          );
         setResourcePolicies(prev =>
-          prev.map(policy => (policy.id === editingItem.id ? updatedPolicy : policy)),
+          prev.map(policy =>
+            policy.id === editingItem.id ? updatedPolicy : policy,
+          ),
         );
         toast.success('Resource policy updated successfully');
       } else {
@@ -905,7 +949,7 @@ export const SettingsPage: React.FC = () => {
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    
+
     const errors = validateFormData(formData, activeTab);
     if (errors.length > 0) {
       errors.forEach(error => toast.error(error));
@@ -936,29 +980,39 @@ export const SettingsPage: React.FC = () => {
   const getCurrentItems = () => {
     switch (activeTab) {
       case 'userRoles':
-        return roles?.filter(
-          role =>
-            role.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            role.description?.toLowerCase().includes(searchQuery.toLowerCase()),
-        ) || [];
+        return (
+          roles?.filter(
+            role =>
+              role.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              role.description
+                ?.toLowerCase()
+                .includes(searchQuery.toLowerCase()),
+          ) || []
+        );
       case 'accessRights':
-        return permissions?.filter(
-          permission =>
-            permission.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            permission.description
-              ?.toLowerCase()
-              .includes(searchQuery.toLowerCase()),
-        ) || [];
+        return (
+          permissions?.filter(
+            permission =>
+              permission.name
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+              permission.description
+                ?.toLowerCase()
+                .includes(searchQuery.toLowerCase()),
+          ) || []
+        );
       case 'blogAccess':
-        return blogPermissions?.filter(
-          bp =>
-            bp.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            bp.resourceType.toLowerCase().includes(searchQuery.toLowerCase()),
-        ) || [];
+        return (
+          blogPermissions?.filter(
+            bp =>
+              bp.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              bp.resourceType.toLowerCase().includes(searchQuery.toLowerCase()),
+          ) || []
+        );
       case 'memberAccess':
         return (teamMemberPermissions || []).filter(tmp => {
           if (!tmp) return false;
-          
+
           const searchTerms = searchQuery.toLowerCase();
           return (
             // User ID search
@@ -972,12 +1026,16 @@ export const SettingsPage: React.FC = () => {
           );
         });
       case 'accessPolicies':
-        return resourcePolicies?.filter(
-          rp =>
-            rp.resourceType.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            rp.resourceId.toString().includes(searchQuery) ||
-            rp.roleId.toString().includes(searchQuery),
-        ) || [];
+        return (
+          resourcePolicies?.filter(
+            rp =>
+              rp.resourceType
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+              rp.resourceId.toString().includes(searchQuery) ||
+              rp.roleId.toString().includes(searchQuery),
+          ) || []
+        );
       default:
         return [];
     }
@@ -1130,7 +1188,8 @@ export const SettingsPage: React.FC = () => {
               </td>
               <td className="px-6 py-4">
                 <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                  {roles.find(r => r.id === item.parentRoleId)?.name || 'No parent'}
+                  {roles.find(r => r.id === item.parentRoleId)?.name ||
+                    'No parent'}
                 </span>
               </td>
               <td className="px-6 py-4">
@@ -1266,11 +1325,13 @@ export const SettingsPage: React.FC = () => {
               </td>
               <td className="px-6 py-4">
                 <div className="space-y-2">
-                  <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    item.isCustom 
-                      ? 'bg-orange-100 text-orange-800' 
-                      : 'bg-gray-100 text-gray-800'
-                  }`}>
+                  <span
+                    className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.isCustom
+                        ? 'bg-orange-100 text-orange-800'
+                        : 'bg-gray-100 text-gray-800'
+                    }`}
+                  >
                     {item.isCustom ? 'Custom' : 'Standard'}
                   </span>
                   {item.teammember?.isOwner && (
@@ -1486,7 +1547,8 @@ export const SettingsPage: React.FC = () => {
             Access Control & Security Center
           </h1>
           <p className="mt-2 text-gray-600">
-            Manage and configure all aspects of your platform's security and access control
+            Manage and configure all aspects of your platform's security and
+            access control
           </p>
         </div>
 
@@ -1535,9 +1597,7 @@ export const SettingsPage: React.FC = () => {
               onChange={handleSearch}
               className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
             />
-            <Search 
-              className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" 
-            />
+            <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
           </div>
           <button
             onClick={handleAddItem}
@@ -1557,7 +1617,9 @@ export const SettingsPage: React.FC = () => {
                   <th className="pb-4 pl-4 text-left">
                     <input
                       type="checkbox"
-                      checked={selectedItems.length === getCurrentItems().length}
+                      checked={
+                        selectedItems.length === getCurrentItems().length
+                      }
                       onChange={handleSelectAll}
                       className="rounded border-gray-300 text-[#1a365d] focus:ring-[#1a365d]"
                     />
@@ -1565,9 +1627,7 @@ export const SettingsPage: React.FC = () => {
                   {renderTableHeaders()}
                 </tr>
               </thead>
-              <tbody>
-                {renderTableRows()}
-              </tbody>
+              <tbody>{renderTableRows()}</tbody>
             </table>
           </div>
         </div>

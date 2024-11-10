@@ -13,19 +13,23 @@ export const SocialPreview: React.FC<SocialPreviewProps> = ({
   ogTitle,
   ogDescription,
   twitterCard,
-  onChange
+  onChange,
 }) => {
   return (
     <div className="space-y-6">
-      <h3 className="text-2xl font-semibold text-gray-800">Social Media Preview</h3>
-      
+      <h3 className="text-2xl font-semibold text-gray-800">
+        Social Media Preview
+      </h3>
+
       <div className="space-y-6">
         <div className="flex flex-col">
-          <label className="block text-sm font-medium text-gray-500 mb-2">Image</label>
+          <label className="block text-sm font-medium text-gray-500 mb-2">
+            Image
+          </label>
           <input
             type="url"
             value={ogImage}
-            onChange={(e) => onChange?.({ ogImage: e.target.value })}
+            onChange={e => onChange?.({ ogImage: e.target.value })}
             placeholder="Enter image URL"
             className="w-full px-4 py-2.5 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
           />
@@ -41,21 +45,25 @@ export const SocialPreview: React.FC<SocialPreviewProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-500 mb-2">Title</label>
+          <label className="block text-sm font-medium text-gray-500 mb-2">
+            Title
+          </label>
           <input
             type="text"
             value={ogTitle}
-            onChange={(e) => onChange?.({ ogTitle: e.target.value })}
+            onChange={e => onChange?.({ ogTitle: e.target.value })}
             placeholder="Enter engaging title for social media"
             className="w-full px-4 py-2.5 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-500 mb-2">Description</label>
+          <label className="block text-sm font-medium text-gray-500 mb-2">
+            Description
+          </label>
           <textarea
             value={ogDescription}
-            onChange={(e) => onChange?.({ ogDescription: e.target.value })}
+            onChange={e => onChange?.({ ogDescription: e.target.value })}
             placeholder="Write a compelling description"
             className="w-full px-4 py-2.5 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
             rows={3}
@@ -63,10 +71,12 @@ export const SocialPreview: React.FC<SocialPreviewProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-500 mb-2">Twitter Card Type</label>
+          <label className="block text-sm font-medium text-gray-500 mb-2">
+            Twitter Card Type
+          </label>
           <select
             value={twitterCard}
-            onChange={(e) => onChange?.({ twitterCard: e.target.value })}
+            onChange={e => onChange?.({ twitterCard: e.target.value })}
             className="w-full px-4 py-2.5 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
           >
             <option value="summary">Summary</option>
@@ -91,7 +101,9 @@ export const SocialPreview: React.FC<SocialPreviewProps> = ({
               </div>
             )}
             <div className="p-4">
-              <div className="text-lg font-semibold text-gray-800">{ogTitle}</div>
+              <div className="text-lg font-semibold text-gray-800">
+                {ogTitle}
+              </div>
               <div className="mt-1 text-sm text-gray-500">{ogDescription}</div>
             </div>
           </div>
@@ -99,4 +111,4 @@ export const SocialPreview: React.FC<SocialPreviewProps> = ({
       </div>
     </div>
   );
-}; 
+};

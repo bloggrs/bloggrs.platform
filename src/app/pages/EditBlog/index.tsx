@@ -1,25 +1,28 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { ClipboardCopy, X, Check } from 'lucide-react'
+import React, { useState } from 'react';
+import { ClipboardCopy, X, Check } from 'lucide-react';
 
 interface ToastProps {
-  message: string
-  onClose: () => void
+  message: string;
+  onClose: () => void;
 }
 
 const Toast: React.FC<ToastProps> = ({ message, onClose }) => (
   <div className="fixed top-4 right-4 flex items-center bg-white rounded-lg shadow-lg border border-gray-100 p-4 animate-slide-down">
     <Check className="w-5 h-5 text-green-500 mr-2" />
     <span className="text-gray-700">{message}</span>
-    <button onClick={onClose} className="ml-4 text-gray-400 hover:text-gray-600">
+    <button
+      onClick={onClose}
+      className="ml-4 text-gray-400 hover:text-gray-600"
+    >
       <X className="w-4 h-4" />
     </button>
   </div>
-)
+);
 
 export const EditBlog = () => {
-  const [showToast, setShowToast] = useState(false)
+  const [showToast, setShowToast] = useState(false);
 
   const sqlCode = `-- Table to store JavaScript files
 CREATE TABLE js_files (
@@ -131,21 +134,24 @@ CREATE TABLE js_dependencies (
     version VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);`
+);`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(sqlCode).then(() => {
-      setShowToast(true)
-      setTimeout(() => setShowToast(false), 3000)
-    })
-  }
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       {showToast && (
-        <Toast message="Code copied to clipboard!" onClose={() => setShowToast(false)} />
+        <Toast
+          message="Code copied to clipboard!"
+          onClose={() => setShowToast(false)}
+        />
       )}
-      
+
       <div className="max-w-[1200px] mx-auto">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
           <div className="flex items-center justify-between p-4 bg-[#1a365d] text-white">
@@ -159,7 +165,7 @@ CREATE TABLE js_dependencies (
               Copy Code
             </button>
           </div>
-          
+
           <div className="overflow-x-auto">
             <pre className="p-4 text-sm leading-relaxed">
               <code className="font-mono">
@@ -168,12 +174,31 @@ CREATE TABLE js_dependencies (
                     <span className="select-none text-gray-400 w-12 pr-4 text-right border-r border-gray-200 mr-4">
                       {index + 1}
                     </span>
-                    <span className={`
+                    <span
+                      className={`
                       ${line.trim().startsWith('--') ? 'text-green-600' : ''}
-                      ${line.includes('CREATE TABLE') ? 'text-[#1a365d] font-bold' : ''}
-                      ${line.includes('PRIMARY KEY') || line.includes('REFERENCES') ? 'text-[#2a4365]' : ''}
-                      ${line.includes('VARCHAR') || line.includes('TEXT') || line.includes('TIMESTAMP') || line.includes('BOOLEAN') || line.includes('INTEGER') ? 'text-[#f4a261]' : ''}
-                    `}>
+                      ${
+                        line.includes('CREATE TABLE')
+                          ? 'text-[#1a365d] font-bold'
+                          : ''
+                      }
+                      ${
+                        line.includes('PRIMARY KEY') ||
+                        line.includes('REFERENCES')
+                          ? 'text-[#2a4365]'
+                          : ''
+                      }
+                      ${
+                        line.includes('VARCHAR') ||
+                        line.includes('TEXT') ||
+                        line.includes('TIMESTAMP') ||
+                        line.includes('BOOLEAN') ||
+                        line.includes('INTEGER')
+                          ? 'text-[#f4a261]'
+                          : ''
+                      }
+                    `}
+                    >
                       {line}
                     </span>
                   </div>
@@ -184,5 +209,5 @@ CREATE TABLE js_dependencies (
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

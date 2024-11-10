@@ -10,7 +10,9 @@ interface AccessibilityCheckerProps {
   features: AccessibilityFeatures;
 }
 
-export const AccessibilityChecker: React.FC<AccessibilityCheckerProps> = ({ features }) => {
+export const AccessibilityChecker: React.FC<AccessibilityCheckerProps> = ({
+  features,
+}) => {
   return (
     <div className="p-6 space-y-6">
       <div className="space-y-4">
@@ -44,7 +46,9 @@ export const AccessibilityChecker: React.FC<AccessibilityCheckerProps> = ({ feat
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-medium text-gray-800">Screen Reader Preview</h3>
+        <h3 className="text-lg font-medium text-gray-800">
+          Screen Reader Preview
+        </h3>
         <button className="w-full bg-[#f4a261] hover:bg-[#e76f51] text-white py-2.5 px-4 rounded-lg transition-colors">
           Test with Screen Reader
         </button>

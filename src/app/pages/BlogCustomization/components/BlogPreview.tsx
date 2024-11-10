@@ -29,9 +29,12 @@ export const BlogPreviewConfig = {
         </div>
         <nav>
           <ul className="flex items-center space-x-8">
-            {['Home', 'About Me', 'Contact'].map((item) => (
+            {['Home', 'About Me', 'Contact'].map(item => (
               <li key={item}>
-                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-500 hover:text-gray-900 transition-colors"
+                >
                   {item}
                 </a>
               </li>
@@ -45,14 +48,17 @@ export const BlogPreviewConfig = {
   BlogPost: () => (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
       <div className="aspect-video mb-6 bg-gray-100 rounded-lg"></div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-3">Lorem Ipsum Title</h2>
+      <h2 className="text-xl font-semibold text-gray-900 mb-3">
+        Lorem Ipsum Title
+      </h2>
       <div className="flex items-center text-sm text-gray-500 mb-4">
         <span>December 22, 2021</span>
         <span className="mx-2">•</span>
         <span>John Cena</span>
       </div>
       <p className="text-gray-600 mb-6">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore...
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore...
       </p>
       <div className="flex items-center space-x-6">
         <button className="flex items-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -75,7 +81,7 @@ export const BlogPreviewConfig = {
           { name: 'T-Shirts', count: 159 },
           { name: 'New Trends', count: 5 },
           { name: "Women's Fashion", count: 45 },
-        ].map((category) => (
+        ].map(category => (
           <li key={category.name} className="flex items-center justify-between">
             <span className="text-gray-700">{category.name}</span>
             <span className="text-gray-400">({category.count})</span>

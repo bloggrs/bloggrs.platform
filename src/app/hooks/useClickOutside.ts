@@ -17,4 +17,4 @@ export const useClickOutside = (handler: () => void) => {
   }, [handler]);
 
   return ref;
-}; 
+};

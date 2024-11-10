@@ -39,7 +39,9 @@ export const CustomizeImage = () => {
             <div className="bg-[#1a365d]/10 text-[#1a365d] text-xs px-2 py-1 rounded-md w-fit mb-2">
               Selected
             </div>
-            <h3 className="font-medium text-gray-900 mb-2">Categories and tags</h3>
+            <h3 className="font-medium text-gray-900 mb-2">
+              Categories and tags
+            </h3>
             <p className="text-sm text-gray-500">
               Organize content for easier navigation.
             </p>

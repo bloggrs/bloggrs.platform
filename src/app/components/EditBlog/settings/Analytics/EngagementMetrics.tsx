@@ -10,7 +10,7 @@ interface EngagementMetricsProps {
 export const EngagementMetrics: React.FC<EngagementMetricsProps> = ({
   pageViews,
   readTime,
-  bounceRate
+  bounceRate,
 }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -32,7 +32,7 @@ export const EngagementMetrics: React.FC<EngagementMetricsProps> = ({
           </span>
         </div>
       </div>
-      
+
       <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 p-6 border border-gray-100">
         <div className="flex items-center justify-between mb-4">
           <div className="p-2 bg-orange-50 rounded-lg">
@@ -40,13 +40,15 @@ export const EngagementMetrics: React.FC<EngagementMetricsProps> = ({
           </div>
           <span className="text-sm text-gray-500">Last 30 days</span>
         </div>
-        <h3 className="text-sm font-medium text-gray-500 mb-1">Avg. Read Time</h3>
+        <h3 className="text-sm font-medium text-gray-500 mb-1">
+          Avg. Read Time
+        </h3>
         <div className="flex items-baseline space-x-2">
           <p className="text-2xl font-semibold text-gray-900">{readTime}</p>
           <span className="text-base text-gray-600">min</span>
         </div>
       </div>
-      
+
       <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 p-6 border border-gray-100">
         <div className="flex items-center justify-between mb-4">
           <div className="p-2 bg-purple-50 rounded-lg">

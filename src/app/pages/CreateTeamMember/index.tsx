@@ -17,12 +17,12 @@ const CreateTeamMemberContent: React.FC = () => {
     const checkEditMode = async () => {
       const pathParts = window.location.pathname.split('/');
       const isTeamMembersPath = pathParts.includes('teammembers');
-      
+
       if (isTeamMembersPath) {
         setIsEditMode(true);
         const teamMemberId = pathParts[pathParts.length - 1];
         setMemberId(teamMemberId);
-        
+
         try {
           const member = await teamMembersService.getTeamMember(teamMemberId);
           if (member) {
@@ -49,28 +49,34 @@ const CreateTeamMemberContent: React.FC = () => {
         await teamMembersService.updateTeamMember(memberId, {
           blog_id,
           email,
-          role
+          role,
         });
       } else {
         await teamMembersService.createTeamMember({
           blog_id,
           email,
-          role
+          role,
         });
       }
       window.location.href = `/blogs/${blog_id}/team`;
     } catch (error) {
-      console.error(`Failed to ${isEditMode ? 'update' : 'create'} team member:`, error);
+      console.error(
+        `Failed to ${isEditMode ? 'update' : 'create'} team member:`,
+        error,
+      );
     }
   };
 
   return (
-    <MainPanel className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
+    <MainPanel
+      className="min-h-screen flex bg-gray-50"
+      style={{ marginTop: '3%' }}
+    >
       <div className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => window.history.back()}
                 className="flex items-center text-[#f4a261] hover:text-[#e76f51] transition-colors"
               >
@@ -86,7 +92,10 @@ const CreateTeamMemberContent: React.FC = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200">
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
               <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Email Address
                 </label>
                 <input
@@ -101,7 +110,10 @@ const CreateTeamMemberContent: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="role"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Role
                 </label>
                 <select

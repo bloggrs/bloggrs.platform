@@ -13,7 +13,8 @@ export const InformationalStep1 = ({ nextStep }) => {
             Let's bring your ideas to life.
           </h1>
           <p className="mt-6 text-xl text-gray-500 max-w-2xl mx-auto">
-            Answer some questions to get the best tools for what you're creating.
+            Answer some questions to get the best tools for what you're
+            creating.
           </p>
           <div className="mt-10">
             <button

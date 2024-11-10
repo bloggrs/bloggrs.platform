@@ -10,14 +10,16 @@ interface EngagementPanelProps {
   };
 }
 
-export const EngagementPanel: React.FC<EngagementPanelProps> = ({ components }) => {
+export const EngagementPanel: React.FC<EngagementPanelProps> = ({
+  components,
+}) => {
   return (
     <div className="p-8">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 gap-6">
           {Object.entries(components).map(([key, Component]) => (
-            <div 
-              key={key} 
+            <div
+              key={key}
               className="bg-white rounded-xl shadow-sm border border-gray-200 hover:border-gray-300 transition-all"
             >
               <div className="p-6">
@@ -34,4 +36,4 @@ export const EngagementPanel: React.FC<EngagementPanelProps> = ({ components }) 
       </div>
     </div>
   );
-}; 
+};

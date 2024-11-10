@@ -33,7 +33,10 @@ export const ChooseBlogLogo = ({ sendValueToParent, nextStep }) => {
       sidebarProps={{ collapse: true }}
       className="container max-h-full max-w-7xl py-9 px-12"
     >
-      <div className="min-h-[80vh] bg-gray-50 px-4 py-8" style={{marginTop: "1%"}}>
+      <div
+        className="min-h-[80vh] bg-gray-50 px-4 py-8"
+        style={{ marginTop: '1%' }}
+      >
         <div className="mx-auto max-w-3xl">
           <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Choose your blog logo

@@ -18,15 +18,15 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({
 
   if (!widgetType || !WidgetComponent) {
     return (
-      <div className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
+      <div className="min-h-screen flex bg-gray-50" style={{ marginTop: '3%' }}>
         <div className="flex-1 p-8">
           <div className="max-w-5xl mx-auto">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200">
               <div className="p-6">
                 <div className="grid grid-cols-3 gap-4">
                   {Object.keys(widgetRegistry).map(type => (
-                    <div 
-                      key={type} 
+                    <div
+                      key={type}
                       className="p-4 border border-gray-200 rounded-lg hover:border-[#1a365d] hover:shadow-sm transition-all cursor-pointer"
                     >
                       {/* Widget selection UI */}
@@ -45,15 +45,15 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
+    <div className="min-h-screen flex bg-gray-50" style={{ marginTop: '3%' }}>
       <div className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200">
             <div className="p-6">
               <div className="grid grid-cols-3 gap-4 mb-6">
                 {Object.keys(widgetRegistry).map(type => (
-                  <div 
-                    key={type} 
+                  <div
+                    key={type}
                     className="p-4 border border-gray-200 rounded-lg hover:border-[#1a365d] hover:shadow-sm transition-all cursor-pointer"
                   >
                     {/* Widget selection UI */}
@@ -61,7 +61,10 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({
                 ))}
               </div>
               <div className="border-t border-gray-100 pt-6">
-                <WidgetComponent config={currentConfig} onChange={onConfigChange} />
+                <WidgetComponent
+                  config={currentConfig}
+                  onChange={onConfigChange}
+                />
               </div>
             </div>
           </div>

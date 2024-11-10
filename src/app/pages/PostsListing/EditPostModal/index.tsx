@@ -79,7 +79,10 @@ export const EditPostModal = ({
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Title
               </label>
               <input

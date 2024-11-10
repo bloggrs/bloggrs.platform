@@ -17,11 +17,11 @@ export const MainPanel = ({
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
+    <div className="min-h-screen flex bg-gray-50" style={{ marginTop: '3%' }}>
       <Header />
       {hideSidebar ? null : <Sidebar {...(sidebarProps || {})} />}
       <div
-        style={{...style }}
+        style={{ ...style }}
         id={id}
         className={`flex-1 p-8 ${className || ''}`}
       >

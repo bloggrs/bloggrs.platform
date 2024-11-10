@@ -23,7 +23,9 @@ export const WidgetPreview: React.FC<WidgetPreviewProps> = ({
     console.error('Widget component is not properly defined:', widget);
     return (
       <div className="flex items-center justify-center h-64 bg-red-50 rounded-xl border border-red-200">
-        <p className="text-red-500 text-sm">Widget component is not properly configured</p>
+        <p className="text-red-500 text-sm">
+          Widget component is not properly configured
+        </p>
       </div>
     );
   }

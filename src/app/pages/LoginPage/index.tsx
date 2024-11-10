@@ -92,7 +92,9 @@ const LoginPage_ = props => {
                             className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                           />
                           <p className="mt-1 text-sm text-red-600">
-                            {errors.password && touched.password && errors.password}
+                            {errors.password &&
+                              touched.password &&
+                              errors.password}
                           </p>
                         </div>
 

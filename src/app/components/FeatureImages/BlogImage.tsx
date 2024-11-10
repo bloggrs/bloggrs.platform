@@ -10,16 +10,24 @@ export const BlogImage = () => {
         </div>
         <nav>
           <ul className="flex space-x-6">
-            <li className="text-gray-500 hover:text-gray-700 transition-colors">Home</li>
-            <li className="text-gray-500 hover:text-gray-700 transition-colors">About Me</li>
-            <li className="text-gray-500 hover:text-gray-700 transition-colors">Contact</li>
+            <li className="text-gray-500 hover:text-gray-700 transition-colors">
+              Home
+            </li>
+            <li className="text-gray-500 hover:text-gray-700 transition-colors">
+              About Me
+            </li>
+            <li className="text-gray-500 hover:text-gray-700 transition-colors">
+              Contact
+            </li>
           </ul>
         </nav>
       </header>
 
       <main className="p-8">
         <article className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Lorem Ipsum Title</h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Lorem Ipsum Title
+          </h2>
           <div className="text-sm text-gray-500 mb-6">
             Wednesday, December 22, 2021 • John Cena
           </div>

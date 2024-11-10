@@ -26,7 +26,7 @@ export const Loading = props_ => {
     Object.keys(props_).filter(k => k !== 'forModal').length > 0
       ? { ...default_props, ...props_ }
       : default_props;
-  
+
   const Comp = (
     <img
       alt="Loading..."
@@ -35,7 +35,7 @@ export const Loading = props_ => {
       style={props.style}
     />
   );
-  
+
   if (props.center) return <Center {...props_}>{Comp}</Center>;
   return Comp;
 };

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
-const handleErrorResponse = async (response) => {
+const handleErrorResponse = async response => {
   const errorData = await response.json();
   // Map specific error codes to user-friendly messages
   switch (errorData.code) {
@@ -9,7 +9,9 @@ const handleErrorResponse = async (response) => {
         toast.error('This team member already has this permission');
         return;
       }
-      toast.error(errorData.message || 'Invalid request. Please check your input.');
+      toast.error(
+        errorData.message || 'Invalid request. Please check your input.',
+      );
       return;
     case 401:
       toast.error('You are not authorized to perform this action');
@@ -50,7 +52,7 @@ const getTeamMembers = (query = {}) => {
     })
     .then(data => {
       if (!data) return { teammembers: [], pagination: { total: 0 } };
-      if (!(data.message === "success") ) {
+      if (!(data.message === 'success')) {
         toast.error(data.message || 'Operation failed');
         return { teammembers: [], pagination: { total: 0 } };
       }
@@ -85,14 +87,15 @@ const getTeamMember = teammemberId => {
     })
     .then(data => {
       if (!data) return null;
-      if (!(data.message === "success")) {
+      if (!(data.message === 'success')) {
         toast.error(data.message || 'Failed to fetch team member');
         return null;
       }
       return data.data.teammember;
     })
     .catch(error => {
-      const errorMessage = error.message || 'Failed to fetch team member details';
+      const errorMessage =
+        error.message || 'Failed to fetch team member details';
       toast.error(errorMessage, { autoClose: 5000 });
       return null; // Return null instead of throwing
     });
@@ -118,7 +121,7 @@ const createTeamMember = memberData => {
     })
     .then(data => {
       if (!data) return null;
-      if (!(data.message === "success")) {
+      if (!(data.message === 'success')) {
         toast.error(data.message || 'Operation failed');
         return null;
       }
@@ -151,7 +154,7 @@ const updateTeamMember = (teammemberId, memberData) => {
     })
     .then(data => {
       if (!data) return null;
-      if (!(data.message === "success")) {
+      if (!(data.message === 'success')) {
         toast.error(data.message || 'Operation failed');
         return null;
       }
@@ -183,7 +186,7 @@ const deleteTeamMember = teammemberId => {
     })
     .then(data => {
       if (!data) return null;
-      if (!(data.message === "success")) {
+      if (!(data.message === 'success')) {
         toast.error(data.message || 'Operation failed');
         return null;
       }

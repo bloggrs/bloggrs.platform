@@ -7,10 +7,14 @@ export const RenderNode = ({ render }) => {
   }));
 
   return (
-    <div 
+    <div
       className={`
         relative rounded-lg border border-gray-200 shadow-sm
-        ${selected ? 'ring-2 ring-[#1a365d] border-transparent' : 'hover:border-gray-300'}
+        ${
+          selected
+            ? 'ring-2 ring-[#1a365d] border-transparent'
+            : 'hover:border-gray-300'
+        }
         transition-all duration-200
       `}
     >

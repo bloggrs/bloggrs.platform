@@ -36,7 +36,9 @@ export const RoleManager: React.FC<RoleManagerProps> = ({
           ...member,
           role: roles.find(r => r.id === newRoleId)!,
           // Automatically grant review permission for admin/editor roles
-          canReview: roles.find(r => r.id === newRoleId)?.permissions.includes('review'),
+          canReview: roles
+            .find(r => r.id === newRoleId)
+            ?.permissions.includes('review'),
         };
       }
       return member;
@@ -75,7 +77,7 @@ export const RoleManager: React.FC<RoleManagerProps> = ({
                 {editingMember === member.id ? (
                   <Select
                     value={member.role.id}
-                    onChange={(value) => handleRoleChange(member.id, value)}
+                    onChange={value => handleRoleChange(member.id, value)}
                     autoFocus
                     onBlur={() => setEditingMember(null)}
                   >
@@ -86,7 +88,9 @@ export const RoleManager: React.FC<RoleManagerProps> = ({
                     ))}
                   </Select>
                 ) : (
-                  <Tooltip title={`Permissions: ${member.role.permissions.join(', ')}`}>
+                  <Tooltip
+                    title={`Permissions: ${member.role.permissions.join(', ')}`}
+                  >
                     <Badge
                       onClick={() => setEditingMember(member.id)}
                       color={member.role.color}
@@ -103,4 +107,4 @@ export const RoleManager: React.FC<RoleManagerProps> = ({
       </div>
     </div>
   );
-}; 
+};

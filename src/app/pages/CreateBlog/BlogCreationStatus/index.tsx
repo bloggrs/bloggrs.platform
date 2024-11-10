@@ -59,7 +59,7 @@ export const BlogCreationStatus = ({
                 <h2 className="mt-6 text-xl font-medium text-gray-900 sm:text-2xl">
                   Setting up your blog
                 </h2>
-                
+
                 <p className="mt-2 text-sm text-gray-500">
                   This may take a few moments...
                 </p>
@@ -68,14 +68,16 @@ export const BlogCreationStatus = ({
                 <div className="mt-8 w-full max-w-md">
                   <div className="relative">
                     <div className="overflow-hidden h-2 bg-gray-100 rounded-full">
-                      <div 
+                      <div
                         className="animate-pulse h-2 bg-[#4B8CE8] rounded-full"
                         style={{ width: '33.33%' }}
                       />
                     </div>
                     {/* Steps indicators */}
                     <div className="mt-4 flex justify-between text-xs text-gray-500">
-                      <div className="text-[#4B8CE8] font-medium">Setting up posts</div>
+                      <div className="text-[#4B8CE8] font-medium">
+                        Setting up posts
+                      </div>
                       <div>Configuring theme</div>
                       <div>Final touches</div>
                     </div>

@@ -28,7 +28,11 @@ interface SEOTools {
   KeywordOptimizer: any; // Replace 'any' with proper type when available
 }
 
-export const SEOPanel: React.FC<SEOPanelProps> = ({ settings, onChange, tools }) => {
+export const SEOPanel: React.FC<SEOPanelProps> = ({
+  settings,
+  onChange,
+  tools,
+}) => {
   return (
     <div className="max-w-5xl mx-auto">
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
@@ -36,13 +40,15 @@ export const SEOPanel: React.FC<SEOPanelProps> = ({ settings, onChange, tools })
           <MetaEditor
             title={settings.metaTitle}
             description={settings.metaDescription}
-            onChange={(data) => onChange({ 
-              ...settings, 
-              metaTitle: data.title || settings.metaTitle, 
-              metaDescription: data.description || settings.metaDescription 
-            })}
+            onChange={data =>
+              onChange({
+                ...settings,
+                metaTitle: data.title || settings.metaTitle,
+                metaDescription: data.description || settings.metaDescription,
+              })
+            }
           />
-          
+
           <div className="border-t border-gray-100 pt-6">
             <KeywordOptimizer
               mainKeyword={settings.mainKeyword}
@@ -51,7 +57,7 @@ export const SEOPanel: React.FC<SEOPanelProps> = ({ settings, onChange, tools })
               suggestions={tools?.KeywordOptimizer || []}
             />
           </div>
-          
+
           <div className="border-t border-gray-100 pt-6">
             <SchemaMarkup
               type={settings.schemaType}
@@ -59,7 +65,7 @@ export const SEOPanel: React.FC<SEOPanelProps> = ({ settings, onChange, tools })
               onChange={onChange}
             />
           </div>
-          
+
           <div className="border-t border-gray-100 pt-6">
             <SocialPreview
               ogImage={settings.ogImage}

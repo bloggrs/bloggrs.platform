@@ -47,7 +47,11 @@ const SelectBlogContainer: React.FC<{
   <div className="">{loading ? <Loading forModal={true} /> : children}</div>
 );
 
-const SelectBlog: React.FC<SelectBlogProps> = ({ loading, selected, blogs }) => {
+const SelectBlog: React.FC<SelectBlogProps> = ({
+  loading,
+  selected,
+  blogs,
+}) => {
   return (
     <div className="absolute bottom-24 left-0 w-64 bg-gray-800/95 rounded-lg shadow-xl overflow-hidden border border-gray-700">
       <div className="p-3 border-b border-gray-700">
@@ -125,7 +129,11 @@ export const _Sidebar: React.FC<SidebarProps> = ({
     ${isActivePath(path) ? 'text-white' : 'hover:text-white'}
   `;
 
-  const IconLink: React.FC<{ to: string, icon: React.ReactNode, label: string }> = ({ to, icon, label }) => (
+  const IconLink: React.FC<{
+    to: string;
+    icon: React.ReactNode;
+    label: string;
+  }> = ({ to, icon, label }) => (
     <Link to={to} className="relative group">
       {icon}
       <div className="absolute left-16 top-0 hidden group-hover:block bg-gray-800 text-white px-2 py-1 rounded whitespace-nowrap">
@@ -134,13 +142,12 @@ export const _Sidebar: React.FC<SidebarProps> = ({
     </Link>
   );
 
-  const NotificationBadge: React.FC<{ count: number }> = ({ count }) => (
+  const NotificationBadge: React.FC<{ count: number }> = ({ count }) =>
     count > 0 ? (
       <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
         {count > 9 ? '9+' : count}
       </div>
-    ) : null
-  );
+    ) : null;
 
   if (collapse) {
     return (
@@ -174,22 +181,22 @@ export const _Sidebar: React.FC<SidebarProps> = ({
         }}
         className="flex flex-col items-center space-y-6 w-16 bg-[#1a365d] transition-all duration-200"
       >
-        <IconLink 
+        <IconLink
           to={getPathname(blogId, '/')}
           icon={<RiHomeLine className={iconClass('/')} />}
           label="Dashboard"
         />
-        <IconLink 
+        <IconLink
           to={getPathname(blogId, '/posts')}
           icon={<RiArticleLine className={iconClass('/posts')} />}
           label="Posts"
         />
-        <IconLink 
+        <IconLink
           to={getPathname(blogId, '/categories')}
           icon={<RiFolderLine className={iconClass('/categories')} />}
           label="Categories"
         />
-        <IconLink 
+        <IconLink
           to={getPathname(blogId, '/comments')}
           icon={
             <div className="relative">
@@ -199,17 +206,17 @@ export const _Sidebar: React.FC<SidebarProps> = ({
           }
           label="Comments"
         />
-        <IconLink 
+        <IconLink
           to={getPathname(blogId, '/team-members')}
           icon={<RiTeamLine className={iconClass('/team-members')} />}
           label="Team Members"
         />
-        <IconLink 
+        <IconLink
           to={getPathname(blogId, '/console')}
           icon={<RiTerminalBoxLine className={iconClass('/console')} />}
           label="Console"
         />
-        <IconLink 
+        <IconLink
           to={getPathname(blogId, '/settings')}
           icon={<RiSettings3Line className={iconClass('/settings')} />}
           label="Settings"

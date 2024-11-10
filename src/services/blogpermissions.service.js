@@ -1,11 +1,10 @@
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
 
-const handleApiError = (error) => {
+const handleApiError = error => {
   let errorMessage;
-  
+
   if (error.response?.data?.message) {
-    // Handle structured API error response
     errorMessage = error.response.data.message;
   } else if (error.response?.data?.error?.message) {
     // Handle nested error message structure

@@ -31,7 +31,11 @@ interface CollaborationToolsProps {
   features: CollaborationFeatures;
 }
 
-export const CollaborationTools: React.FC<CollaborationToolsProps> = ({ team, onUpdate, features }) => {
+export const CollaborationTools: React.FC<CollaborationToolsProps> = ({
+  team,
+  onUpdate,
+  features,
+}) => {
   const handleReviewComplete = (review: any) => {
     // TODO: Implement review completion logic
     console.log('Review completed:', review);
@@ -48,7 +52,9 @@ export const CollaborationTools: React.FC<CollaborationToolsProps> = ({ team, on
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-semibold text-gray-800">Collaboration Tools</h1>
+            <h1 className="text-2xl font-semibold text-gray-800">
+              Collaboration Tools
+            </h1>
           </div>
         </div>
 
@@ -57,7 +63,9 @@ export const CollaborationTools: React.FC<CollaborationToolsProps> = ({ team, on
           <div className="grid gap-6 md:grid-cols-2">
             {/* Role Manager Card */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Role Management</h2>
+              <h2 className="text-lg font-medium text-gray-900 mb-4">
+                Role Management
+              </h2>
               <RoleManager
                 members={team}
                 roles={features.availableRoles}
@@ -67,7 +75,9 @@ export const CollaborationTools: React.FC<CollaborationToolsProps> = ({ team, on
 
             {/* Review System Card */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Review System</h2>
+              <h2 className="text-lg font-medium text-gray-900 mb-4">
+                Review System
+              </h2>
               <ReviewSystem
                 pendingReviews={features.pendingReviews}
                 reviewers={team.filter(m => m.canReview)}
@@ -79,7 +89,9 @@ export const CollaborationTools: React.FC<CollaborationToolsProps> = ({ team, on
           <div className="grid gap-6 md:grid-cols-2">
             {/* Communication Hub Card */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Communication</h2>
+              <h2 className="text-lg font-medium text-gray-900 mb-4">
+                Communication
+              </h2>
               <CommunicationHub
                 threads={features.communicationThreads}
                 members={team}
@@ -89,7 +101,9 @@ export const CollaborationTools: React.FC<CollaborationToolsProps> = ({ team, on
 
             {/* Activity Feed Card */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Activity Feed</h2>
+              <h2 className="text-lg font-medium text-gray-900 mb-4">
+                Activity Feed
+              </h2>
               <ActivityFeed
                 activities={features.recentActivities}
                 filters={features.activityFilters}
@@ -100,4 +114,4 @@ export const CollaborationTools: React.FC<CollaborationToolsProps> = ({ team, on
       </div>
     </div>
   );
-}; 
+};

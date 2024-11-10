@@ -91,7 +91,9 @@ export const PricingPage = () => {
                     {plan.name}
                   </h3>
                   <div className="flex items-center justify-center mb-3">
-                    <span className="text-3xl font-semibold text-gray-900">$</span>
+                    <span className="text-3xl font-semibold text-gray-900">
+                      $
+                    </span>
                     <span className="text-5xl font-semibold text-gray-900">
                       {plan.price}
                     </span>

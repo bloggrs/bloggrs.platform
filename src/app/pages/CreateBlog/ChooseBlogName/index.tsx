@@ -20,7 +20,7 @@ export const ChooseBlogName = ({
       sidebarProps={{ collapse: true }}
       className="container max-h-full max-w-7xl p-4 md:py-9 md:px-12"
     >
-      <div className="w-full" style={{marginTop: "7%"}}>
+      <div className="w-full" style={{ marginTop: '7%' }}>
         <h1 className="text-center font-semibold text-3xl md:text-4xl text-gray-900">
           Enter the name of your blog
         </h1>

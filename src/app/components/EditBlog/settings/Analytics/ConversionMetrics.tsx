@@ -18,12 +18,17 @@ interface ConversionMetricsProps {
   };
 }
 
-export const ConversionMetrics: React.FC<ConversionMetricsProps> = ({ goals, performance }) => {
+export const ConversionMetrics: React.FC<ConversionMetricsProps> = ({
+  goals,
+  performance,
+}) => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <h3 className="text-2xl font-semibold text-gray-800 mb-6">Conversion Goals</h3>
+      <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+        Conversion Goals
+      </h3>
       <div className="space-y-6">
-        {goals.map((goal) => (
+        {goals.map(goal => (
           <div key={goal.id} className="space-y-2">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
@@ -34,9 +39,9 @@ export const ConversionMetrics: React.FC<ConversionMetricsProps> = ({ goals, per
                 {goal.conversionRate.toFixed(1)}%
               </span>
             </div>
-            <Progress 
-              percent={(goal.current / goal.target) * 100} 
-              status={goal.current >= goal.target ? "success" : "active"}
+            <Progress
+              percent={(goal.current / goal.target) * 100}
+              status={goal.current >= goal.target ? 'success' : 'active'}
               format={() => `${goal.current}/${goal.target}`}
               strokeColor="#1a365d"
             />
@@ -45,8 +50,13 @@ export const ConversionMetrics: React.FC<ConversionMetricsProps> = ({ goals, per
 
         <div className="grid grid-cols-3 gap-6 pt-6">
           {Object.entries(performance).map(([period, value]) => (
-            <div key={period} className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100">
-              <div className="text-sm text-gray-500 mb-1 capitalize">{period}</div>
+            <div
+              key={period}
+              className="text-center p-4 bg-gray-50 rounded-lg border border-gray-100"
+            >
+              <div className="text-sm text-gray-500 mb-1 capitalize">
+                {period}
+              </div>
               <div className="font-semibold text-gray-900">{value}%</div>
             </div>
           ))}
@@ -54,4 +64,4 @@ export const ConversionMetrics: React.FC<ConversionMetricsProps> = ({ goals, per
       </div>
     </div>
   );
-}; 
+};

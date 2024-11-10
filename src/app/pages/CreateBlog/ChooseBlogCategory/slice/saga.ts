@@ -11,10 +11,7 @@ function* loadBlogCategories(action: PayloadAction<LoadBlogCategoriesPayload>) {
     yield put(blogCategoriesActions.setLoading({ query, loading: true }));
 
     // Make API call
-    const response = yield call(
-      blogCategoriesService.getBlogCategories,
-      query,
-    );
+    const response = yield call(blogCategoriesService.getBlogCategories, query);
 
     // Only dispatch loaded action if we got a valid response
     if (response) {

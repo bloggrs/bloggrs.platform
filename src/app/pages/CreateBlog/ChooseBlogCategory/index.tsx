@@ -76,7 +76,7 @@ export const ChooseBlogCategory = ({
       className="container max-h-full max-w-7xl py-9 px-12"
       sidebarProps={{ collapse: true }}
     >
-      <div className="max-w-5xl mx-auto" style={{marginTop: "7%"}}>
+      <div className="max-w-5xl mx-auto" style={{ marginTop: '7%' }}>
         <h1 className="text-3xl font-semibold text-gray-900 text-center mb-12">
           What kind of blog are you creating?
         </h1>
@@ -105,9 +105,9 @@ export const ChooseBlogCategory = ({
             <button
               onClick={e => !nextStepDisabled && nextStep()}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                nextStepDisabled 
-                ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-                : 'bg-[#f4a261] hover:bg-[#e76f51] text-white'
+                nextStepDisabled
+                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                  : 'bg-[#f4a261] hover:bg-[#e76f51] text-white'
               }`}
             >
               Next
@@ -126,9 +126,9 @@ export const ChooseBlogCategory = ({
                       key={bg.id}
                       onClick={() => setBlogCategoryId(bg.id)}
                       className={`p-3 cursor-pointer hover:bg-gray-50 transition-colors ${
-                        blogCategoryId === bg.id 
-                        ? 'text-[#1a365d] font-medium' 
-                        : 'text-gray-600'
+                        blogCategoryId === bg.id
+                          ? 'text-[#1a365d] font-medium'
+                          : 'text-gray-600'
                       }`}
                     >
                       {bg.name}
@@ -138,20 +138,24 @@ export const ChooseBlogCategory = ({
               </div>
             ) : (
               <div className="space-y-2">
-                <h3 className="text-sm font-medium text-gray-500 mb-4">Examples</h3>
-                {['Personal Blog', 'Portfolio', 'Travel', 'Food'].map(category => (
-                  <div
-                    key={category}
-                    onClick={() => setCustomCategoryName(category)}
-                    className={`p-3 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors ${
-                      customCategoryName === category 
-                      ? 'text-[#1a365d] font-medium' 
-                      : 'text-gray-600'
-                    }`}
-                  >
-                    {category}
-                  </div>
-                ))}
+                <h3 className="text-sm font-medium text-gray-500 mb-4">
+                  Examples
+                </h3>
+                {['Personal Blog', 'Portfolio', 'Travel', 'Food'].map(
+                  category => (
+                    <div
+                      key={category}
+                      onClick={() => setCustomCategoryName(category)}
+                      className={`p-3 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors ${
+                        customCategoryName === category
+                          ? 'text-[#1a365d] font-medium'
+                          : 'text-gray-600'
+                      }`}
+                    >
+                      {category}
+                    </div>
+                  ),
+                )}
               </div>
             )}
           </div>

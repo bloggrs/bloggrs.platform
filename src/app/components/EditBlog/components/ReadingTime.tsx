@@ -6,9 +6,9 @@ interface ReadingTimeProps {
   wordsPerMinute?: number;
 }
 
-export const ReadingTime: React.FC<ReadingTimeProps> = ({ 
-  content = '', 
-  wordsPerMinute = 200 
+export const ReadingTime: React.FC<ReadingTimeProps> = ({
+  content = '',
+  wordsPerMinute = 200,
 }) => {
   const wordCount = content.trim().split(/\s+/).length;
   const minutes = Math.ceil(wordCount / wordsPerMinute);
@@ -19,4 +19,4 @@ export const ReadingTime: React.FC<ReadingTimeProps> = ({
       {minutes} min read
     </span>
   );
-}; 
+};

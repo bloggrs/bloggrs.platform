@@ -6,7 +6,8 @@ export const SuccessInformational = ({ parentData }: any) => {
   return (
     <MainPanel
       sidebarProps={{ collapse: true }}
-      className="container max-h-full max-w-7xl py-6 md:py-9 px-4 md:px-12" style={{marginTop: "4%"}}
+      className="container max-h-full max-w-7xl py-6 md:py-9 px-4 md:px-12"
+      style={{ marginTop: '4%' }}
     >
       <div className="flex flex-col items-center">
         <div className="mb-6 rounded-full bg-green-100 p-3">
@@ -16,9 +17,10 @@ export const SuccessInformational = ({ parentData }: any) => {
         <h1 className="text-center font-semibold text-3xl md:text-4xl text-gray-900 mb-4">
           DataAddict's Blog is all set up!
         </h1>
-        
+
         <p className="text-center text-gray-600 mb-8 max-w-2xl">
-          Your blog is ready to go. You can now start managing your content and customizing your blog's appearance.
+          Your blog is ready to go. You can now start managing your content and
+          customizing your blog's appearance.
         </p>
 
         <div className="w-full max-w-2xl px-4">

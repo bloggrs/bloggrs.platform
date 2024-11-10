@@ -45,9 +45,9 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
   };
 
   const updateLink = (id: string, updates: Partial<AffiliateLink>) => {
-    onChange(links.map(link => 
-      link.id === id ? { ...link, ...updates } : link
-    ));
+    onChange(
+      links.map(link => (link.id === id ? { ...link, ...updates } : link)),
+    );
   };
 
   const removeLink = (id: string) => {
@@ -61,9 +61,9 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
       render: (record: AffiliateLink) => (
         <Select
           value={record.programId}
-          onChange={(value) => updateLink(record.id, { programId: value })}
+          onChange={value => updateLink(record.id, { programId: value })}
         >
-          {programs.map((program) => (
+          {programs.map(program => (
             <Select.Option key={program.id} value={program.id}>
               {program.name}
             </Select.Option>
@@ -78,7 +78,7 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
         <Input
           type="url"
           value={record.url}
-          onChange={(e) => updateLink(record.id, { url: e.target.value })}
+          onChange={e => updateLink(record.id, { url: e.target.value })}
           placeholder="https://..."
         />
       ),
@@ -89,7 +89,7 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
       render: (record: AffiliateLink) => (
         <Input
           value={record.description}
-          onChange={(e) => updateLink(record.id, { description: e.target.value })}
+          onChange={e => updateLink(record.id, { description: e.target.value })}
           placeholder="Description..."
         />
       ),
@@ -101,7 +101,9 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
         <Input
           type="number"
           value={record.commission}
-          onChange={(e) => updateLink(record.id, { commission: Number(e.target.value) })}
+          onChange={e =>
+            updateLink(record.id, { commission: Number(e.target.value) })
+          }
           min={0}
           max={100}
         />
@@ -121,8 +123,10 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
   return (
     <div className="max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-8">
-        <h3 className="text-2xl font-semibold text-gray-800">Affiliate Links</h3>
-        <Button 
+        <h3 className="text-2xl font-semibold text-gray-800">
+          Affiliate Links
+        </h3>
+        <Button
           onClick={addLink}
           className="px-4 py-2 bg-[#f4a261] hover:bg-[#e76f51] text-white rounded-lg transition-colors"
         >
@@ -142,4 +146,4 @@ export const AffiliateManager: React.FC<AffiliateManagerProps> = ({
       </div>
     </div>
   );
-}; 
+};

@@ -46,9 +46,9 @@ const TableRow = styled.tr`
 `;
 
 const getNestedValue = (obj, path) => {
-  return path.split('.').reduce((current, key) => 
-    current ? current[key] : undefined, obj
-  );
+  return path
+    .split('.')
+    .reduce((current, key) => (current ? current[key] : undefined), obj);
 };
 
 export const Table = ({
@@ -94,7 +94,10 @@ export const Table = ({
           </thead>
           <tbody>
             {data.map((d, rowIndex) => (
-              <tr key={d.id || `row-${rowIndex}`} className="group hover:bg-gray-50">
+              <tr
+                key={d.id || `row-${rowIndex}`}
+                className="group hover:bg-gray-50"
+              >
                 {fields.map((field, colIndex) => {
                   const href = get_field_href(field, d[field.key]);
                   const className =
@@ -103,17 +106,12 @@ export const Table = ({
                       : '';
                   const onClick =
                     href !== false ? () => history.push(href) : undefined;
-                  
+
                   const value = getNestedValue(d, field.key);
-                  const content = field.render 
-                    ? field.render(value)
-                    : value;
+                  const content = field.render ? field.render(value) : value;
 
                   return (
-                    <td
-                      key={`cell-${rowIndex}-${colIndex}`}
-                      className="py-3"
-                    >
+                    <td key={`cell-${rowIndex}-${colIndex}`} className="py-3">
                       <div
                         className={`${className} font-medium text-gray-900`}
                         onClick={onClick}

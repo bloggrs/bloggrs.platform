@@ -24,7 +24,8 @@ const ConsoleOutput = ({ logs }: { logs: string[] }) => (
   <div className="bg-gray-900 text-gray-100 font-mono p-4 rounded-lg h-96 overflow-y-auto">
     {logs.map((log, index) => (
       <div key={index} className="py-1">
-        <span className="text-gray-500">[{new Date().toISOString()}]</span> {log}
+        <span className="text-gray-500">[{new Date().toISOString()}]</span>{' '}
+        {log}
       </div>
     ))}
   </div>
@@ -32,46 +33,48 @@ const ConsoleOutput = ({ logs }: { logs: string[] }) => (
 
 const FileManager = () => {
   const [expandedFolders, setExpandedFolders] = React.useState<string[]>(['/']);
-  
+
   const sampleFileStructure = {
     public_html: {
       type: 'folder',
       children: {
-        'css': {
+        css: {
           type: 'folder',
           children: {
             'style.css': { type: 'file', size: '24KB' },
-            'main.css': { type: 'file', size: '12KB' }
-          }
+            'main.css': { type: 'file', size: '12KB' },
+          },
         },
-        'js': {
+        js: {
           type: 'folder',
           children: {
             'app.js': { type: 'file', size: '156KB' },
-            'utils.js': { type: 'file', size: '45KB' }
-          }
+            'utils.js': { type: 'file', size: '45KB' },
+          },
         },
-        'index.html': { type: 'file', size: '8KB' }
-      }
+        'index.html': { type: 'file', size: '8KB' },
+      },
     },
     logs: {
       type: 'folder',
       children: {
         'error.log': { type: 'file', size: '1.2MB' },
-        'access.log': { type: 'file', size: '3.4MB' }
-      }
-    }
+        'access.log': { type: 'file', size: '3.4MB' },
+      },
+    },
   };
 
   const toggleFolder = (path: string) => {
     setExpandedFolders(prev =>
-      prev.includes(path)
-        ? prev.filter(p => p !== path)
-        : [...prev, path]
+      prev.includes(path) ? prev.filter(p => p !== path) : [...prev, path],
     );
   };
 
-  const renderFileTree = (structure: any, path: string = '', level: number = 0) => {
+  const renderFileTree = (
+    structure: any,
+    path: string = '',
+    level: number = 0,
+  ) => {
     return Object.entries(structure).map(([name, details]: [string, any]) => {
       const currentPath = `${path}/${name}`;
       const isExpanded = expandedFolders.includes(currentPath);
@@ -80,7 +83,9 @@ const FileManager = () => {
         <div key={currentPath} style={{ marginLeft: `${level * 20}px` }}>
           <div
             className="flex items-center space-x-2 py-1 px-2 hover:bg-gray-100 cursor-pointer"
-            onClick={() => details.type === 'folder' && toggleFolder(currentPath)}
+            onClick={() =>
+              details.type === 'folder' && toggleFolder(currentPath)
+            }
           >
             {details.type === 'folder' && (
               <span className="w-4">
@@ -98,7 +103,9 @@ const FileManager = () => {
             )}
             <span className="text-sm">{name}</span>
             {details.type === 'file' && (
-              <span className="text-xs text-gray-500 ml-auto">{details.size}</span>
+              <span className="text-xs text-gray-500 ml-auto">
+                {details.size}
+              </span>
             )}
           </div>
           {details.type === 'folder' && isExpanded && (
@@ -141,7 +148,7 @@ const ServerStats = () => (
       { label: 'CPU Usage', value: '45%' },
       { label: 'Memory', value: '2.4GB / 4GB' },
       { label: 'Disk Space', value: '28GB / 50GB' },
-    ].map((stat) => (
+    ].map(stat => (
       <div key={stat.label} className="bg-white rounded-lg shadow p-4">
         <h4 className="text-sm text-gray-500">{stat.label}</h4>
         <p className="text-xl font-semibold mt-1">{stat.value}</p>
@@ -156,21 +163,39 @@ const FileZillaCredentials = () => (
       <div className="flex">
         <div className="ml-3">
           <p className="text-sm text-yellow-700">
-            Use these credentials in FileZilla or any other FTP client to manage your files remotely.
+            Use these credentials in FileZilla or any other FTP client to manage
+            your files remotely.
           </p>
         </div>
       </div>
     </div>
-    
+
     <div className="grid grid-cols-1 gap-6">
       {[
-        { label: 'Host', value: 'ftp.yourdomain.com', description: 'The FTP server address' },
+        {
+          label: 'Host',
+          value: 'ftp.yourdomain.com',
+          description: 'The FTP server address',
+        },
         { label: 'Port', value: '21', description: 'Default FTP port' },
-        { label: 'Username', value: 'user123', description: 'Your FTP username' },
-        { label: 'Password', value: '••••••••', description: 'Your FTP password' },
-      ].map((field) => (
-        <div key={field.label} className="bg-white rounded-lg border border-gray-200 p-4">
-          <label className="block text-sm font-medium text-gray-700">{field.label}</label>
+        {
+          label: 'Username',
+          value: 'user123',
+          description: 'Your FTP username',
+        },
+        {
+          label: 'Password',
+          value: '••••••••',
+          description: 'Your FTP password',
+        },
+      ].map(field => (
+        <div
+          key={field.label}
+          className="bg-white rounded-lg border border-gray-200 p-4"
+        >
+          <label className="block text-sm font-medium text-gray-700">
+            {field.label}
+          </label>
           <div className="mt-1 flex">
             <input
               type={field.label === 'Password' ? 'password' : 'text'}
@@ -190,7 +215,17 @@ const FileZillaCredentials = () => (
     <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
       <h3 className="text-lg font-medium mb-4">How to Connect</h3>
       <ol className="list-decimal list-inside space-y-3 text-sm text-gray-600">
-        <li>Download and install <a href="https://filezilla-project.org/" className="text-[#1a365d] hover:underline" target="_blank" rel="noopener noreferrer">FileZilla</a></li>
+        <li>
+          Download and install{' '}
+          <a
+            href="https://filezilla-project.org/"
+            className="text-[#1a365d] hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            FileZilla
+          </a>
+        </li>
         <li>Open FileZilla and click on "File {`>`} Site Manager"</li>
         <li>Click "New Site" and enter a name for your connection</li>
         <li>Enter the credentials above in the corresponding fields</li>
@@ -212,7 +247,8 @@ const SettingsContent = () => {
         <div className="flex">
           <div className="ml-3">
             <p className="text-sm text-blue-700">
-              Manage your server settings, configurations, and advanced options here. Some changes may require a server restart.
+              Manage your server settings, configurations, and advanced options
+              here. Some changes may require a server restart.
             </p>
           </div>
         </div>
@@ -221,12 +257,31 @@ const SettingsContent = () => {
       {/* Quick Links */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {[
-          { title: 'Server Properties', description: 'Configure server.properties file', icon: DocumentTextIcon },
-          { title: 'Plugins Manager', description: 'Install and manage plugins', icon: CogIcon },
-          { title: 'Backup Settings', description: 'Configure automatic backups', icon: ShieldCheckIcon },
-          { title: 'Access Control', description: 'Manage user permissions', icon: KeyIcon },
-        ].map((item) => (
-          <div key={item.title} className="bg-white p-4 rounded-lg border border-gray-200 hover:border-[#1a365d] cursor-pointer transition-colors">
+          {
+            title: 'Server Properties',
+            description: 'Configure server.properties file',
+            icon: DocumentTextIcon,
+          },
+          {
+            title: 'Plugins Manager',
+            description: 'Install and manage plugins',
+            icon: CogIcon,
+          },
+          {
+            title: 'Backup Settings',
+            description: 'Configure automatic backups',
+            icon: ShieldCheckIcon,
+          },
+          {
+            title: 'Access Control',
+            description: 'Manage user permissions',
+            icon: KeyIcon,
+          },
+        ].map(item => (
+          <div
+            key={item.title}
+            className="bg-white p-4 rounded-lg border border-gray-200 hover:border-[#1a365d] cursor-pointer transition-colors"
+          >
             <div className="flex items-start space-x-4">
               <item.icon className="h-6 w-6 text-[#1a365d]" />
               <div>
@@ -247,9 +302,11 @@ const SettingsContent = () => {
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-medium">Reset Server Content</h4>
-              <p className="text-sm text-gray-500">Remove all world data and configurations</p>
+              <p className="text-sm text-gray-500">
+                Remove all world data and configurations
+              </p>
             </div>
-            <button 
+            <button
               onClick={() => setShowDeleteModal(true)}
               className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
             >
@@ -263,9 +320,12 @@ const SettingsContent = () => {
       {showDeleteModal && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Confirm Reset</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Confirm Reset
+            </h3>
             <p className="text-sm text-gray-500 mb-4">
-              Are you sure you want to reset all server content? This action cannot be undone.
+              Are you sure you want to reset all server content? This action
+              cannot be undone.
             </p>
             <div className="flex justify-end space-x-3">
               <button
@@ -294,7 +354,12 @@ const SettingsContent = () => {
 // Add new StatisticsContent component
 const StatisticsContent = () => {
   const performanceMetrics = [
-    { label: 'Average Response Time', value: '145ms', trend: 'down', change: '12%' },
+    {
+      label: 'Average Response Time',
+      value: '145ms',
+      trend: 'down',
+      change: '12%',
+    },
     { label: 'Requests per Second', value: '256', trend: 'up', change: '8%' },
     { label: 'Active Users', value: '1,234', trend: 'up', change: '23%' },
     { label: 'Error Rate', value: '0.05%', trend: 'down', change: '5%' },
@@ -313,7 +378,8 @@ const StatisticsContent = () => {
         <div className="flex">
           <div className="ml-3">
             <p className="text-sm text-blue-700">
-              Monitor your server's performance metrics and usage statistics over time.
+              Monitor your server's performance metrics and usage statistics
+              over time.
             </p>
           </div>
         </div>
@@ -321,13 +387,20 @@ const StatisticsContent = () => {
 
       {/* Performance Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {performanceMetrics.map((metric) => (
-          <div key={metric.label} className="bg-white rounded-lg border border-gray-200 p-4">
+        {performanceMetrics.map(metric => (
+          <div
+            key={metric.label}
+            className="bg-white rounded-lg border border-gray-200 p-4"
+          >
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-gray-500">{metric.label}</h3>
-              <span className={`flex items-center text-sm ${
-                metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <h3 className="text-sm font-medium text-gray-500">
+                {metric.label}
+              </h3>
+              <span
+                className={`flex items-center text-sm ${
+                  metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                }`}
+              >
                 {metric.trend === 'up' ? (
                   <ArrowUpIcon className="h-4 w-4 mr-1" />
                 ) : (
@@ -353,8 +426,11 @@ const StatisticsContent = () => {
             <div>Bandwidth Used</div>
             <div>Error Count</div>
           </div>
-          {timeframeStats.map((stat) => (
-            <div key={stat.period} className="grid grid-cols-4 gap-4 py-3 border-t border-gray-100">
+          {timeframeStats.map(stat => (
+            <div
+              key={stat.period}
+              className="grid grid-cols-4 gap-4 py-3 border-t border-gray-100"
+            >
               <div className="font-medium">{stat.period}</div>
               <div>{stat.visits}</div>
               <div>{stat.bandwidth}</div>
@@ -367,26 +443,29 @@ const StatisticsContent = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[
-          { 
+          {
             title: 'Peak Hours',
             value: '2PM - 6PM UTC',
             description: 'Highest server activity',
-            icon: ClockIcon 
+            icon: ClockIcon,
           },
-          { 
+          {
             title: 'Most Active Users',
             value: 'United States',
             description: 'By geographic location',
-            icon: UserGroupIcon 
+            icon: UserGroupIcon,
           },
-          { 
+          {
             title: 'Uptime',
             value: '99.98%',
             description: 'Last 30 days',
-            icon: ServerIcon 
+            icon: ServerIcon,
           },
-        ].map((stat) => (
-          <div key={stat.title} className="bg-white rounded-lg border border-gray-200 p-4">
+        ].map(stat => (
+          <div
+            key={stat.title}
+            className="bg-white rounded-lg border border-gray-200 p-4"
+          >
             <div className="flex items-center space-x-3">
               <stat.icon className="h-8 w-8 text-[#1a365d]" />
               <div>
@@ -405,32 +484,32 @@ const StatisticsContent = () => {
 // Add new BackupsContent component
 const BackupsContent = () => {
   const [showBackupModal, setShowBackupModal] = React.useState(false);
-  
+
   const backups = [
-    { 
+    {
       id: '1',
       name: 'Daily Backup',
       created_at: '2024-03-20T10:00:00Z',
       size: '2.4GB',
       type: 'Automated',
-      status: 'completed'
+      status: 'completed',
     },
-    { 
+    {
       id: '2',
       name: 'Pre-Update Backup',
       created_at: '2024-03-19T15:30:00Z',
       size: '2.3GB',
       type: 'Manual',
-      status: 'completed'
+      status: 'completed',
     },
-    { 
+    {
       id: '3',
       name: 'Weekly Backup',
       created_at: '2024-03-18T00:00:00Z',
       size: '2.3GB',
       type: 'Automated',
-      status: 'completed'
-    }
+      status: 'completed',
+    },
   ];
 
   return (
@@ -440,7 +519,9 @@ const BackupsContent = () => {
         <div className="flex">
           <div className="ml-3">
             <p className="text-sm text-blue-700">
-              Regular backups help protect your data. Automated backups are performed daily, but you can also create manual backups at any time.
+              Regular backups help protect your data. Automated backups are
+              performed daily, but you can also create manual backups at any
+              time.
             </p>
           </div>
         </div>
@@ -449,23 +530,26 @@ const BackupsContent = () => {
       {/* Backup Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[
-          { 
+          {
             title: 'Last Backup',
             value: '2 hours ago',
-            description: 'Automated daily backup'
+            description: 'Automated daily backup',
           },
-          { 
+          {
             title: 'Total Backups',
             value: '24',
-            description: 'Using 48GB storage'
+            description: 'Using 48GB storage',
           },
-          { 
+          {
             title: 'Next Backup',
             value: '22:00 UTC',
-            description: 'Scheduled daily backup'
-          }
-        ].map((stat) => (
-          <div key={stat.title} className="bg-white rounded-lg border border-gray-200 p-4">
+            description: 'Scheduled daily backup',
+          },
+        ].map(stat => (
+          <div
+            key={stat.title}
+            className="bg-white rounded-lg border border-gray-200 p-4"
+          >
             <h3 className="text-sm font-medium text-gray-500">{stat.title}</h3>
             <p className="text-2xl font-semibold mt-1">{stat.value}</p>
             <p className="text-sm text-gray-500 mt-1">{stat.description}</p>
@@ -490,31 +574,53 @@ const BackupsContent = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Created
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Size
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Type
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {backups.map((backup) => (
+              {backups.map(backup => (
                 <tr key={backup.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{backup.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {backup.name}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {new Date(backup.created_at).toLocaleString()}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{backup.size}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{backup.type}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {backup.size}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {backup.type}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">
                       {backup.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button className="text-[#1a365d] hover:text-[#2d4ed8] mr-4">Download</button>
-                    <button className="text-red-600 hover:text-red-900">Delete</button>
+                    <button className="text-[#1a365d] hover:text-[#2d4ed8] mr-4">
+                      Download
+                    </button>
+                    <button className="text-red-600 hover:text-red-900">
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -527,10 +633,14 @@ const BackupsContent = () => {
       {showBackupModal && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Create New Backup</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Create New Backup
+            </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Backup Name</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Backup Name
+                </label>
                 <input
                   type="text"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d]"
@@ -538,7 +648,9 @@ const BackupsContent = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Description (optional)</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Description (optional)
+                </label>
                 <textarea
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d]"
                   rows={3}
@@ -603,18 +715,28 @@ export const Console = () => {
             <div className="flex items-center space-x-4">
               <ServerIcon className="h-6 w-6 text-gray-400" />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">Server Console</h1>
+                <h1 className="text-xl font-semibold text-gray-900">
+                  Server Console
+                </h1>
                 <p className="text-sm text-gray-500">ID: {server_id}</p>
               </div>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                serverStatus === 'running' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-              }`}>
+              <span
+                className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  serverStatus === 'running'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                }`}
+              >
                 {serverStatus.charAt(0).toUpperCase() + serverStatus.slice(1)}
               </span>
             </div>
             <div className="flex space-x-3">
               <button
-                onClick={() => setServerStatus(prev => prev === 'running' ? 'stopped' : 'running')}
+                onClick={() =>
+                  setServerStatus(prev =>
+                    prev === 'running' ? 'stopped' : 'running',
+                  )
+                }
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   serverStatus === 'running'
                     ? 'bg-red-600 text-white hover:bg-red-700'
@@ -637,7 +759,7 @@ export const Console = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-4" aria-label="Tabs">
-              {tabs.map((tab) => (
+              {tabs.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
@@ -664,7 +786,7 @@ export const Console = () => {
                     type="text"
                     placeholder="Enter command..."
                     className="flex-1 rounded-lg border border-gray-300 px-4 py-2"
-                    onKeyPress={(e) => {
+                    onKeyPress={e => {
                       if (e.key === 'Enter') {
                         handleCommand(e.currentTarget.value);
                         e.currentTarget.value = '';
@@ -688,4 +810,4 @@ export const Console = () => {
       </div>
     </div>
   );
-}; 
+};

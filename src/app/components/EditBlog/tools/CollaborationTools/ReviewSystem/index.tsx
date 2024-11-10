@@ -24,15 +24,18 @@ export const ReviewSystem: React.FC<ReviewSystemProps> = ({
   const [activeReviewId, setActiveReviewId] = useState<string | null>(null);
   const [comments, setComments] = useState<{ [key: string]: string }>({});
 
-  const handleReviewAction = (review: Review, status: 'approved' | 'rejected') => {
+  const handleReviewAction = (
+    review: Review,
+    status: 'approved' | 'rejected',
+  ) => {
     const comment = comments[review.id] || '';
-    
+
     onReviewComplete({
       ...review,
       status,
       comments: [...(review.comments || []), comment],
     });
-    
+
     setActiveReviewId(null);
     setComments(prev => {
       const newComments = { ...prev };
@@ -45,7 +48,9 @@ export const ReviewSystem: React.FC<ReviewSystemProps> = ({
     <div className="max-w-5xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h3 className="text-2xl font-semibold text-gray-800">Content Reviews</h3>
+        <h3 className="text-2xl font-semibold text-gray-800">
+          Content Reviews
+        </h3>
         <div className="flex items-center space-x-4">
           <button className="px-4 py-2 bg-[#f4a261] hover:bg-[#e76f51] text-white rounded-lg transition-colors">
             New Review
@@ -55,24 +60,30 @@ export const ReviewSystem: React.FC<ReviewSystemProps> = ({
 
       {/* Reviews List */}
       <div className="space-y-4">
-        {pendingReviews.map((review) => (
-          <Card 
-            key={review.id} 
+        {pendingReviews.map(review => (
+          <Card
+            key={review.id}
             className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all"
           >
             <div className="flex justify-between items-start p-6">
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <span className="text-gray-400">#{review.id}</span>
-                  <h4 className="font-medium text-lg text-gray-900">{review.title}</h4>
+                  <h4 className="font-medium text-lg text-gray-900">
+                    {review.title}
+                  </h4>
                 </div>
-                <p className="text-gray-600">{review.content.substring(0, 100)}...</p>
+                <p className="text-gray-600">
+                  {review.content.substring(0, 100)}...
+                </p>
               </div>
-              <Badge 
+              <Badge
                 className={`${
-                  review.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
-                  review.status === 'approved' ? 'bg-green-100 text-green-800' : 
-                  'bg-red-100 text-red-800'
+                  review.status === 'pending'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : review.status === 'approved'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
                 } px-3 py-1 rounded-full text-sm font-medium`}
               >
                 {review.status}
@@ -84,7 +95,9 @@ export const ReviewSystem: React.FC<ReviewSystemProps> = ({
                 <Select
                   className="w-full"
                   options={reviewers.map(r => ({ value: r.id, label: r.name }))}
-                  onChange={(id) => onReviewComplete({ ...review, assignedTo: id })}
+                  onChange={id =>
+                    onReviewComplete({ ...review, assignedTo: id })
+                  }
                   placeholder="Assign reviewer"
                 />
               </div>
@@ -94,20 +107,25 @@ export const ReviewSystem: React.FC<ReviewSystemProps> = ({
               <div className="border-t border-gray-100 px-6 py-4 space-y-4">
                 <Input.TextArea
                   value={comments[review.id] || ''}
-                  onChange={(e) => setComments(prev => ({ ...prev, [review.id]: e.target.value }))}
+                  onChange={e =>
+                    setComments(prev => ({
+                      ...prev,
+                      [review.id]: e.target.value,
+                    }))
+                  }
                   placeholder="Add review comments..."
                   className="w-full border-gray-200 rounded-lg focus:ring-[#1a365d] focus:border-[#1a365d]"
                 />
                 <div className="flex gap-3">
-                  <Button 
-                    onClick={() => handleReviewAction(review, 'approved')} 
+                  <Button
+                    onClick={() => handleReviewAction(review, 'approved')}
                     type="primary"
                     className="bg-[#f4a261] hover:bg-[#e76f51] border-none"
                   >
                     Approve
                   </Button>
-                  <Button 
-                    onClick={() => handleReviewAction(review, 'rejected')} 
+                  <Button
+                    onClick={() => handleReviewAction(review, 'rejected')}
                     className="border-red-500 text-red-500 hover:bg-red-50"
                   >
                     Reject
@@ -120,4 +138,4 @@ export const ReviewSystem: React.FC<ReviewSystemProps> = ({
       </div>
     </div>
   );
-}; 
+};

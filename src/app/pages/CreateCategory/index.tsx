@@ -30,7 +30,7 @@ const CreateCategoryContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
+    <div className="min-h-screen flex bg-gray-50" style={{ marginTop: '3%' }}>
       <div className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center justify-between mb-8">
@@ -39,14 +39,19 @@ const CreateCategoryContent: React.FC = () => {
                 <ChevronLeft className="w-5 h-5 mr-1" />
                 Back
               </button>
-              <h1 className="text-2xl font-semibold text-gray-800">Create New Category</h1>
+              <h1 className="text-2xl font-semibold text-gray-800">
+                Create New Category
+              </h1>
             </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200">
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
               <div className="space-y-2">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Category Name
                 </label>
                 <input
@@ -61,7 +66,10 @@ const CreateCategoryContent: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Description
                 </label>
                 <textarea

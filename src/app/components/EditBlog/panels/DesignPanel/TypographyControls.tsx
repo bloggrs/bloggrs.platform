@@ -21,16 +21,20 @@ export const TypographyControls: React.FC<TypographyControlsProps> = ({
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <h3 className="text-xl font-semibold text-gray-800 mb-6">Typography</h3>
-      
+
       <div className="space-y-5">
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-500">Heading Font</label>
+          <label className="block text-sm font-medium text-gray-500">
+            Heading Font
+          </label>
           <select
             value={fonts?.headings || 'Arial'}
-            onChange={(e) => onChange({ 
-              fonts: { ...fonts, headings: e.target.value },
-              fontSizes: sizes 
-            })}
+            onChange={e =>
+              onChange({
+                fonts: { ...fonts, headings: e.target.value },
+                fontSizes: sizes,
+              })
+            }
             className="w-full rounded-lg bg-gray-100 border border-gray-200 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
           >
             <option value="Arial">Arial</option>
@@ -40,13 +44,17 @@ export const TypographyControls: React.FC<TypographyControlsProps> = ({
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-500">Body Font</label>
+          <label className="block text-sm font-medium text-gray-500">
+            Body Font
+          </label>
           <select
             value={fonts?.body || 'Arial'}
-            onChange={(e) => onChange({ 
-              fonts: { ...fonts, body: e.target.value },
-              fontSizes: sizes 
-            })}
+            onChange={e =>
+              onChange({
+                fonts: { ...fonts, body: e.target.value },
+                fontSizes: sizes,
+              })
+            }
             className="w-full rounded-lg bg-gray-100 border border-gray-200 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
           >
             <option value="Arial">Arial</option>
@@ -56,14 +64,18 @@ export const TypographyControls: React.FC<TypographyControlsProps> = ({
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-500">Base Font Size</label>
+          <label className="block text-sm font-medium text-gray-500">
+            Base Font Size
+          </label>
           <input
             type="text"
             value={sizes.base}
-            onChange={(e) => onChange({
-              fonts,
-              fontSizes: { ...sizes, base: e.target.value }
-            })}
+            onChange={e =>
+              onChange({
+                fonts,
+                fontSizes: { ...sizes, base: e.target.value },
+              })
+            }
             className="w-full rounded-lg bg-gray-100 border border-gray-200 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
             placeholder="16px"
           />
@@ -71,4 +83,4 @@ export const TypographyControls: React.FC<TypographyControlsProps> = ({
       </div>
     </div>
   );
-}; 
+};

@@ -11,7 +11,7 @@ export const PublishSettings: React.FC<PublishSettingsProps> = ({
   isPublic,
   onPublishChange,
   scheduledDate,
-  onScheduleChange
+  onScheduleChange,
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -20,10 +20,12 @@ export const PublishSettings: React.FC<PublishSettingsProps> = ({
           <input
             type="checkbox"
             checked={isPublic}
-            onChange={(e) => onPublishChange(e.target.checked)}
+            onChange={e => onPublishChange(e.target.checked)}
             className="rounded border-gray-300 text-[#1a365d] focus:ring-[#1a365d] h-4 w-4"
           />
-          <span className="ml-3 text-sm font-medium text-gray-900">Make this post public</span>
+          <span className="ml-3 text-sm font-medium text-gray-900">
+            Make this post public
+          </span>
         </div>
 
         {onScheduleChange && (
@@ -34,7 +36,11 @@ export const PublishSettings: React.FC<PublishSettingsProps> = ({
             <input
               type="datetime-local"
               value={scheduledDate?.toISOString().slice(0, 16)}
-              onChange={(e) => onScheduleChange(e.target.value ? new Date(e.target.value) : null)}
+              onChange={e =>
+                onScheduleChange(
+                  e.target.value ? new Date(e.target.value) : null,
+                )
+              }
               className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
             />
           </div>
@@ -42,4 +48,4 @@ export const PublishSettings: React.FC<PublishSettingsProps> = ({
       </div>
     </div>
   );
-}; 
+};

@@ -18,9 +18,9 @@ export function ModalContainer({ setOpen, data, setData }) {
 
   return ReactDOM.createPortal(
     <>
-      <div 
+      <div
         className="fixed inset-0 bg-black bg-opacity-70 z-40"
-        onClick={close} 
+        onClick={close}
       />
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-white rounded-lg shadow-lg z-50 flex flex-col max-h-[90vh] sm:max-h-[80vh]">
         <div className="bg-[#1a365d] text-white px-5 py-4 rounded-t-lg font-medium">
@@ -28,7 +28,8 @@ export function ModalContainer({ setOpen, data, setData }) {
         </div>
         <div className="overflow-auto min-h-[200px] px-10 pb-20">
           <p className="mb-4">
-            Edit the clicks below by clicking on the number input or typing in your own value.
+            Edit the clicks below by clicking on the number input or typing in
+            your own value.
           </p>
           <label className="flex items-center">
             Clicks

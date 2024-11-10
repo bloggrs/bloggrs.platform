@@ -74,7 +74,7 @@ export const PostsListing = ({ match }) => {
   );
 
   return (
-    <div className="min-h-screen flex bg-gray-50" style={{marginTop: "3%"}}>
+    <div className="min-h-screen flex bg-gray-50" style={{ marginTop: '3%' }}>
       <div className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}

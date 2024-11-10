@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
 import { API_URL } from '../config';
 
-const handleApiError = (error) => {
-  // Extract error message from response if available
-  const message = error.data?.message || error.message || 'An unexpected error occurred';
+const handleApiError = error => {
+  const message =
+    error.data?.message || error.message || 'An unexpected error occurred';
   toast.error(message);
   throw error;
 };
@@ -33,7 +33,8 @@ const getResourcePolicies = (query = {}) => {
       };
     })
     .catch(error => {
-      const message = error.data?.message || 'Failed to fetch resource policies';
+      const message =
+        error.data?.message || 'Failed to fetch resource policies';
       toast.error(message);
       throw error;
     });
@@ -85,7 +86,8 @@ const getPoliciesForResource = (resourceType, resourceId) => {
       return data.data.resourcePolicies;
     })
     .catch(error => {
-      const message = error.data?.message || 'Failed to fetch resource policies';
+      const message =
+        error.data?.message || 'Failed to fetch resource policies';
       toast.error(message);
       throw error;
     });
@@ -195,7 +197,8 @@ const deleteResourcePolicies = (resourceType, resourceId) => {
       return { resourceType, resourceId };
     })
     .catch(error => {
-      const message = error.data?.message || 'Failed to delete resource policies';
+      const message =
+        error.data?.message || 'Failed to delete resource policies';
       toast.error(message);
       throw error;
     });

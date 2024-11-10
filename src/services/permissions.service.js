@@ -26,7 +26,10 @@ const getPermissions = (query = {}) => {
       };
     })
     .catch(error => {
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch permissions';
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to fetch permissions';
       toast.error(errorMessage);
       throw error;
     });
@@ -52,7 +55,10 @@ const getPermission = permissionId => {
       return data.data.permission;
     })
     .catch(error => {
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch permission';
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to fetch permission';
       toast.error(errorMessage);
       throw error;
     });
@@ -80,7 +86,10 @@ const createPermission = permissionData => {
       return data.data.permission;
     })
     .catch(error => {
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to create permission';
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to create permission';
       toast.error(errorMessage);
       throw error;
     });
@@ -108,7 +117,10 @@ const updatePermission = (permissionId, permissionData) => {
       return data.data.permission;
     })
     .catch(error => {
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to update permission';
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to update permission';
       toast.error(errorMessage);
       throw error;
     });
@@ -135,7 +147,10 @@ const deletePermission = permissionId => {
       return permissionId;
     })
     .catch(error => {
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to delete permission';
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to delete permission';
       toast.error(errorMessage);
       throw error;
     });
@@ -162,7 +177,10 @@ const deleteRolePermissions = roleId => {
       return roleId;
     })
     .catch(error => {
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to delete role permissions';
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to delete role permissions';
       toast.error(errorMessage);
       throw error;
     });
@@ -189,7 +207,10 @@ const deleteTenantPermissions = tenantId => {
       return tenantId;
     })
     .catch(error => {
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to delete tenant permissions';
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to delete tenant permissions';
       toast.error(errorMessage);
       throw error;
     });

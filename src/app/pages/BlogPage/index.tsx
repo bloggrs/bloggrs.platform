@@ -98,7 +98,8 @@ export const BlogPage = () => {
               Resources to Help You Succeed
             </h1>
             <p className="text-lg text-gray-300 mb-8">
-              Discover tips, guides, and insights to create and grow your perfect blog
+              Discover tips, guides, and insights to create and grow your
+              perfect blog
             </p>
             <div className="flex justify-center gap-4">
               <Link
@@ -218,9 +219,7 @@ export const BlogPage = () => {
                   <span className="text-sm text-[#f4a261] font-medium">
                     {post.category}
                   </span>
-                  <span className="text-sm text-gray-500">
-                    {post.readTime}
-                  </span>
+                  <span className="text-sm text-gray-500">{post.readTime}</span>
                 </div>
                 <h2 className="text-xl font-bold text-slate-800 mb-3">
                   {post.title}

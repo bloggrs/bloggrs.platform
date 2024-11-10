@@ -10,7 +10,7 @@ interface HeatmapVisualizationProps {
 export const HeatmapVisualization: React.FC<HeatmapVisualizationProps> = ({
   clicks = [],
   scroll = [],
-  attention = []
+  attention = [],
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -39,17 +39,21 @@ export const HeatmapVisualization: React.FC<HeatmapVisualizationProps> = ({
 
   return (
     <div className="space-y-6">
-      <h3 className="text-2xl font-semibold text-gray-800">User Interaction Analytics</h3>
-      
+      <h3 className="text-2xl font-semibold text-gray-800">
+        User Interaction Analytics
+      </h3>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div 
-          ref={containerRef} 
-          className="h-[400px] bg-white rounded-xl shadow-sm border border-gray-200" 
+        <div
+          ref={containerRef}
+          className="h-[400px] bg-white rounded-xl shadow-sm border border-gray-200"
         />
-        
+
         <div className="space-y-6">
           <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-200">
-            <h4 className="text-lg font-medium text-gray-800 mb-4">Scroll Depth</h4>
+            <h4 className="text-lg font-medium text-gray-800 mb-4">
+              Scroll Depth
+            </h4>
             {scroll.map(({ depth, frequency }, i) => (
               <div key={i} className="flex justify-between items-center mb-3">
                 <span className="text-gray-600">{depth}%</span>
@@ -64,11 +68,15 @@ export const HeatmapVisualization: React.FC<HeatmapVisualizationProps> = ({
           </div>
 
           <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-200">
-            <h4 className="text-lg font-medium text-gray-800 mb-4">Attention Hotspots</h4>
+            <h4 className="text-lg font-medium text-gray-800 mb-4">
+              Attention Hotspots
+            </h4>
             {attention.map(({ element, duration }, i) => (
               <div key={i} className="flex justify-between items-center mb-3">
                 <span className="text-gray-600">{element}</span>
-                <span className="font-medium text-[#1a365d]">{Math.round(duration)}s</span>
+                <span className="font-medium text-[#1a365d]">
+                  {Math.round(duration)}s
+                </span>
               </div>
             ))}
           </div>
@@ -76,4 +84,4 @@ export const HeatmapVisualization: React.FC<HeatmapVisualizationProps> = ({
       </div>
     </div>
   );
-}; 
+};

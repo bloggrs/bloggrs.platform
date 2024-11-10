@@ -84,7 +84,8 @@ export const DeleteTeamMemberModal: React.FC<DeleteTeamMemberModalProps> = ({
               Delete team member '{name}'
             </h1>
             <p className="text-sm text-gray-500">
-              Are you sure you want to remove this team member? This action cannot be reversed.
+              Are you sure you want to remove this team member? This action
+              cannot be reversed.
             </p>
           </div>
 

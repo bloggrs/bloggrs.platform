@@ -17,8 +17,8 @@ const colors = {
     warning: 'bg-yellow-100 text-yellow-800',
     error: 'bg-red-100 text-red-800',
     info: 'bg-indigo-100 text-indigo-800',
-  }
-}
+  },
+};
 
 export const WordCount: React.FC<WordCountProps> = ({ content }) => {
   const wordCount = content?.split(/\s+/).filter(Boolean).length || 0;
@@ -29,4 +29,4 @@ export const WordCount: React.FC<WordCountProps> = ({ content }) => {
       <span className="ml-1 text-sm text-gray-500">words</span>
     </div>
   );
-}; 
+};

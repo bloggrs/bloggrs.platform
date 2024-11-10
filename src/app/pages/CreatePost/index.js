@@ -38,8 +38,6 @@ import { PerformanceStatus } from 'app/components/EditBlog/components/Performanc
 import { PublishSettings } from 'app/components/EditBlog/components/PublishSettings';
 import { ChevronLeft } from 'react-feather';
 
-
-
 export const CreatePost = ({ match }) => {
   const history = useHistory();
 
@@ -62,7 +60,7 @@ export const CreatePost = ({ match }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [lastSavedTime, setLastSavedTime] = useState('Never');
   const [autoSaveTimer, setAutoSaveTimer] = useState(null);
-  
+
   const [seoSettings, setSeoSettings] = useState({
     metaTitle: '',
     metaDescription: '',
@@ -79,15 +77,15 @@ export const CreatePost = ({ match }) => {
         h3: { size: '1.75rem', weight: '600', lineHeight: '1.3' },
         h4: { size: '1.5rem', weight: '600', lineHeight: '1.4' },
         h5: { size: '1.25rem', weight: '600', lineHeight: '1.4' },
-        h6: { size: '1rem', weight: '600', lineHeight: '1.4' }
+        h6: { size: '1rem', weight: '600', lineHeight: '1.4' },
       },
       body: {
         size: '1rem',
         lineHeight: '1.5',
-        paragraphSpacing: '1.5rem'
+        paragraphSpacing: '1.5rem',
       },
       fontFamily: 'Arial',
-      fontSize: '16px'
+      fontSize: '16px',
     },
     templates: [
       { id: 'default', name: 'Default Template' },
@@ -100,16 +98,16 @@ export const CreatePost = ({ match }) => {
     comments: {
       enabled: true,
       requireModeration: true,
-      allowReplies: true
+      allowReplies: true,
     },
     newsletter: {
       enabled: true,
-      position: 'bottom'
+      position: 'bottom',
     },
     socialSharing: {
       enabled: true,
-      platforms: ['facebook', 'twitter', 'linkedin']
-    }
+      platforms: ['facebook', 'twitter', 'linkedin'],
+    },
   });
 
   const [monetizationSettings, setMonetizationSettings] = useState({
@@ -120,8 +118,8 @@ export const CreatePost = ({ match }) => {
     subscriptionPlans: [],
     paywallRules: [],
     paywallContent: {
-      title: 'Subscribe to Continue Reading'
-    }
+      title: 'Subscribe to Continue Reading',
+    },
   });
 
   const [thumbnail, setThumbnail] = useState('');
@@ -179,7 +177,7 @@ export const CreatePost = ({ match }) => {
 
   const handleSave = async () => {
     const { blog_id: BlogId, id } = match.params;
-    
+
     try {
       // Get current editor content
       const blocks = await editorState.current.save();
@@ -192,11 +190,13 @@ export const CreatePost = ({ match }) => {
         BlogId,
         categories: selectedCategories.map(cat => ({ id: cat.id })),
         status: 'published',
-        thumbnail
+        thumbnail,
       };
 
       // Create or update post
-      const fn = createMode ? blogsService.createBlogPost : blogsService.updateBlogPost;
+      const fn = createMode
+        ? blogsService.createBlogPost
+        : blogsService.updateBlogPost;
       if (!createMode) {
         postData.id = id;
       }
@@ -204,16 +204,21 @@ export const CreatePost = ({ match }) => {
       const post = await fn(postData);
 
       // Show success message
-      toast.success(createMode ? 'Post published successfully!' : 'Post updated successfully!');
+      toast.success(
+        createMode
+          ? 'Post published successfully!'
+          : 'Post updated successfully!',
+      );
 
       // Redirect after create
       if (createMode) {
         history.push(`/blogs/${BlogId}/posts/${post.id}`);
       }
-
     } catch (err) {
       console.error('Error saving post:', err);
-      toast.error(createMode ? 'Failed to publish post' : 'Failed to update post');
+      toast.error(
+        createMode ? 'Failed to publish post' : 'Failed to update post',
+      );
     }
   };
 
@@ -223,7 +228,7 @@ export const CreatePost = ({ match }) => {
       handleAutoSave();
     }, 30000);
     setAutoSaveTimer(timer);
-    
+
     return () => {
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
     };
@@ -241,9 +246,12 @@ export const CreatePost = ({ match }) => {
     <MainPanel>
       <div className="min-h-screen flex flex-col bg-gray-50">
         {/* Top Action Bar */}
-        <div className="bg-white border-b px-6 py-4 flex justify-between items-center" style={{ marginLeft: "3%"}}>
+        <div
+          className="bg-white border-b px-6 py-4 flex justify-between items-center"
+          style={{ marginLeft: '3%' }}
+        >
           <div className="flex items-center space-x-4">
-            <button 
+            <button
               onClick={() => history.goBack()}
               className="flex items-center text-gray-600 hover:text-gray-800 transition-colors"
             >
@@ -266,14 +274,23 @@ export const CreatePost = ({ match }) => {
             {/* Tab Navigation */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
               <div className="flex border-b border-gray-100">
-                {['Content', 'Design', 'SEO', 'Engagement', 'Monetization', 'Accessibility', 'Integrations'].map((tab, index) => (
+                {[
+                  'Content',
+                  'Design',
+                  'SEO',
+                  'Engagement',
+                  'Monetization',
+                  'Accessibility',
+                  'Integrations',
+                ].map((tab, index) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(index)}
                     className={`px-6 py-4 font-medium text-sm transition-colors
-                      ${activeTab === index 
-                        ? 'text-[#1a365d] border-b-2 border-[#1a365d]' 
-                        : 'text-gray-500 hover:text-gray-700'
+                      ${
+                        activeTab === index
+                          ? 'text-[#1a365d] border-b-2 border-[#1a365d]'
+                          : 'text-gray-500 hover:text-gray-700'
                       }`}
                   >
                     {tab}
@@ -304,7 +321,7 @@ export const CreatePost = ({ match }) => {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => {
+                      onChange={e => {
                         const file = e.target.files?.[0];
                         if (file) {
                           setThumbnail(URL.createObjectURL(file));
@@ -319,9 +336,9 @@ export const CreatePost = ({ match }) => {
                         transition-colors"
                     />
                     {thumbnail && (
-                      <img 
-                        src={thumbnail} 
-                        alt="Post thumbnail" 
+                      <img
+                        src={thumbnail}
+                        alt="Post thumbnail"
                         className="mt-2 h-32 w-32 object-cover rounded-lg border border-gray-200"
                       />
                     )}
@@ -338,7 +355,7 @@ export const CreatePost = ({ match }) => {
                 </div>
               )}
               {activeTab === 1 && (
-                <DesignPanel 
+                <DesignPanel
                   settings={designSettings}
                   onChange={setDesignSettings}
                   components={{
@@ -346,45 +363,42 @@ export const CreatePost = ({ match }) => {
                     LayoutBuilder: {},
                     ColorSchemeManager: {},
                     TypographyControls: {},
-                    CustomCSS: {},    
+                    CustomCSS: {},
                     templates: [
                       { id: 'default', name: 'Default Template' },
                       { id: 'modern', name: 'Modern Template' },
                     ],
-                    blocks: []
+                    blocks: [],
                   }}
                 />
               )}
               {activeTab === 2 && (
-                <SEOPanel 
-                  settings={seoSettings}
-                  onChange={setSeoSettings}
-                />
+                <SEOPanel settings={seoSettings} onChange={setSeoSettings} />
               )}
               {activeTab === 3 && (
-                <EngagementPanel 
+                <EngagementPanel
                   components={{
                     CommentSettings,
                     NewsletterForm,
                     SocialSharing,
                     RelatedPosts,
-                    TableOfContents
+                    TableOfContents,
                   }}
                 />
               )}
               {activeTab === 4 && (
-                <MonetizationPanel 
+                <MonetizationPanel
                   settings={monetizationSettings}
                   onChange={setMonetizationSettings}
                   features={{
                     adProviders: [],
                     subscriptionFeatures: [],
-                    affiliatePrograms: []
+                    affiliatePrograms: [],
                   }}
                 />
               )}
               {activeTab === 5 && (
-                <AccessibilityChecker 
+                <AccessibilityChecker
                   features={{
                     wcagCompliance: {},
                     screenReader: {},
@@ -393,7 +407,7 @@ export const CreatePost = ({ match }) => {
                 />
               )}
               {activeTab === 6 && (
-                <IntegrationsPanel 
+                <IntegrationsPanel
                   connections={{
                     socialMedia: {},
                     emailMarketing: {},
@@ -407,7 +421,10 @@ export const CreatePost = ({ match }) => {
         </div>
 
         {/* Footer Status Bar */}
-        <div className="bg-white border-t px-6 py-3 flex justify-between items-center" style={{ marginLeft: "3%"}}>
+        <div
+          className="bg-white border-t px-6 py-3 flex justify-between items-center"
+          style={{ marginLeft: '3%' }}
+        >
           <div className="text-sm text-gray-500">
             Last saved: {lastSavedTime}
           </div>
@@ -429,7 +446,7 @@ const CommentSettings = () => {
     allowReplies: true,
     notifyOnNewComments: true,
     allowAnonymous: false,
-    sortBy: 'newest'
+    sortBy: 'newest',
   });
 
   return (
@@ -440,7 +457,9 @@ const CommentSettings = () => {
           <input
             type="checkbox"
             checked={settings.enabled}
-            onChange={e => setSettings({...settings, enabled: e.target.checked})}
+            onChange={e =>
+              setSettings({ ...settings, enabled: e.target.checked })
+            }
           />
           <span>Enable comments</span>
         </label>
@@ -456,7 +475,7 @@ const NewsletterForm = () => {
     position: 'bottom',
     title: 'Subscribe to our newsletter',
     description: 'Get the latest updates directly in your inbox.',
-    buttonText: 'Subscribe Now'
+    buttonText: 'Subscribe Now',
   });
 
   return (
@@ -466,7 +485,7 @@ const NewsletterForm = () => {
         <input
           type="text"
           value={settings.title}
-          onChange={e => setSettings({...settings, title: e.target.value})}
+          onChange={e => setSettings({ ...settings, title: e.target.value })}
           className="block w-full border rounded p-2"
           placeholder="Form Title"
         />
@@ -481,7 +500,7 @@ const SocialSharing = () => {
     enabled: true,
     platforms: ['facebook', 'twitter', 'linkedin'],
     position: 'bottom',
-    showShareCount: true
+    showShareCount: true,
   });
 
   return (
@@ -497,7 +516,7 @@ const SocialSharing = () => {
                 const newPlatforms = e.target.checked
                   ? [...settings.platforms, platform]
                   : settings.platforms.filter(p => p !== platform);
-                setSettings({...settings, platforms: newPlatforms});
+                setSettings({ ...settings, platforms: newPlatforms });
               }}
             />
             <span className="capitalize">{platform}</span>
@@ -515,16 +534,16 @@ const RelatedPosts = () => {
     layout: 'grid',
     showThumbnail: true,
     showExcerpt: true,
-    matchBy: ['category', 'tags']
+    matchBy: ['category', 'tags'],
   });
 
   return (
     <div className="space-y-4">
       <h3 className="font-medium">Related Posts</h3>
       <div className="space-y-3">
-        <select 
+        <select
           value={settings.layout}
-          onChange={e => setSettings({...settings, layout: e.target.value})}
+          onChange={e => setSettings({ ...settings, layout: e.target.value })}
           className="block w-full border rounded p-2"
         >
           <option value="grid">Grid Layout</option>
@@ -543,16 +562,16 @@ const TableOfContents = () => {
     sticky: true,
     maxDepth: 3,
     smooth: true,
-    numbered: true
+    numbered: true,
   });
 
   return (
     <div className="space-y-4">
       <h3 className="font-medium">Table of Contents</h3>
       <div className="space-y-3">
-        <select 
+        <select
           value={settings.position}
-          onChange={e => setSettings({...settings, position: e.target.value})}
+          onChange={e => setSettings({ ...settings, position: e.target.value })}
           className="block w-full border rounded p-2"
         >
           <option value="right">Right Sidebar</option>

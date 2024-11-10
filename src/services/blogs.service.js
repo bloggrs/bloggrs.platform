@@ -353,4 +353,3 @@ export const blogsService = {
   getCategories,
   logError,
 };
-

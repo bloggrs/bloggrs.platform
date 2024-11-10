@@ -19,7 +19,7 @@ interface MediaLibraryProps {
 export const MediaLibrary: React.FC<MediaLibraryProps> = ({
   onSelect,
   maxFileSize = 5242880, // 5MB default
-  allowedTypes = ['image/*', 'video/*', 'application/pdf']
+  allowedTypes = ['image/*', 'video/*', 'application/pdf'],
 }) => {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -37,22 +37,22 @@ export const MediaLibrary: React.FC<MediaLibraryProps> = ({
       type: files[0].type.startsWith('image') ? 'image' : 'video',
       name: files[0].name,
       size: files[0].size,
-      uploadedAt: new Date()
+      uploadedAt: new Date(),
     };
-    
+
     setMedia([newMedia, ...media]);
     setUploading(false);
   };
 
   const toggleSelect = (id: string) => {
     setSelectedItems(prev =>
-      prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id],
     );
   };
 
   const toggleSelectAll = () => {
     setSelectedItems(prev =>
-      prev.length === media.length ? [] : media.map(item => item.id)
+      prev.length === media.length ? [] : media.map(item => item.id),
     );
   };
 
@@ -63,7 +63,9 @@ export const MediaLibrary: React.FC<MediaLibraryProps> = ({
           {/* Header */}
           <div className="p-4 border-b border-gray-100 flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <h3 className="text-xl font-semibold text-gray-800">Media Library</h3>
+              <h3 className="text-xl font-semibold text-gray-800">
+                Media Library
+              </h3>
               <input
                 type="file"
                 accept={allowedTypes.join(',')}
@@ -86,22 +88,26 @@ export const MediaLibrary: React.FC<MediaLibraryProps> = ({
               </button>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-3 gap-4">
-            {media.map((item) => (
+            {media.map(item => (
               <div
                 key={item.id}
                 onClick={() => onSelect?.(item)}
                 className="cursor-pointer border rounded p-2 hover:border-blue-500"
               >
                 {item.type === 'image' && (
-                  <img src={item.url} alt={item.name} className="w-full h-32 object-cover" />
+                  <img
+                    src={item.url}
+                    alt={item.name}
+                    className="w-full h-32 object-cover"
+                  />
                 )}
                 <p className="text-sm truncate mt-1">{item.name}</p>
               </div>
             ))}
           </div>
-          
+
           {uploading && <div className="text-center mt-4">Uploading...</div>}
         </div>
       </div>

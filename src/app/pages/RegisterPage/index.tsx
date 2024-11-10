@@ -88,7 +88,9 @@ const RegisterPage_ = props => {
                             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
                           />
                           <p className="mt-1 text-sm text-red-600">
-                            {errors.first_name && touched.first_name && errors.first_name}
+                            {errors.first_name &&
+                              touched.first_name &&
+                              errors.first_name}
                           </p>
                         </div>
                         <div>
@@ -102,7 +104,9 @@ const RegisterPage_ = props => {
                             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
                           />
                           <p className="mt-1 text-sm text-red-600">
-                            {errors.last_name && touched.last_name && errors.last_name}
+                            {errors.last_name &&
+                              touched.last_name &&
+                              errors.last_name}
                           </p>
                         </div>
                         <div>
@@ -130,7 +134,9 @@ const RegisterPage_ = props => {
                             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-[#1a365d] focus:ring-[#1a365d] sm:text-sm"
                           />
                           <p className="mt-1 text-sm text-red-600">
-                            {errors.password && touched.password && errors.password}
+                            {errors.password &&
+                              touched.password &&
+                              errors.password}
                           </p>
                         </div>
                       </div>

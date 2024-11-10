@@ -10,7 +10,9 @@ export const FileInput = ({ value, onChange, ...rest }) => {
       <label className="block w-full cursor-pointer">
         {(Boolean(value) && (
           <div className="p-4 rounded-lg border border-gray-200 bg-white shadow-sm">
-            <span className="text-gray-900 font-medium">Selected file: {value.name}</span>
+            <span className="text-gray-900 font-medium">
+              Selected file: {value.name}
+            </span>
           </div>
         )) || (
           <div className="p-6 rounded-lg border border-gray-200 bg-white shadow-sm hover:bg-gray-50 transition-colors text-center">

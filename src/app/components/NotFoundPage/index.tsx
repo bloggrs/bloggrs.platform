@@ -21,8 +21,10 @@ export function NotFoundPage() {
           </span>
           4
         </div>
-        <p className="text-gray-600 mb-6">The page you're looking for doesn't exist.</p>
-        <button 
+        <p className="text-gray-600 mb-6">
+          The page you're looking for doesn't exist.
+        </p>
+        <button
           onClick={() => window.history.back()}
           className="px-8 py-3 bg-[#1a365d] text-white rounded-lg font-medium transition-colors hover:bg-[#142c4b] md:px-6 md:py-2"
         >

@@ -13,4 +13,4 @@ export const SettingsButton: React.FC = () => {
       Settings
     </button>
   );
-}; 
+};

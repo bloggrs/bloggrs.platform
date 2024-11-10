@@ -10,7 +10,7 @@ interface CustomCSSProps {
 export const CustomCSS: React.FC<CustomCSSProps> = ({
   value,
   onChange,
-  isEnabled = true
+  isEnabled = true,
 }) => {
   const [isValid, setIsValid] = useState(true);
 
@@ -40,7 +40,11 @@ export const CustomCSS: React.FC<CustomCSSProps> = ({
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold text-gray-800">Custom CSS</h3>
         <div className="flex items-center space-x-3">
-          <span className={`text-sm font-medium ${isValid ? 'text-green-500' : 'text-red-500'}`}>
+          <span
+            className={`text-sm font-medium ${
+              isValid ? 'text-green-500' : 'text-red-500'
+            }`}
+          >
             {isValid ? 'Valid CSS' : 'Invalid CSS'}
           </span>
           <label className="relative inline-flex items-center cursor-pointer">
@@ -48,7 +52,7 @@ export const CustomCSS: React.FC<CustomCSSProps> = ({
               type="checkbox"
               checked={isEnabled}
               className="sr-only peer"
-              onChange={(e) => onChange(e.target.checked ? value : '')}
+              onChange={e => onChange(e.target.checked ? value : '')}
             />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#1a365d] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a365d]"></div>
           </label>
@@ -74,4 +78,4 @@ export const CustomCSS: React.FC<CustomCSSProps> = ({
       </div>
     </div>
   );
-}; 
+};
