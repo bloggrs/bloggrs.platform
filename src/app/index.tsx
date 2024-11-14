@@ -45,6 +45,8 @@ import { CreateCategory } from './pages/CreateCategory';
 import { TeamMembersListing } from './pages/TeamMembersListing';
 import { CreateTeamMember } from './pages/CreateTeamMember';
 import { Console } from './pages/Console';
+import { Platform } from './pages/Platform/Loadable';
+import { CommentsPage } from './pages/Comments';
 
 export function App() {
   const { actions } = useAuthSlice();
@@ -132,7 +134,7 @@ export function App() {
           <PrivateRoute
             exact
             path="/blogs/:blog_id/comments"
-            component={CommentsListing}
+            component={CommentsPage}
           />
           <PrivateRoute
             exact
@@ -159,6 +161,11 @@ export function App() {
             exact
             path="/blogs/:blog_id/team-members"
             component={TeamMembersListing}
+          />
+          <PrivateRoute
+            exact
+            path="/blogs/:blog_id/platform"
+            component={Platform}
           />
         </MainPanel>
         <Route component={NotFoundPage} />

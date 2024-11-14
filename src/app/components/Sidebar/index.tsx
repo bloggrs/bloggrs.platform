@@ -23,6 +23,7 @@ import {
   RiTeamLine,
   RiSettings3Line,
   RiTerminalBoxLine,
+  RiCodeBoxLine,
 } from 'react-icons/ri';
 
 interface Blog {
@@ -215,6 +216,11 @@ export const _Sidebar: React.FC<SidebarProps> = ({
           to={getPathname(blogId, '/console')}
           icon={<RiTerminalBoxLine className={iconClass('/console')} />}
           label="Console"
+        />
+        <IconLink
+          to={getPathname(blogId, '/platform')}
+          icon={<RiCodeBoxLine className={iconClass('/platform')} />}
+          label="Platform"
         />
         <IconLink
           to={getPathname(blogId, '/settings')}
